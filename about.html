@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>39rage - Portfolio</title>
+    <title>ABOUT - 39rage</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -13,7 +13,6 @@
             min-height: 100vh; display: flex; flex-direction: column;
         }
 
-        /* 共通ヘッダー */
         header {
             width: 100%; max-width: 1400px;
             margin: 0 auto; padding: 30px 40px;
@@ -21,19 +20,16 @@
             display: flex; justify-content: space-between; align-items: center;
             z-index: 100; position: relative;
         }
-
         .header-logo {
             color: #0f172a; text-decoration: none;
             font-size: 1.6rem; font-weight: 700;
             letter-spacing: 0.05em; transition: opacity 0.2s;
         }
         .header-logo:hover { opacity: 0.7; }
-
         .nav-links { display: flex; gap: 30px; }
         .nav-btn {
             color: #0f172a; text-decoration: none; font-weight: 700;
-            font-size: 0.95rem; letter-spacing: 0.1em;
-            position: relative; padding-bottom: 4px;
+            font-size: 0.95rem; letter-spacing: 0.1em; position: relative; padding-bottom: 4px;
         }
         .nav-btn::after {
             content: ''; position: absolute; width: 100%; transform: scaleX(0);
@@ -46,25 +42,28 @@
             display: none; flex-direction: column; gap: 6px;
             background: none; border: none; cursor: pointer; padding: 0;
         }
-        .menu-toggle span {
-            display: block; width: 25px; height: 3px; background-color: #0f172a;
-            transition: all 0.3s ease;
-        }
+        .menu-toggle span { display: block; width: 25px; height: 3px; background-color: #0f172a; transition: all 0.3s ease; }
 
-        /* メインレイアウト */
-        .main-layout { flex: 1; display: flex; width: 100%; align-items: center; justify-content: space-between; box-sizing: border-box; }
-        .profile-text-side { flex: 1; padding: 0 8% 60px 8%; text-align: left; }
-        .profile-text-side h1 { font-size: 3.5rem; letter-spacing: 0.05em; margin: 0 0 15px 0; font-weight: 700; }
-        .profile-text-side .description { color: #475569; font-size: 1.05rem; margin: 0 0 40px 0; letter-spacing: 0.05em; font-weight: 500; line-height: 1.8; }
+        .container { flex: 1; width: 90%; max-width: 800px; margin: 0 auto; padding: 40px 0 60px 0; text-align: center; }
+        h1 { font-size: 2rem; margin-bottom: 30px; letter-spacing: 0.1em; font-weight: 700; }
         
-        .sns-links { display: flex; gap: 25px; }
-        .sns-link { color: #0f172a; text-decoration: none; font-size: 1.8rem; font-weight: 400; transition: opacity 0.2s; line-height: 1; }
-        .sns-link:hover { opacity: 0.6; }
+        .content { 
+            background: #ffffff; padding: 40px; border-radius: 16px; 
+            text-align: left; box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05); 
+        }
+        .history { line-height: 1.8; font-size: 0.95rem; margin-bottom: 35px; color: #1e293b; }
+        h2 { font-size: 1.2rem; border-left: 4px solid #0f172a; padding-left: 10px; margin-top: 30px; margin-bottom: 15px; letter-spacing: 0.05em; }
+        .info-list { list-style: none; padding: 0; margin: 0; }
+        .info-list li { margin-bottom: 12px; font-size: 0.95rem; display: flex; align-items: flex-start; }
+        .info-label { font-weight: bold; min-width: 80px; color: #475569; }
+        .info-value { color: #0f172a; }
+        .license-item { margin-bottom: 10px; font-size: 0.9rem; display: flex; }
+        .license-date { font-family: 'Inter', sans-serif; font-weight: 700; color: #64748b; min-width: 65px; }
+        .license-name { color: #0f172a; }
 
-        .profile-image-side { flex: 1; height: 80vh; display: flex; justify-content: flex-end; }
-        .profile-img { width: 100%; height: 100%; border-radius: 0; border: none; object-fit: cover; box-shadow: -10px 0 30px rgba(15, 23, 42, 0.05); }
+        .back-btn { display: inline-block; margin-top: 40px; color: #0f172a; font-weight: bold; text-decoration: none; transition: opacity 0.2s; }
+        .back-btn:hover { opacity: 0.7; }
 
-        /* 共通フッター（中央揃えに変更） */
         footer { 
             padding: 30px 40px; text-align: center; 
             font-size: 0.75rem; color: #64748b; letter-spacing: 0.1em; 
@@ -73,20 +72,13 @@
         @media (max-width: 768px) {
             header { padding: 25px 20px; }
             .menu-toggle { display: flex; }
-            
             .nav-links {
-                display: none;
-                flex-direction: column; gap: 20px; position: absolute;
+                display: none; flex-direction: column; gap: 20px; position: absolute;
                 top: 80px; left: 0; width: 100%; background-color: #e0f2fe;
                 padding: 20px 0; text-align: center; box-shadow: 0 10px 15px rgba(0,0,0,0.05);
             }
             .nav-links.active { display: flex; }
-
-            .main-layout { flex-direction: column-reverse; }
-            .profile-text-side { text-align: center; padding: 40px 20px; }
-            .profile-text-side h1 { font-size: 2.5rem; }
-            .sns-links { justify-content: center; }
-            .profile-image-side { width: 100%; height: 45vh; }
+            .content { padding: 25px 20px; }
         }
     </style>
 </head>
@@ -104,19 +96,36 @@
         </nav>
     </header>
 
-    <main class="main-layout">
-        <div class="profile-text-side">
-            <h1>39rage</h1>
-            <p class="description">MIX / 動画編集 / デザイン / HP制作とか勉強中</p>
-            <div class="sns-links">
-                <a href="https://x.com/39rage" class="sns-link" target="_blank" rel="noopener noreferrer">ⓧ</a>
-                <a href="https://www.instagram.com/39rage" class="sns-link" target="_blank" rel="noopener noreferrer">ⓘ</a>
+    <div class="container">
+        <h1>ABOUT</h1>
+        
+        <div class="content">
+            <div class="history">
+                2020年4月に「Sacra」名義で歌ってみたの活動を、同年11月には「Qurage」名義でBGM制作を開始。<br>
+                2024年4月より「さくらげ」としてこれまでの活動で培った経験を活かして様々なことに挑戦中！
+            </div>
+
+            <h2>🪼 Profile 🪼</h2>
+            <ul class="info-list">
+                <li><span class="info-label">誕生日</span><span class="info-value">9月16日</span></li>
+                <li><span class="info-label">出身地</span><span class="info-value">関西</span></li>
+                <li><span class="info-label">趣味</span><span class="info-value">ヲタ活 (Vtuber・アニメ・アイドルetc...)</span></li>
+                <li><span class="info-label">特技</span><span class="info-value">書道 (師範になりました)</span></li>
+            </ul>
+
+            <h2>🪼 Qualifications 🪼</h2>
+            <div class="license-list">
+                <div class="license-item"><span class="license-date">18 / 03</span><span class="license-name">3級音響技術者資格</span></div>
+                <div class="license-item"><span class="license-date">20 / 09</span><span class="license-name">普通自動車免許（マニュアル）</span></div>
+                <div class="license-item"><span class="license-date">21 / 01</span><span class="license-name">Microsoft Office Specialist Excel 365&2019</span></div>
+                <div class="license-item"><span class="license-date">21 / 01</span><span class="license-name">Microsoft Office Specialist PowerPoint 365&2019</span></div>
+                <div class="license-item"><span class="license-date">21 / 01</span><span class="license-name">Microsoft Office Specialist Word 365&2019</span></div>
+                <div class="license-item"><span class="license-date">21 / 07</span><span class="license-name">映像音響処理技術者資格</span></div>
             </div>
         </div>
-        <div class="profile-image-side">
-            <img src="https://64.media.tumblr.com/3798e5568544434743b7bc635c4b539a/tumblr_pd6q45nJAl1xci1k0o1_1280.png" alt="39rage" class="profile-img">
-        </div>
-    </main>
+        
+        <a href="index.html" class="back-btn">← TOPに戻る</a>
+    </div>
 
     <footer>
         © 39rage. Powered by GitHub Pages.
