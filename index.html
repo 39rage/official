@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>39Rage - Portfolio</title>
+    <!-- フォントの読み込み -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* 全体のデザイン設定 */
         body {
             margin: 0;
             padding: 0;
-            background-color: #0d0d0d; /* 深みのある黒 */
-            color: #ffffff;
+            background-color: #e0f2fe; /* 爽やかな水色（ライトブルー） */
+            color: #0f172a; /* 深みのある紺色（ネイビー） */
             font-family: 'Inter', 'Noto Sans JP', sans-serif;
             line-height: 1.6;
             display: flex;
@@ -27,15 +28,15 @@
             text-align: center;
         }
 
-        /* アイコン画像（教えてもらったURLに差し替え済み） */
+        /* アイコン画像 */
         .profile-img {
             width: 130px;
             height: 130px;
             border-radius: 50%; /* 丸く切り抜き */
             object-fit: cover;
             margin-bottom: 25px;
-            border: 3px solid #1a1a1a;
-            box-shadow: 0 0 20px rgba(0, 195, 255, 0.2); /* ほんのり青く光らせる */
+            border: 3px solid #0f172a; /* 枠線を紺色に */
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.15); /* 軽い影で立体感をプラス */
         }
 
         h1 {
@@ -46,7 +47,7 @@
         }
 
         p.description {
-            color: #a0a0a0;
+            color: #475569; /* 少しマイルドな紺灰色で読みやすく */
             font-size: 0.95rem;
             margin-bottom: 45px;
             letter-spacing: 0.05em;
@@ -62,19 +63,19 @@
         .link-btn {
             display: block;
             padding: 16px;
-            background-color: #161616;
-            color: #fff;
+            background-color: #0f172a; /* ボタンの背景を紺色に */
+            color: #ffffff; /* ボタンの文字を白に */
             text-decoration: none;
             border-radius: 12px;
-            border: 1px solid #333;
+            border: 1px solid #0f172a;
             font-weight: 700;
             transition: all 0.3s ease;
         }
 
-        /* ホバー時の動き（iPad/Androidでも反応します） */
+        /* ホバー（タップ）時の動き */
         .link-btn:hover {
-            background-color: #ffffff;
-            color: #000;
+            background-color: #ffffff; /* 背景が白に反転 */
+            color: #0f172a; /* 文字が紺色に反転 */
             transform: translateY(-2px);
         }
 
@@ -82,12 +83,12 @@
         .media-section {
             margin-top: 60px;
             padding-top: 40px;
-            border-top: 1px solid #222;
+            border-top: 1px solid rgba(15, 23, 42, 0.1); /* 薄い紺色の区切り線 */
         }
 
         .media-section h3 {
             font-size: 1.1rem;
-            color: #444;
+            color: #475569;
             letter-spacing: 0.2em;
             text-transform: uppercase;
         }
@@ -96,7 +97,7 @@
             margin-top: auto;
             padding: 50px 0;
             font-size: 0.75rem;
-            color: #444;
+            color: #64748b;
             letter-spacing: 0.1em;
         }
     </style>
@@ -104,9 +105,28 @@
 <body>
 
     <div class="container">
+        <!-- プロフィール画像 -->
         <img src="https://64.media.tumblr.com/3798e5568544434743b7bc635c4b539a/tumblr_pd6q45nJAl1xci1k0o1_1280.png" alt="39Rage" class="profile-img">
         
         <h1>39Rage</h1>
         <p class="description">Creating something special.</p>
 
         <div class="links">
+            <a href="#" class="link-btn">X (Twitter)</a>
+            <a href="#" class="link-btn">Instagram</a>
+            <a href="#" class="link-btn">YouTube</a>
+        </div>
+
+        <!-- 将来的に動画や音声を載せる場所 -->
+        <div class="media-section">
+            <h3>Media Archive</h3>
+            <p style="font-size: 0.8rem; color: #64748b;">Ready for Video & Audio contents</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 39Rage. Powered by GitHub Pages.
+    </div>
+
+</body>
+</html>
