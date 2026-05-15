@@ -13,7 +13,7 @@
             min-height: 100vh; display: flex; flex-direction: column;
         }
 
-        /* 共通ヘッダー構造 */
+        /* 共通ヘッダー */
         header {
             width: 100%; max-width: 1400px;
             margin: 0 auto; padding: 30px 40px;
@@ -22,7 +22,7 @@
             z-index: 100; position: relative;
         }
 
-        /* 左上のロゴ（見出し） */
+        /* 左上の強調ロゴ */
         .header-logo {
             color: #0f172a; text-decoration: none;
             font-size: 1.6rem; font-weight: 700;
@@ -44,7 +44,7 @@
         }
         .nav-btn:hover::after { transform: scaleX(1); transform-origin: bottom left; }
 
-        /* 三本線ボタン（初期状態は隠す） */
+        /* 三本線ボタン */
         .menu-toggle {
             display: none; flex-direction: column; gap: 6px;
             background: none; border: none; cursor: pointer; padding: 0;
@@ -59,51 +59,55 @@
         .profile-text-side { flex: 1; padding: 0 8% 60px 8%; text-align: left; }
         .profile-text-side h1 { font-size: 3.5rem; letter-spacing: 0.05em; margin: 0 0 15px 0; font-weight: 700; }
         .profile-text-side .description { color: #475569; font-size: 1.05rem; margin: 0 0 40px 0; letter-spacing: 0.05em; font-weight: 500; line-height: 1.8; }
+        
+        /* SNSリンク */
         .sns-links { display: flex; gap: 25px; }
         .sns-link { color: #0f172a; text-decoration: none; font-size: 1.8rem; font-weight: 400; transition: opacity 0.2s; line-height: 1; }
         .sns-link:hover { opacity: 0.6; }
 
+        /* 右側大画面画像 */
         .profile-image-side { flex: 1; height: 80vh; display: flex; justify-content: flex-end; }
         .profile-img { width: 100%; height: 100%; border-radius: 0; border: none; object-fit: cover; box-shadow: -10px 0 30px rgba(15, 23, 42, 0.05); }
 
-        footer { padding: 30px 40px; text-align: left; padding-left: 8%; font-size: 0.75rem; color: #64748b; letter-spacing: 0.1em; }
+        /* 中央揃えフッター */
+        footer { 
+            padding: 30px 40px; text-align: center; 
+            font-size: 0.75rem; color: #64748b; letter-spacing: 0.1em; 
+        }
 
-        /* 📱 スマホサイズ（ハンバーガーメニュー化） */
+        /* スマホ対応表示 */
         @media (max-width: 768px) {
             header { padding: 25px 20px; }
-            .menu-toggle { display: flex; } /* 三本線を表示 */
+            .menu-toggle { display: flex; }
             
             .nav-links {
-                display: none; /* 通常時は閉じる */
+                display: none;
                 flex-direction: column; gap: 20px; position: absolute;
                 top: 80px; left: 0; width: 100%; background-color: #e0f2fe;
                 padding: 20px 0; text-align: center; box-shadow: 0 10px 15px rgba(0,0,0,0.05);
             }
-            .nav-links.active { display: flex; } /* ボタンを押したら展開 */
+            .nav-links.active { display: flex; }
 
             .main-layout { flex-direction: column-reverse; }
             .profile-text-side { text-align: center; padding: 40px 20px; }
             .profile-text-side h1 { font-size: 2.5rem; }
             .sns-links { justify-content: center; }
             .profile-image-side { width: 100%; height: 45vh; }
-            footer { text-align: center; padding-left: 40px; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <!-- 左上のロゴ見出し -->
+        <!-- 左上のロゴ（見出し） -->
         <a href="index.html" class="header-logo">39rage</a>
         
-        <!-- 三本線ボタン -->
+        <!-- スマホ用三本線ボタン -->
         <button class="menu-toggle" id="menuToggle">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
         </button>
 
-        <!-- メニューバー -->
+        <!-- 右上のメニューバー -->
         <nav class="nav-links" id="navLinks">
             <a href="about.html" class="nav-btn">ABOUT</a>
             <a href="works.html" class="nav-btn">WORKS</a>
@@ -129,13 +133,10 @@
         © 39rage. Powered by GitHub Pages.
     </footer>
 
-    <!-- 三本線メニューを動かす仕組み -->
     <script>
         const menuToggle = document.getElementById('menuToggle');
         const navLinks = document.getElementById('navLinks');
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
+        menuToggle.addEventListener('click', () => { navLinks.classList.toggle('active'); });
     </script>
 </body>
 </html>
