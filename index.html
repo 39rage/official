@@ -4,214 +4,138 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>39rage - Portfolio</title>
-    <!-- フォントの読み込み -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* 全体のデザイン設定 */
         body {
-            margin: 0;
-            padding: 0;
-            background-color: #e0f2fe; /* 爽やかな水色 */
-            color: #0f172a; /* 深みのある紺色 */
+            margin: 0; padding: 0;
+            background-color: #e0f2fe; color: #0f172a;
             font-family: 'Inter', 'Noto Sans JP', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            min-height: 100vh; display: flex; flex-direction: column;
         }
 
-        /* 画面上部のヘッター（メニューを右上に配置） */
+        /* 共通ヘッダー構造 */
         header {
-            width: 100%;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 30px 40px;
+            width: 100%; max-width: 1400px;
+            margin: 0 auto; padding: 30px 40px;
             box-sizing: border-box;
-            display: flex;
-            justify-content: flex-end;
-            z-index: 10; /* 画像より手前に表示 */
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 100; position: relative;
         }
 
-        /* メニューのリンク */
-        .nav-links {
-            display: flex;
-            gap: 30px;
+        /* 左上のロゴ（見出し） */
+        .header-logo {
+            color: #0f172a; text-decoration: none;
+            font-size: 1.6rem; font-weight: 700;
+            letter-spacing: 0.05em; transition: opacity 0.2s;
         }
+        .header-logo:hover { opacity: 0.7; }
 
+        /* 右上のメニュー */
+        .nav-links { display: flex; gap: 30px; }
         .nav-btn {
-            color: #0f172a;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.95rem;
-            letter-spacing: 0.1em;
-            position: relative;
-            padding-bottom: 4px;
+            color: #0f172a; text-decoration: none; font-weight: 700;
+            font-size: 0.95rem; letter-spacing: 0.1em;
+            position: relative; padding-bottom: 4px;
         }
-
-        /* メニューのホバー線効果 */
         .nav-btn::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            transform: scaleX(0);
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background-color: #0f172a;
-            transform-origin: bottom right;
-            transition: transform 0.25s ease-out;
+            content: ''; position: absolute; width: 100%; transform: scaleX(0);
+            height: 2px; bottom: 0; left: 0; background-color: #0f172a;
+            transform-origin: bottom right; transition: transform 0.25s ease-out;
         }
-        .nav-btn:hover::after {
-            transform: scaleX(1);
-            transform-origin: bottom left;
+        .nav-btn:hover::after { transform: scaleX(1); transform-origin: bottom left; }
+
+        /* 三本線ボタン（初期状態は隠す） */
+        .menu-toggle {
+            display: none; flex-direction: column; gap: 6px;
+            background: none; border: none; cursor: pointer; padding: 0;
+        }
+        .menu-toggle span {
+            display: block; width: 25px; height: 3px; background-color: #0f172a;
+            transition: all 0.3s ease;
         }
 
-        /* メインコンテンツエリア（左右に100%割り振り） */
-        .main-layout {
-            flex: 1;
-            display: flex;
-            width: 100%;
-            align-items: center;
-            justify-content: space-between;
-            box-sizing: border-box;
-        }
+        /* メインレイアウト */
+        .main-layout { flex: 1; display: flex; width: 100%; align-items: center; justify-content: space-between; box-sizing: border-box; }
+        .profile-text-side { flex: 1; padding: 0 8% 60px 8%; text-align: left; }
+        .profile-text-side h1 { font-size: 3.5rem; letter-spacing: 0.05em; margin: 0 0 15px 0; font-weight: 700; }
+        .profile-text-side .description { color: #475569; font-size: 1.05rem; margin: 0 0 40px 0; letter-spacing: 0.05em; font-weight: 500; line-height: 1.8; }
+        .sns-links { display: flex; gap: 25px; }
+        .sns-link { color: #0f172a; text-decoration: none; font-size: 1.8rem; font-weight: 400; transition: opacity 0.2s; line-height: 1; }
+        .sns-link:hover { opacity: 0.6; }
 
-        /* 左側：テキストエリア（幅を均等に50%確保） */
-        .profile-text-side {
-            flex: 1;
-            padding: 0 8% 60px 8%; /* 左右に程よい余白 */
-            text-align: left;
-        }
+        .profile-image-side { flex: 1; height: 80vh; display: flex; justify-content: flex-end; }
+        .profile-img { width: 100%; height: 100%; border-radius: 0; border: none; object-fit: cover; box-shadow: -10px 0 30px rgba(15, 23, 42, 0.05); }
 
-        .profile-text-side h1 {
-            font-size: 3.5rem;
-            letter-spacing: 0.05em;
-            margin: 0 0 15px 0;
-            font-weight: 700;
-        }
+        footer { padding: 30px 40px; text-align: left; padding-left: 8%; font-size: 0.75rem; color: #64748b; letter-spacing: 0.1em; }
 
-        .profile-text-side .description {
-            color: #475569;
-            font-size: 1.05rem;
-            margin: 0 0 40px 0;
-            letter-spacing: 0.05em;
-            font-weight: 500;
-            line-height: 1.8;
-        }
-
-        /* SNSリンクの並び */
-        .sns-links {
-            display: flex;
-            gap: 25px;
-        }
-
-        .sns-link {
-            color: #0f172a;
-            text-decoration: none;
-            font-size: 1.8rem; /* 記号が見えやすいように少し大きめに */
-            font-weight: 400;
-            transition: opacity 0.2s;
-            line-height: 1;
-        }
-
-        .sns-link:hover {
-            opacity: 0.6;
-        }
-
-        /* 右側：画像エリア（右半分を完全に支配） */
-        .profile-image-side {
-            flex: 1;
-            height: 80vh; /* 画面の高さ80%分を贅沢に使う */
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        /* ★角丸なし・縁なし・右側いっぱいに大きく表示 */
-        .profile-img {
-            width: 100%;
-            height: 100%;
-            border-radius: 0; /* 角丸なし */
-            border: none; /* 縁なし */
-            object-fit: cover; /* 縦横比を保ったままエリアを完全に埋める */
-            box-shadow: -10px 0 30px rgba(15, 23, 42, 0.05); /* 左側にうっすら影を落としてテキストと境界を作る */
-        }
-
-        /* フッター */
-        footer {
-            padding: 30px 40px;
-            text-align: left;
-            padding-left: 8%;
-            font-size: 0.75rem;
-            color: #64748b;
-            letter-spacing: 0.1em;
-        }
-
-        /* 📱 スマホ・縦向きタブレット（画面が狭い時）の調整 */
+        /* 📱 スマホサイズ（ハンバーガーメニュー化） */
         @media (max-width: 768px) {
-            header {
-                justify-content: center;
-                padding: 25px 20px;
+            header { padding: 25px 20px; }
+            .menu-toggle { display: flex; } /* 三本線を表示 */
+            
+            .nav-links {
+                display: none; /* 通常時は閉じる */
+                flex-direction: column; gap: 20px; position: absolute;
+                top: 80px; left: 0; width: 100%; background-color: #e0f2fe;
+                padding: 20px 0; text-align: center; box-shadow: 0 10px 15px rgba(0,0,0,0.05);
             }
-            .main-layout {
-                flex-direction: column-reverse; /* 画像上、テキスト下 */
-            }
-            .profile-text-side {
-                text-align: center;
-                padding: 40px 20px 40px 20px;
-            }
-            .profile-text-side h1 {
-                font-size: 2.5rem;
-            }
-            .sns-links {
-                justify-content: center;
-            }
-            .profile-image-side {
-                width: 100%;
-                height: 45vh; /* スマホの時は上部45%を画像にする */
-            }
-            footer {
-                text-align: center;
-                padding-left: 40px;
-            }
+            .nav-links.active { display: flex; } /* ボタンを押したら展開 */
+
+            .main-layout { flex-direction: column-reverse; }
+            .profile-text-side { text-align: center; padding: 40px 20px; }
+            .profile-text-side h1 { font-size: 2.5rem; }
+            .sns-links { justify-content: center; }
+            .profile-image-side { width: 100%; height: 45vh; }
+            footer { text-align: center; padding-left: 40px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 右上のメニューバー -->
     <header>
-        <nav class="nav-links">
+        <!-- 左上のロゴ見出し -->
+        <a href="index.html" class="header-logo">39rage</a>
+        
+        <!-- 三本線ボタン -->
+        <button class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <!-- メニューバー -->
+        <nav class="nav-links" id="navLinks">
             <a href="about.html" class="nav-btn">ABOUT</a>
             <a href="works.html" class="nav-btn">WORKS</a>
             <a href="request.html" class="nav-btn">REQUEST</a>
         </nav>
     </header>
 
-    <!-- メインの左右レイアウト -->
     <main class="main-layout">
-        
-        <!-- 左側：お名前と説明文、SNS -->
         <div class="profile-text-side">
             <h1>39rage</h1>
             <p class="description">MIX / 動画編集 / デザイン / HP制作とか勉強中</p>
-            
             <div class="sns-links">
-                <!-- 新規タブで開く設定（target="_blank"）と実際のURLを反映 -->
                 <a href="https://x.com/39rage" class="sns-link" target="_blank" rel="noopener noreferrer">ⓧ</a>
                 <a href="https://www.instagram.com/39rage" class="sns-link" target="_blank" rel="noopener noreferrer">ⓘ</a>
             </div>
         </div>
-
-        <!-- 右側：大画面の画像エリア -->
         <div class="profile-image-side">
             <img src="https://64.media.tumblr.com/3798e5568544434743b7bc635c4b539a/tumblr_pd6q45nJAl1xci1k0o1_1280.png" alt="39rage" class="profile-img">
         </div>
-
     </main>
 
-    <!-- フッター -->
     <footer>
         © 39rage. Powered by GitHub Pages.
     </footer>
 
+    <!-- 三本線メニューを動かす仕組み -->
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    </script>
 </body>
 </html>
