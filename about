@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABOUT - 39rage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0; padding: 0;
+            background-color: #e0f2fe; color: #0f172a;
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            display: flex; flex-direction: column; align-items: center; min-height: 100vh;
+        }
+        .container { width: 90%; max-width: 600px; padding: 60px 0; text-align: center; }
+        h1 { font-size: 2rem; margin-bottom: 30px; letter-spacing: 0.1em; }
+        .content { background: #ffffff; padding: 30px; border-radius: 12px; text-align: left; box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05); }
+        .back-btn { display: inline-block; margin-top: 40px; color: #0f172a; font-weight: bold; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ABOUT</h1>
+        <div class="content">
+            <p>ここにプロフィールや自己紹介の文章を書いていきます。</p>
+        </div>
+        <a href="index.html" class="back-btn">← TOPに戻る</a>
+    </div>
+</body>
+</html>
