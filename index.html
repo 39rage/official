@@ -125,11 +125,12 @@
             justify-content: center; /* 中央寄せ */
         }
 
+        /* ★アイコンを正方形＆範囲内フィットに変更 */
         .profile-img {
             width: 320px;
             height: 320px;
-            border-radius: 50%;
-            object-fit: cover;
+            border-radius: 16px; /* 角をほんのり丸くしてお洒落に */
+            object-fit: cover; /* 縦横比を崩さずに範囲いっぱいに広げるおまじない */
             border: 4px solid #0f172a;
             box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
         }
@@ -164,9 +165,10 @@
             .sns-links {
                 justify-content: center;
             }
+            /* スマホの時の画像サイズ */
             .profile-img {
-                width: 200px;
-                height: 200px;
+                width: 240px;
+                height: 240px;
             }
         }
     </style>
@@ -191,14 +193,13 @@
             <p class="description">MIX / 動画編集 / デザイン / HP制作とか勉強中</p>
             
             <div class="sns-links">
-                <!-- href="#" の部分を将来URLに変えられます -->
                 <a href="#" class="sns-link" target="_blank">X (Twitter)</a>
                 <a href="#" class="sns-link" target="_blank">Instagram</a>
                 <a href="#" class="sns-link" target="_blank">YouTube</a>
             </div>
         </div>
 
-        <!-- 右側：大きなアイコン画像 -->
+        <!-- 右側：正方形のアイコン画像 -->
         <div class="profile-image-side">
             <img src="https://64.media.tumblr.com/3798e5568544434743b7bc635c4b539a/tumblr_pd6q45nJAl1xci1k0o1_1280.png" alt="39rage" class="profile-img">
         </div>
