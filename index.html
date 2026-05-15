@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>39Rage - Portfolio</title>
-    <!-- お洒落なフォントの読み込み -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* 全体のデザイン設定 */
         body {
             margin: 0;
             padding: 0;
-            background-color: #0d0d0d; /* Carrdに近い暗い背景 */
+            background-color: #0d0d0d; /* 深みのある黒 */
             color: #ffffff;
             font-family: 'Inter', 'Noto Sans JP', sans-serif;
             line-height: 1.6;
@@ -28,111 +27,86 @@
             text-align: center;
         }
 
-        /* プロフィール画像 */
+        /* アイコン画像（教えてもらったURLに差し替え済み） */
         .profile-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%; /* 丸く切り抜き */
             object-fit: cover;
-            margin-bottom: 20px;
-            border: 2px solid #333;
+            margin-bottom: 25px;
+            border: 3px solid #1a1a1a;
+            box-shadow: 0 0 20px rgba(0, 195, 255, 0.2); /* ほんのり青く光らせる */
         }
 
         h1 {
-            font-size: 2rem;
-            letter-spacing: 0.1em;
-            margin-bottom: 10px;
+            font-size: 2.2rem;
+            letter-spacing: 0.15em;
+            margin-bottom: 8px;
+            font-weight: 700;
         }
 
         p.description {
-            color: #888;
-            font-size: 0.9rem;
-            margin-bottom: 40px;
+            color: #a0a0a0;
+            font-size: 0.95rem;
+            margin-bottom: 45px;
+            letter-spacing: 0.05em;
         }
 
-        /* リンクボタン */
+        /* リンクボタンのエリア */
         .links {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 16px;
         }
 
         .link-btn {
             display: block;
-            padding: 15px;
-            background-color: #1a1a1a;
+            padding: 16px;
+            background-color: #161616;
             color: #fff;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 12px;
             border: 1px solid #333;
+            font-weight: 700;
             transition: all 0.3s ease;
         }
 
+        /* ホバー時の動き（iPad/Androidでも反応します） */
         .link-btn:hover {
             background-color: #ffffff;
             color: #000;
+            transform: translateY(-2px);
         }
 
-        /* 将来用のメディアセクション */
+        /* 将来のメディア（動画・音声）セクション */
         .media-section {
-            margin-top: 50px;
-            padding-top: 50px;
+            margin-top: 60px;
+            padding-top: 40px;
             border-top: 1px solid #222;
         }
 
-        video, audio {
-            width: 100%;
-            margin-top: 20px;
-            border-radius: 8px;
+        .media-section h3 {
+            font-size: 1.1rem;
+            color: #444;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
         }
 
         .footer {
             margin-top: auto;
-            padding: 40px 0;
-            font-size: 0.7rem;
+            padding: 50px 0;
+            font-size: 0.75rem;
             color: #444;
+            letter-spacing: 0.1em;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- プロフィール画像（ファイルをアップしたら差し替え） -->
-        <img src="https://via.placeholder.com/150" alt="39Rage" class="profile-img">
+        <img src="https://64.media.tumblr.com/3798e5568544434743b7bc635c4b539a/tumblr_pd6q45nJAl1xci1k0o1_1280.png" alt="39Rage" class="profile-img">
         
         <h1>39Rage</h1>
         <p class="description">Creating something special.</p>
 
         <div class="links">
-            <a href="#" class="link-btn">X (Twitter)</a>
-            <a href="#" class="link-btn">Instagram</a>
-            <a href="#" class="link-btn">YouTube</a>
-        </div>
-
-        <!-- 将来的に動画や音声を載せる場所 -->
-        <div class="media-section">
-            <h3>Future Content</h3>
-            <p style="font-size: 0.8rem; color: #666;">動画や音声はここに埋め込めます</p>
-            
-            <!-- 動画の例（コメントアウトを外すと動きます）
-            <video controls>
-                <source src="your-video.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video> 
-            -->
-
-            <!-- 音声の例（コメントアウトを外すと動きます）
-            <audio controls>
-                <source src="your-audio.mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio> 
-            -->
-        </div>
-    </div>
-
-    <div class="footer">
-        © 39Rage. Built with AI & GitHub.
-    </div>
-
-</body>
-</html>
