@@ -77,10 +77,13 @@
             display: inline-flex; align-items: center; justify-content: center;
             background-color: #2563eb; color: #ffffff !important;
             text-decoration: none; font-weight: 700; font-size: 0.9rem;
-            padding: 12px 24px; border-radius: 8px; margin: 15px 0;
+            padding: 12px 24px; border-radius: 8px; margin: 10px 0;
             box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2); transition: all 0.2s ease;
         }
         .btn-blue:hover { background-color: #1d4ed8; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3); }
+
+        /* ボタンを綺麗に左並びにするための枠 */
+        .btn-group { display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0; align-items: flex-start; }
 
         /* —— 区切り線（上下段の間） */
         .section-divider { border: none; height: 1px; background: #e2e8f0; margin: 40px 0; position: relative; }
@@ -94,7 +97,7 @@
             font-size: 1.3rem; color: #0f172a; font-weight: 700;
             margin-top: 40px; margin-bottom: 20px;
             display: flex; align-items: center; gap: 10px;
-            scroll-margin-top: 100px; /* 目次から飛んだ時の余白 */
+            scroll-margin-top: 100px;
         }
         .section-desc { line-height: 1.8; font-size: 0.95rem; color: #334155; margin-bottom: 20px; }
         .sub-info { font-size: 0.85rem; color: #64748b; margin-top: 5px; margin-bottom: 15px; font-weight: bold; }
@@ -106,7 +109,7 @@
 
         /* 🎥 YouTube埋め込みレスポンシブ設定 */
         .video-container {
-            position: relative; width: 100%; padding-top: 56.25%; /* 16:9 比率 */
+            position: relative; width: 100%; padding-top: 56.25%;
             margin-top: 15px; margin-bottom: 15px; border-radius: 12px; overflow: hidden;
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
@@ -129,7 +132,7 @@
             }
             .nav-links.active { display: flex; }
             .content { padding: 25px 20px; }
-            .hp-list { grid-template-columns: 1fr; } /* スマホでは1列に */
+            .hp-list { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -169,8 +172,10 @@
             </div>
 
             <p class="intro-text">ご相談・ご依頼はぜひX（旧Twitter）まで</p>
-            <!-- 🟦 Xリンクをボタン化 -->
-            <a href="https://x.com/39rage" class="btn-blue" target="_blank" rel="noopener noreferrer">X（旧Twitter）はこちら</a>
+            <!-- 🟦 Xリンク修正：「はこちら」を削除 -->
+            <div class="btn-group">
+                <a href="https://x.com/39rage" class="btn-blue" target="_blank" rel="noopener noreferrer">X（旧Twitter）</a>
+            </div>
 
             <!-- —— 上下段の間にある線は「区切り線」に -->
             <div class="section-divider"></div>
@@ -207,8 +212,10 @@
                 別名義でBGM作ってるので今公開してる分をご紹介することも可能ですし、時間はかかりますがお作りすることも可能です。<br>
                 もし可能であれば別名義の方に直接ご連絡いただければたいへん助かります。
             </p>
-            <!-- 🟦 Boothリンクをボタン化 -->
-            <a href="https://casbgcasbg.booth.pm/" class="btn-blue" target="_blank" rel="noopener noreferrer">Qurage Music (BOOTH)</a>
+            <!-- 🟦 Boothリンク -->
+            <div class="btn-group">
+                <a href="https://casbgcasbg.booth.pm/" class="btn-blue" target="_blank" rel="noopener noreferrer">Qurage Music (BOOTH)</a>
+            </div>
 
             <!-- デザイン -->
             <h2 class="section-title" id="design">🪼 デザイン</h2>
@@ -232,7 +239,7 @@
                 また、HPではなくプロフィールやリンクをまとめるサイトもいくつか知ってるので相談のれます。
             </p>
             
-            <!-- 制作経験のあるシステム一覧（グリッドで見やすく配置） -->
+            <!-- 制作経験のあるシステム一覧 -->
             <ul class="hp-list">
                 <li>Ameba Ownd</li>
                 <li>Canva</li>
@@ -249,10 +256,11 @@
             </ul>
 
             <p class="sub-info">（参考）Qurage Musicの公式サイトと歌ってみた活動時にcarrdで作ったサイト</p>
-            <div style="display: flex; flex-direction: column; gap: 5px;">
-                <!-- 🟦 AmebaOwndとCarrdのリンクをボタン化 -->
+            
+            <!-- 🟦 ホームページの2つのボタン：横長を解消し、他のボタンと同じサイズで横並び・左詰めに配置 -->
+            <div class="btn-group">
                 <a href="https://casbgcasbg.amebaownd.com/" class="btn-blue" target="_blank" rel="noopener noreferrer">Qurage Music 公式サイト</a>
-                <a href="https://3939-sacra.carrd.co/" class="btn-blue" target="_blank" rel="noopener noreferrer">SACRA'S CARRD</a>
+                <a href="https://3939-sacra.carrd.co/" class="btn-blue" target="_blank" rel="noopener noreferrer">Sacra's Carrd</a>
             </div>
 
         </div>
