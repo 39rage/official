@@ -62,22 +62,17 @@
         /* 🪼 見出しスタイル（REQUESTページと統一化） */
         .section-title { 
             font-size: 1.3rem; color: #0f172a; font-weight: 700;
-            margin-top: 35px; margin-bottom: 20px;
+            margin-top: 45px; margin-bottom: 20px;
             display: flex; align-items: center; gap: 10px;
         }
         /* 最初の見出しの上の余白を少し詰める */
         .content > .section-title:first-of-type { margin-top: 10px; }
 
-        /* プロフィールテーブル */
+        /* テーブル共通スタイル（プロフィール・資格共通） */
         .profile-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        .profile-table th, .profile-table td { padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 0.95rem; }
+        .profile-table th, .profile-table td { padding: 14px 0; border-bottom: 1px solid #f1f5f9; font-size: 0.95rem; }
         .profile-table th { width: 30%; text-align: left; color: #64748b; font-weight: 500; }
         .profile-table td { color: #0f172a; line-height: 1.6; }
-
-        /* 資格リスト */
-        .cert-list { list-style-type: none; padding-left: 0; margin: 0; }
-        .cert-list li { position: relative; padding-left: 20px; margin-bottom: 12px; font-size: 0.95rem; color: #0f172a; line-height: 1.6; }
-        .cert-list li::before { content: "・"; position: absolute; left: 0; color: #3b82f6; font-weight: bold; }
 
         .back-btn { display: inline-block; margin-top: 40px; color: #0f172a; font-weight: bold; text-decoration: none; transition: opacity 0.2s; }
         .back-btn:hover { opacity: 0.7; }
@@ -126,7 +121,7 @@
                 2024年4月より「さくらげ」としてこれまでの活動で培った経験を活かして様々なことに挑戦中！
             </p>
             
-            <!-- 🪼見出しに統一 -->
+            <!-- プロフィールセクション -->
             <h2 class="section-title">🪼 プロフィール</h2>
             <table class="profile-table">
                 <tr>
@@ -147,16 +142,38 @@
                 </tr>
             </table>
 
-            <!-- 🪼見出しに統一 -->
+            <!-- 取得資格セクション（プロフィールと同じテーブル形式に変更） -->
             <h2 class="section-title">🪼 取得資格</h2>
-            <ul class="cert-list">
-                <li>1803＿3級音響技術者資格</li>
-                <li>2009＿普通自動車免許（マニュアル）</li>
-                <li>2101＿Microsoft Office Specialist Excel 365&2019</li>
-                <li>2101＿Microsoft Office Specialist PowerPoint 365&2019</li>
-                <li>2101＿Microsoft Office Specialist Word 365&2019</li>
-                <li>2107＿映像音響処理技術者資格</li>
-            </ul>
+            <table class="profile-table">
+                <tr>
+                    <th>2018年03月</th>
+                    <td>3級音響技術者資格</td>
+                </tr>
+                <tr>
+                    <th>2020年09月</th>
+                    <td>普通自動車免許（マニュアル）</td>
+                </tr>
+                <tr>
+                    <th>2021年01月</th>
+                    <td>Microsoft Office Specialist Excel 365&2019</td>
+                </tr>
+                <tr>
+                    <th>2021年01月</th>
+                    <td>Microsoft Office Specialist PowerPoint 365&2019</td>
+                </tr>
+                <tr>
+                    <th>2021年01月</th>
+                    <td>Microsoft Office Specialist Word 365&2019</td>
+                </tr>
+                <tr>
+                    <th>2021年07月</th>
+                    <td>映像音響処理技術者資格</td>
+                </tr>
+                <tr>
+                    <th>2025年02月</th>
+                    <td>コミュニケーション検定 上級</td>
+                </tr>
+            </table>
 
         </div>
         
