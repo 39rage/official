@@ -3,174 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>39rage Portal</title>
+    <title>39rage - Portal</title>
+    <!-- ファビコン設定 -->
+    <link rel="icon" href="https://64.media.tumblr.com/3798e5568544434743b7bc635c4b539a/tumblr_pd6q45nJAl1xci1k0o1_1280.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
+            margin: 0; padding: 0;
+            background-color: #e0f2fe; color: #0f172a;
             font-family: 'Inter', 'Noto Sans JP', sans-serif;
-            background-color: #050b14;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
         }
 
-        /* タイトルエリア */
-        .title-area {
-            text-align: center;
-            padding: 40px 20px;
-            background: linear-gradient(to bottom, #050b14, transparent);
-            position: absolute;
-            top: 0; left: 0; width: 100%;
-            z-index: 10;
-        }
-        .title-area h1 {
-            color: #ffffff;
-            font-size: 1.8rem;
-            letter-spacing: 0.2em;
-            text-shadow: 0 0 10px rgba(255,255,255,0.5);
-        }
-        .title-area p {
-            color: #64748b;
-            font-size: 0.85rem;
-            margin-top: 5px;
-            letter-spacing: 0.1em;
+        .container {
+            width: 90%; max-width: 900px; margin: 0 auto;
+            padding: 40px 0; text-align: center;
         }
 
-        /* セレクトコンテナ（3分割） */
-        .select-container {
-            flex: 1;
-            display: flex;
-            width: 100%;
-            height: 100%;
+        h1 {
+            font-size: 2.2rem; margin-bottom: 50px; letter-spacing: 0.1em; font-weight: 700;
         }
 
-        /* 各名義の共通スタイル */
-        .panel {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-decoration: none;
-            position: relative;
-            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-            overflow: hidden;
-            padding: 20px;
+        /* 3択の選択肢を横並びにするコンテナ */
+        .portal-grid {
+            display: flex; justify-content: center; align-items: flex-start;
+            gap: 40px; flex-wrap: wrap; margin-bottom: 50px;
         }
 
-        /* ホバーしたパネルを広げる（主人公選択感） */
-        .panel:hover {
-            flex: 1.4;
+        /* 選択肢それぞれのカードスタイル */
+        .portal-card {
+            display: flex; flex-direction: column; align-items: center;
+            text-decoration: none; color: #0f172a; width: 220px;
+            transition: transform 0.25s ease, opacity 0.2s;
         }
 
-        /* 背景の薄いオーバーレイ */
-        .panel::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.4);
-            transition: background 0.3s;
-            z-index: 1;
-        }
-        .panel:hover::before {
-            background: rgba(0, 0, 0, 0.1);
+        /* アイコン画像のスタイル（正円・影・枠線） */
+        .portal-avatar {
+            width: 150px; height: 150px; border-radius: 50%;
+            object-fit: cover; background-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.1);
+            border: 4px solid #ffffff; transition: box-shadow 0.25s ease;
         }
 
-        .panel-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        .panel:hover .panel-content {
-            transform: scale(1.05);
-        }
-
-        .name {
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            margin-bottom: 10px;
-            color: #ffffff;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        }
-        .desc {
-            font-size: 0.9rem;
-            color: #cbd5e1;
+        /* 名義のテキストスタイル */
+        .portal-name {
+            margin-top: 18px; font-size: 1.2rem; font-weight: 700;
             letter-spacing: 0.05em;
         }
 
-        /* ーーー 各パネルの個別デザイン ーーー */
-
-        /* 1. さくらげ（爽やかブルー） */
-        .panel.sakurage {
-            background: linear-gradient(135deg, #0284c7, #e0f2fe);
+        /* 各名義の簡単な説明（世界観の補足） */
+        .portal-desc {
+            margin-top: 6px; font-size: 0.8rem; color: #64748b;
+            line-height: 1.4;
         }
-        .panel.sakurage .name { color: #0f172a; text-shadow: none; }
-        .panel.sakurage .desc { color: #334155; }
 
-        /* 2. くらげ（深海ダークブルー） */
-        .panel.qurage {
-            background: linear-gradient(135deg, #0f172a, #1e1b4b);
-            border-left: 1px solid rgba(255,255,255,0.1);
-            border-right: 1px solid rgba(255,255,255,0.1);
+        /* ホバー時の演出（少し浮き上がって影を強く） */
+        .portal-card:hover {
+            transform: translateY(-8px);
         }
-        .panel.qurage .name { color: #38bdf8; }
-
-        /* 3. さくら（過去名義・Carrdリンク） */
-        .panel.sakura {
-            background: linear-gradient(135deg, #4c0519, #fbcfe8);
+        .portal-card:hover .portal-avatar {
+            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.15);
         }
-        .panel.sakura .name { color: #fff; }
-        .panel.sakura .desc { color: #f1f5f9; }
 
-        /* スマホ対応（縦並びにする） */
+        /* 中央揃えフッター */
+        footer {
+            margin-top: auto; padding: 30px 40px; text-align: center;
+            font-size: 0.75rem; color: #64748b; letter-spacing: 0.1em;
+        }
+
+        /* スマホ表示対応 */
         @media (max-width: 768px) {
-            body { overflow: auto; height: auto; }
-            .title-area { position: relative; padding: 40px 20px 20px 20px; }
-            .select-container { flex-direction: column; height: 600px; }
-            .panel { border: none !important; }
-            .panel:hover { flex: 1; }
-            .name { font-size: 1.6rem; }
+            h1 { font-size: 1.8rem; margin-bottom: 40px; }
+            .portal-grid { gap: 30px; }
+            .portal-card { width: 180px; }
+            .portal-avatar { width: 120px; height: 120px; }
+            .portal-name { font-size: 1.1rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="title-area">
-        <h1>CHOOSE YOUR CHARACTER</h1>
-        <p>名義を選択して各コンテンツへ移動します</p>
-    </div>
-
-    <div class="select-container">
+    <div class="container">
+        <h1>39rage</h1>
         
-        <!-- さくらげパネル（新フォルダへリンク） -->
-        <a href="39rage/index.html" class="panel sakurage">
-            <div class="panel-content">
-                <div class="name">さくらげ</div>
-                <div class="desc">Vocaloid & Movie お手伝い</div>
-            </div>
-        </a>
+        <div class="portal-grid">
+            
+            <!-- ① Qurage （BGM）-->
+            <a href="https://casbgcasbg.booth.pm/" class="portal-card" target="_blank" rel="noopener noreferrer">
+                <img src="https://fromtheasia.com/wp-content/uploads/NCG292.jpg" alt="Qurage" class="portal-avatar">
+                <div class="portal-name">Qurage</div>
+                <div class="portal-desc">BGM制作 / Sound</div>
+            </a>
 
-        <!-- くらげパネル（次につくる新フォルダへリンク） -->
-        <a href="qurage/index.html" class="panel qurage">
-            <div class="panel-content">
-                <div class="name">Qurage</div>
-                <div class="desc">Free BGM & Track Maker</div>
-            </div>
-        </a>
+            <!-- ② 39rage （メインポートフォリオへの入り口）-->
+            <a href="about.html" class="portal-card">
+                <img src="https://64.media.tumblr.com/3798e5568544434743b7bc635c4b539a/tumblr_pd6q45nJAl1xci1k0o1_1280.png" alt="39rage" class="portal-avatar">
+                <div class="portal-name">39rage</div>
+                <div class="portal-desc">Portfolio Site</div>
+            </a>
 
-        <!-- さくらパネル（Carrdへの外部リンク） -->
-        <a href="https://3939-sacra.carrd.co/" class="panel sakura" target="_blank" rel="noopener noreferrer">
-            <div class="panel-content">
-                <div class="name">さくら</div>
-                <div class="desc">Past Works (Carrd) ↗</div>
-            </div>
-        </a>
+            <!-- ③ Sacra （歌ってみた）-->
+            <!-- ※現在はworks.htmlに飛びますが、必要に応じて変更可能です -->
+            <a href="works.html" class="portal-card">
+                <img src="https://fromtheasia.com/wp-content/uploads/NCG144.jpg" alt="Sacra" class="portal-avatar">
+                <div class="portal-name">Sacra</div>
+                <div class="portal-desc">歌ってみた / Vocal</div>
+            </a>
 
+        </div>
     </div>
+
+    <footer>
+        © 39rage. Powered by GitHub Pages.
+    </footer>
 
 </body>
 </html>
