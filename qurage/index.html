@@ -4,86 +4,119 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Qurage - Free BGM</title>
+    <!-- ファビコン設定 -->
     <link rel="icon" href="https://fromtheasia.com/wp-content/uploads/6410224d7e21cc6e2a9eb0cf659e7eb4.png" type="image/png">
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body {
             font-family: 'Shippori Mincho', 'Inter', serif;
-            background-color: #ffffff; /* 背景を白に */
-            color: #1f2937; /* 文字色を濃いグレーに */
+            background-color: #ffffff;
+            color: #1f2937;
             min-height: 100vh;
+        }
+
+        /* サイト全体のレイアウト：PC時は2カラム */
+        .site-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 左右 50% ずつ */
+            min-height: 100vh;
+        }
+
+        /* ==========================================
+           左半分：ヒーローエリア（PC時は画面に固定）
+        ========================================== */
+        .left-panel {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; /* 中の要素を右寄せ */
+            padding-right: 40px; /* 白枠と中央線の間の余白 */
+        }
+
+        /* 左側の背景画像（全幅・最上部優先） */
+        .bg-image {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: top;
+            z-index: 1;
+        }
+
+        /* 画像の上に載せる白枠テキストボックス */
+        .title-box {
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.92); /* 少しだけ後ろが透ける上品な白 */
+            border: 1px solid rgba(180, 107, 45, 0.2); /* ほんのりオレンジの枠線 */
+            padding: 40px 50px;
+            border-radius: 4px;
+            text-align: right; /* 文字を右揃えに */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            max-width: 85%;
+        }
+
+        .title-box h1 {
+            font-size: 2.8rem;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            margin-bottom: 8px;
+            color: #111827;
+        }
+        .title-box p {
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            color: #b46b2d; /* アクセントのオレンジ */
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+
+        /* ==========================================
+           右半分：コンテンツエリア（スクロールする側）
+        ========================================== */
+        .right-panel {
+            padding: 60px 40px;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            overflow-x: hidden;
-        }
-
-        /* ヒーローヘッダー：全幅・最上部固定 */
-        .hero-header {
-            width: 100%;
-            position: relative;
-        }
-
-        .header-image {
-            width: 100%;
-            height: 50vh; /* 画面の高さの半分を使用 */
-            object-fit: cover;
-            object-position: top; /* 顔が見切れないよう上部を優先表示 */
-            display: block;
-        }
-
-        .title-area {
-            padding: 60px 20px;
-            text-align: center;
+            justify-content: space-between; /* フッターを最下部に固定するため */
             background: #ffffff;
         }
 
-        .title-area h1 {
-            font-size: 3rem;
-            font-weight: 400;
-            letter-spacing: 0.2em;
-            margin-bottom: 12px;
-            color: #111827;
-        }
-        .title-area p {
-            font-size: 0.9rem;
-            letter-spacing: 0.15em;
-            color: #b46b2d; /* 白背景で見やすいよう少し濃くしたオレンジ */
-            font-weight: 600;
-        }
-
-        /* メインコンテナ */
         .container {
-            width: 90%;
-            max-width: 800px;
+            width: 100%;
+            max-width: 640px; /* 右側の中で綺麗に収まる幅 */
             margin: 0 auto;
-            padding-bottom: 80px;
         }
 
-        /* セクションスタイル（白背景に合わせた上品な陰影） */
+        /* セクションスタイル */
         section {
             background: #ffffff;
             border: 1px solid #f3f4f6;
             border-radius: 8px;
-            padding: 40px;
+            padding: 35px;
             margin-bottom: 40px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
         }
 
         section h2 {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
             letter-spacing: 0.15em;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             color: #111827;
             border-left: 3px solid #b46b2d;
-            padding-left: 15px;
+            padding-left: 12px;
         }
 
         .about-text {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             line-height: 2;
             letter-spacing: 0.05em;
             color: #4b5563;
@@ -92,24 +125,23 @@
         /* プレイヤーエリア */
         .player-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            grid-template-columns: 1fr; /* 右パネル内でのスマートさ重視で1カラムに */
+            gap: 30px;
         }
 
         .track-list {
             list-style: none;
-            max-height: 300px;
+            max-height: 240px;
             overflow-y: auto;
-            padding-right: 10px;
         }
         .track-list::-webkit-scrollbar { width: 4px; }
         .track-list::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 2px; }
 
         .track-item {
-            padding: 15px 10px;
+            padding: 12px 8px;
             border-bottom: 1px solid #f3f4f6;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #6b7280;
             transition: all 0.3s;
             display: flex;
@@ -118,7 +150,7 @@
         .track-item:hover, .track-item.active {
             color: #111827;
             background: #fffcf9;
-            padding-left: 15px;
+            padding-left: 12px;
         }
         .track-item.active {
             color: #b46b2d;
@@ -128,22 +160,23 @@
         .audio-controls {
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            border-left: 1px solid #f3f4f6;
-            padding-left: 40px;
+            background: #fffcf9;
+            border: 1px solid rgba(180, 107, 45, 0.1);
+            border-radius: 6px;
+            padding: 25px;
         }
         .now-playing {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: #b46b2d;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             letter-spacing: 0.1em;
             font-weight: 600;
         }
         .current-title {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 700;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             color: #111827;
             text-align: center;
         }
@@ -151,13 +184,13 @@
             background: #ffffff;
             border: 1px solid #b46b2d;
             color: #b46b2d;
-            width: 60px; height: 60px;
+            width: 50px; height: 50px;
             border-radius: 50%;
             cursor: pointer;
             display: flex; justify-content: center; align-items: center;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             transition: all 0.3s;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
         .play-btn:hover {
             background: #b46b2d;
@@ -177,7 +210,7 @@
         .seek-bar {
             flex: 1;
             -webkit-appearance: none;
-            background: #f3f4f6;
+            background: #e5e7eb;
             height: 3px;
             border-radius: 2px;
             outline: none;
@@ -186,15 +219,15 @@
         .seek-bar::-webkit-slider-thumb {
             -webkit-appearance: none;
             background: #b46b2d;
-            width: 10px; height: 10px;
+            width: 8px; height: 8px;
             border-radius: 50%;
         }
 
         /* アルバム一覧 */
         .album-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
+            grid-template-columns: 1fr; /* 右パネル内で綺麗に並べるため1列に */
+            gap: 20px;
         }
         .album-card {
             display: flex;
@@ -203,16 +236,16 @@
             text-decoration: none;
             color: inherit;
             transition: all 0.4s;
-            border-radius: 4px;
+            border-radius: 6px;
             overflow: hidden;
         }
         .album-card:hover {
             border-color: #b46b2d;
-            box-shadow: 0 10px 25px rgba(180, 107, 45, 0.08);
-            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(180, 107, 45, 0.06);
+            transform: translateY(-2px);
         }
         .album-img {
-            width: 100px; height: 100px;
+            width: 90px; height: 90px;
             object-fit: cover;
         }
         .album-info {
@@ -222,7 +255,7 @@
             justify-content: center;
         }
         .album-title {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 700;
             color: #111827;
             margin-bottom: 4px;
@@ -234,97 +267,136 @@
 
         footer {
             text-align: center;
-            padding: 60px 0;
+            padding-top: 40px;
             font-size: 0.75rem;
             color: #9ca3af;
             border-top: 1px solid #f3f4f6;
-            width: 100%;
         }
 
-        @media (max-width: 768px) {
-            .header-image { height: 40vh; }
-            .player-container { grid-template-columns: 1fr; gap: 30px; }
-            .audio-controls { border-left: none; padding-left: 0; border-top: 1px solid #f3f4f6; padding-top: 30px; }
-            .album-grid { grid-template-columns: 1fr; }
+        /* ==========================================
+           レスポンシブ：スマホ・縦向きタブレット（992px未満）
+        ========================================== */
+        @media (max-width: 992px) {
+            .site-wrapper {
+                grid-template-columns: 1fr; /* 縦1列に変更 */
+            }
+
+            .left-panel {
+                position: relative;
+                height: 40vh; /* 上部トップ画としての高さ */
+                width: 100%;
+                justify-content: center; /* スマホ時は中央寄せ */
+                padding-right: 0;
+            }
+
+            .title-box {
+                text-align: center; /* スマホ時は文字を中央揃えに */
+                max-width: 90%;
+                padding: 20px 30px;
+                background: rgba(255, 255, 255, 0.95);
+            }
+
+            .title-box h1 { font-size: 2.2rem; }
+
+            .right-panel {
+                padding: 40px 20px;
+            }
+            
+            section { padding: 25px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="hero-header">
-        <img src="https://fromtheasia.com/wp-content/uploads/NCG292.jpg" alt="Qurage Hero Visual" class="header-image">
+    <div class="site-wrapper">
+        
+        <!-- 左半分：固定ヒーローエリア -->
+        <div class="left-panel">
+            <img src="https://fromtheasia.com/wp-content/uploads/NCG292.jpg" alt="Qurage Hero Visual" class="bg-image">
+            <!-- 画像の上に載る白枠ボックス（文字は右揃え） -->
+            <div class="title-box">
+                <h1>Qurage</h1>
+                <p>Free BGM & Track Maker</p>
+            </div>
+        </div>
+
+        <!-- 右半分：スクロールコンテンツエリア -->
+        <div class="right-panel">
+            <div class="container">
+                
+                <!-- ① Aboutエリア -->
+                <section>
+                    <h2>About</h2>
+                    <div class="about-text">
+                        ここにサイトの説明や、簡単な使い方、メッセージなどを記載します。<br>
+                        Qurageが制作したフリーBGMの試聴ポータルです。動画制作や配信など、あなたのクリエイティブにお役立てください。
+                    </div>
+                </section>
+
+                <!-- ② Tracksエリア -->
+                <section>
+                    <h2>Tracks</h2>
+                    <div class="player-container">
+                        <ul class="track-list" id="trackList">
+                            <li class="track-item active" data-src="audio/song1.mp3">
+                                <span>01. 楽曲タイトルA</span>
+                                <span style="font-family:'Inter'; font-size:0.8rem;">Preview</span>
+                            </li>
+                            <li class="track-item" data-src="audio/song2.mp3">
+                                <span>02. 楽曲タイトルB</span>
+                                <span style="font-family:'Inter'; font-size:0.8rem;">Preview</span>
+                            </li>
+                            <li class="track-item" data-src="audio/song3.mp3">
+                                <span>03. 楽曲タイトルC</span>
+                                <span style="font-family:'Inter'; font-size:0.8rem;">Preview</span>
+                            </li>
+                        </ul>
+
+                        <div class="audio-controls">
+                            <div class="now-playing">NOW PLAYING</div>
+                            <div class="current-title" id="currentTitle">01. 楽曲タイトルA</div>
+                            <button class="play-btn" id="playBtn">▶</button>
+                            <div class="timeline-container">
+                                <span id="currentTime">0:00</span>
+                                <input type="range" class="seek-bar" id="seekBar" value="0" max="100">
+                                <span id="duration">0:00</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ③ Albumsエリア -->
+                <section>
+                    <h2>Albums</h2>
+                    <div class="album-grid">
+                        <a href="albums/album01.html" class="album-card">
+                            <img src="https://fromtheasia.com/wp-content/uploads/NCG292.jpg" class="album-img">
+                            <div class="album-info">
+                                <div class="album-title">Album Title 01</div>
+                                <div class="album-meta">2026.05 / 8 Tracks</div>
+                            </div>
+                        </a>
+                        <a href="albums/album02.html" class="album-card">
+                            <img src="https://fromtheasia.com/wp-content/uploads/NCG144.jpg" class="album-img">
+                            <div class="album-info">
+                                <div class="album-title">Album Title 02</div>
+                                <div class="album-meta">2026.01 / 5 Tracks</div>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+                
+            </div>
+
+            <!-- フッター（右パイルの最下部に配置） -->
+            <footer>
+                © Qurage. All Rights Reserved.
+            </footer>
+        </div>
+
     </div>
 
-    <div class="title-area">
-        <h1>Qurage</h1>
-        <p>Free BGM & Track Maker</p>
-    </div>
-
-    <div class="container">
-        <section>
-            <h2>About</h2>
-            <div class="about-text">
-                ここにサイトの説明や、簡単な使い方、メッセージなどを記載します。<br>
-                Qurageが制作したフリーBGMの試聴ポータルです。動画制作や配信など、あなたのクリエイティブにお役立てください。
-            </div>
-        </section>
-
-        <section>
-            <h2>Tracks</h2>
-            <div class="player-container">
-                <ul class="track-list" id="trackList">
-                    <li class="track-item active" data-src="audio/song1.mp3">
-                        <span>01. 楽曲タイトルA</span>
-                        <span style="font-family:'Inter'; font-size:0.8rem;">Preview</span>
-                    </li>
-                    <li class="track-item" data-src="audio/song2.mp3">
-                        <span>02. 楽曲タイトルB</span>
-                        <span style="font-family:'Inter'; font-size:0.8rem;">Preview</span>
-                    </li>
-                    <li class="track-item" data-src="audio/song3.mp3">
-                        <span>03. 楽曲タイトルC</span>
-                        <span style="font-family:'Inter'; font-size:0.8rem;">Preview</span>
-                    </li>
-                </ul>
-
-                <div class="audio-controls">
-                    <div class="now-playing">NOW PLAYING</div>
-                    <div class="current-title" id="currentTitle">01. 楽曲タイトルA</div>
-                    <button class="play-btn" id="playBtn">▶</button>
-                    <div class="timeline-container">
-                        <span id="currentTime">0:00</span>
-                        <input type="range" class="seek-bar" id="seekBar" value="0" max="100">
-                        <span id="duration">0:00</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2>Albums</h2>
-            <div class="album-grid">
-                <a href="albums/album01.html" class="album-card">
-                    <img src="https://fromtheasia.com/wp-content/uploads/NCG292.jpg" class="album-img">
-                    <div class="album-info">
-                        <div class="album-title">Album Title 01</div>
-                        <div class="album-meta">2026.05 / 8 Tracks</div>
-                    </div>
-                </a>
-                <a href="albums/album02.html" class="album-card">
-                    <img src="https://fromtheasia.com/wp-content/uploads/NCG144.jpg" class="album-img">
-                    <div class="album-info">
-                        <div class="album-title">Album Title 02</div>
-                        <div class="album-meta">2026.01 / 5 Tracks</div>
-                    </div>
-                </a>
-            </div>
-        </section>
-    </div>
-
-    <footer>
-        © Qurage. All Rights Reserved.
-    </footer>
-
+    <!-- オーディオ制御JavaScript（構造はそのまま維持） -->
     <script>
         const audio = new Audio();
         const playBtn = document.getElementById('playBtn');
