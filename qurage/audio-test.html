@@ -57,7 +57,7 @@
             padding-top: var(--header-height);
         }
 
-        /* --- 左カラム（サイドバー）：変更なし --- */
+        /* --- 左カラム（サイドバー） --- */
         .col-left {
             background: var(--primary-orange);
             color: #ffffff;
@@ -80,11 +80,11 @@
         .recent-link { width: calc(50% - 4px); display: flex; align-items: center; color: #ffffff; text-decoration: none; font-size: 0.65rem; padding: 6px 8px; border: 1px solid rgba(255,255,255,0.4); border-radius: 2px; transition: all 0.3s ease; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .recent-link:hover { background: #ffffff; color: var(--primary-orange); border-color: #ffffff; transform: translateX(3px); }
 
-        /* --- メイン領域：65:35比率 (Template準拠) --- */
+        /* --- コンテンツエリア：65% : 35% --- */
         .content-area { display: flex; flex-direction: column; background: var(--soft-white); }
         .columns-split { display: grid; grid-template-columns: 65% 35%; flex: 1; }
 
-        /* 中カラム：アルバム詳細 (基本audio-test維持) */
+        /* 中カラム：アルバム詳細（audio-testのテキストを完全維持） */
         .col-mid { 
             padding: 60px 50px; 
             border-right: 1px solid #f3f4f6; 
@@ -98,7 +98,7 @@
         .album-subtitle { color: var(--primary-orange); font-weight: bold; margin-bottom: 20px; font-size: 0.9rem; }
         .album-desc { font-size: 0.95rem; line-height: 2; color: var(--text-sub); max-width: 500px; }
 
-        /* 右カラム：独立スクロール & プレーヤー (Template準拠) */
+        /* 右カラム：プレイヤー（templateの構成） */
         .col-right { 
             height: calc(100vh - var(--header-height));
             position: sticky; top: var(--header-height);
@@ -119,7 +119,7 @@
         .track-item.active { background: #fff; color: var(--primary-orange); font-weight: bold; }
         .track-meta { font-family: 'Inter'; font-size: 0.65rem; color: var(--text-sub); }
 
-        /* プレーヤーUI (Template準拠) */
+        /* プレイヤーUI */
         .player-ui {
             background: #fff;
             padding: 25px;
@@ -146,7 +146,7 @@
         .volume-box { width: 100%; display: flex; align-items: center; gap: 10px; margin-top: 20px; padding-top: 15px; border-top: 1px solid #f3f4f6; }
         #volumeBar { height: 4px; accent-color: #9ca3af; flex: 1; cursor: pointer; }
 
-        /* BOOTHボタン (リンク先維持、デザインのみTemplate準拠) */
+        /* BOOTHボタン（audio-testのリンクとテキストを維持） */
         .download-btn-wrapper { margin-top: auto; }
         .booth-btn {
             display: block;
@@ -166,7 +166,6 @@
 
         footer { text-align: center; padding: 30px 0; color: var(--text-sub); font-size: 0.75rem; border-top: 1px solid #f3f4f6; background: #ffffff; }
 
-        /* --- モバイル設定 --- */
         @media (max-width: 900px) {
             .main-container { display: block; }
             .burger-btn { display: block; }
@@ -216,10 +215,10 @@
                     <img src="https://fromtheasia.com/wp-content/uploads/53f5724e756ca01ef2b8b93557e492f4.jpg" alt="First step" class="album-art-square">
                     <div class="album-info-content">
                         <h2>First step</h2>
-                        <p class="album-subtitle">Qurage Music - 1st Album</p>
+                        <p class="album-subtitle">First step</p>
                         <p class="album-desc">
-                            透き通るような透明感と、どこか懐かしい郷愁を感じさせるサウンド。<br>
-                            Qurage Musicが贈る、始まりの一歩を記した1stアルバム。
+                            First step の説明文が入ります。<br>
+                            ここにアルバムや楽曲の詳細を記載してください。
                         </p>
                     </div>
                 </article>
@@ -234,6 +233,22 @@
                         <li class="track-item" data-src="https://fromtheasia.com/wp-content/uploads/track2.mp3">
                             <span>02. Track Title 02</span>
                             <span class="track-meta">3:12</span>
+                        </li>
+                        <li class="track-item" data-src="https://fromtheasia.com/wp-content/uploads/track3.mp3">
+                            <span>03. Track Title 03</span>
+                            <span class="track-meta">2:55</span>
+                        </li>
+                        <li class="track-item" data-src="https://fromtheasia.com/wp-content/uploads/track4.mp3">
+                            <span>04. Track Title 04</span>
+                            <span class="track-meta">3:40</span>
+                        </li>
+                        <li class="track-item" data-src="https://fromtheasia.com/wp-content/uploads/track5.mp3">
+                            <span>05. Track Title 05</span>
+                            <span class="track-meta">2:20</span>
+                        </li>
+                        <li class="track-item" data-src="https://fromtheasia.com/wp-content/uploads/track6.mp3">
+                            <span>06. Track Title 06</span>
+                            <span class="track-meta">3:05</span>
                         </li>
                     </ul>
 
@@ -268,7 +283,6 @@
     </div>
 
     <script>
-        // スクリプトはaudio-testのロジックをベースに、新しいUIに対応
         const audio = new Audio();
         const playBtn = document.getElementById('playBtn');
         const playIconSVG = document.getElementById('playIconSVG');
@@ -283,7 +297,7 @@
         const repeatBtn = document.getElementById('repeatBtn');
 
         let currentIndex = 0;
-        let repeatMode = 0; // 0:なし, 1:1曲
+        let repeatMode = 0; 
         let lastVolume = 0.8;
 
         const playPath = "M8 5v14l11-7z";
@@ -321,13 +335,11 @@
             item.addEventListener('click', () => { loadTrack(index); audio.play(); updatePlayIcon(true); });
         });
 
-        // リピート
         repeatBtn.addEventListener('click', () => {
             repeatMode = (repeatMode + 1) % 2;
             repeatBtn.classList.toggle('active', repeatMode === 1);
         });
 
-        // 初期ロード
         loadTrack(0); audio.volume = lastVolume;
 
         audio.addEventListener('timeupdate', () => {
@@ -344,7 +356,6 @@
             if(repeatMode === 1) audio.play(); else playNext();
         });
 
-        // 音量
         volumeBar.addEventListener('input', () => {
             audio.volume = volumeBar.value / 100;
             updateVolumeIcon(audio.volume);
@@ -356,7 +367,6 @@
             else path.setAttribute('d', 'M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z');
         }
 
-        // バーガーメニュー
         const burgerBtn = document.getElementById('burgerBtn');
         const sidebar = document.getElementById('sidebar');
         burgerBtn.addEventListener('click', () => { 
