@@ -4,193 +4,268 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>First step - Qurage Music</title>
+    <link rel="icon" href="https://fromtheasia.com/wp-content/uploads/90d8e4fe08331e787970ae1288933823.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-orange: #ff6b35;
-            --soft-white: #fafafa;
-            --text-dark: #2b2d42;
-            --text-light: #8d99ae;
-        }
-
+        /* index.htmlのデザインを完全継承 */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: 'Helvetica Neue', Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
-            background-color: var(--soft-white);
-            color: var(--text-dark);
-            margin: 0;
-            display: flex;
+            font-family: 'Shippori Mincho', 'Inter', serif;
+            background-color: #ffffff;
+            color: #1f2937;
             min-height: 100vh;
         }
-
-        /* 左側：固定ヘッダー（サイドバー） */
-        header {
-            width: 40%;
-            height: 100vh;
-            position: fixed;
-            left: 0;
+        .site-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 100vh;
+        }
+        .left-panel {
+            position: sticky;
             top: 0;
-            background-color: white;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+        }
+        .hero-image {
+            width: 100%;
+            height: 70vh;
+            object-fit: cover;
+            object-position: center;
+        }
+        .title-box {
+            width: 100%;
+            height: 30vh;
+            background: #b46b2d;
+            padding: 30px 20px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            border-right: 1px solid #eee;
-            padding: 40px;
-            box-sizing: border-box;
+            text-align: center;
         }
-
-        .header-image {
-            width: 100%;
-            max-width: 350px;
-            aspect-ratio: 1 / 1;
-            object-fit: cover;
+        .title-box h1 {
+            font-size: 2.6rem;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            margin-bottom: 6px;
+            color: #ffffff;
+        }
+        .title-box p {
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .illust-credit {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.75);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            padding-top: 8px;
+        }
+        .right-panel {
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+        }
+        .container { width: 100%; max-width: 640px; margin: 0 auto; }
+        section {
+            background: #ffffff;
+            border: 1px solid #f3f4f6;
             border-radius: 8px;
-            box-shadow: 20px 20px 0px var(--primary-orange);
-            margin-bottom: 50px;
+            padding: 35px;
+            margin-bottom: 40px;
         }
-
-        .header-info h1 {
-            font-size: 3rem;
-            margin: 0;
-            line-height: 1;
-            text-transform: uppercase;
-            letter-spacing: -2px;
+        section h2 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            border-left: 3px solid #b46b2d;
+            padding-left: 12px;
         }
-
-        .header-info p {
-            color: var(--primary-orange);
-            font-weight: bold;
-            margin-top: 10px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* 右側：スクロールするコンテンツ */
-        main {
-            margin-left: 40%;
-            width: 60%;
-            padding: 100px 80px;
-            box-sizing: border-box;
-        }
-
         .track-list {
             list-style: none;
-            padding: 0;
+            max-height: 400px; /* リストが見えやすいように少し広げました */
+            overflow-y: auto;
         }
-
         .track-item {
-            margin-bottom: 60px;
-        }
-
-        .track-header {
+            padding: 15px 8px;
+            border-bottom: 1px solid #f3f4f6;
+            cursor: pointer;
             display: flex;
             justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 15px;
-            border-bottom: 2px solid var(--text-dark);
-            padding-bottom: 10px;
+            align-items: center;
+            transition: 0.3s;
         }
+        .track-item:hover, .track-item.active { background: #fffcf9; }
+        .track-item.active { color: #b46b2d; border-bottom: 1px solid #b46b2d; }
+        .track-meta { font-family: 'Inter'; font-size: 0.75rem; color: #9ca3af; }
+        
+        .audio-controls {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #fffcf9;
+            padding: 25px;
+            border-radius: 6px;
+        }
+        .current-title { font-weight: 700; margin-bottom: 20px; }
+        .play-btn {
+            background: #ffffff; border: 1px solid #b46b2d; color: #b46b2d;
+            width: 50px; height: 50px; border-radius: 50%; cursor: pointer;
+            display: flex; justify-content: center; align-items: center; margin-bottom: 20px;
+        }
+        .timeline-container { width: 100%; display: flex; align-items: center; gap: 10px; font-size: 0.75rem; }
+        .seek-bar { flex: 1; height: 3px; cursor: pointer; }
 
-        .track-number {
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #b46b2d;
             font-size: 0.9rem;
-            font-weight: bold;
-            color: var(--primary-orange);
+            font-weight: 600;
         }
 
-        .track-title {
-            font-size: 1.8rem;
-            font-weight: bold;
-            flex-grow: 1;
-            margin-left: 20px;
-        }
-
-        .track-meta {
-            font-size: 0.8rem;
-            color: var(--text-light);
-            text-align: right;
-        }
-
-        audio {
-            width: 100%;
-            height: 40px;
-            filter: sepia(20%) saturate(70%) hue-rotate(330deg); /* ほんのりオレンジ寄りの色味に */
-        }
-
-        /* スマホ対応：画面が狭い時は縦並びにする */
-        @media (max-width: 900px) {
-            body { flex-direction: column; }
-            header {
-                width: 100%;
-                height: auto;
-                position: relative;
-                padding: 60px 20px;
-            }
-            main {
-                width: 100%;
-                margin-left: 0;
-                padding: 40px 20px;
-            }
-            .header-info h1 { font-size: 2.5rem; }
+        @media (max-width: 992px) {
+            .site-wrapper { grid-template-columns: 1fr; }
+            .left-panel { position: relative; height: auto; }
+            .hero-image { height: 45vh; }
+            .right-panel { padding: 40px 20px; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <img src="https://fromtheasia.com/wp-content/uploads/NCG63.jpg" alt="First step Art" class="header-image">
-        <div class="header-info">
-            <h1>First<br>Step</h1>
-            <p>Full Album Preview</p>
+    <div class="site-wrapper">
+        <div class="left-panel">
+            <img src="https://fromtheasia.com/wp-content/uploads/NCG63.jpg" alt="First step Art" class="hero-image">
+            <div class="title-box">
+                <h1>First step</h1>
+                <p>Full Album Preview</p>
+                <div class="illust-credit">Illustration : ノーコピーライトガール</div>
+            </div>
         </div>
-    </header>
 
-    <main>
-        <ul class="track-list">
-            <li class="track-item">
-                <div class="track-header">
-                    <span class="track-number">01</span>
-                    <span class="track-title">British Brixton</span>
-                    <span class="track-meta">BPM 100 / Key C</span>
-                </div>
-                <audio controls src="audio/2020102923 British_Brixton-100_C.mp3"></audio>
-            </li>
+        <div class="right-panel">
+            <div class="container">
+                <a href="index.html" class="back-link">← BACK TO HOME</a>
+                
+                <section>
+                    <h2>Tracks</h2>
+                    <div class="player-container">
+                        <ul class="track-list" id="trackList">
+                            <li class="track-item active" data-src="audio/2020102923 British_Brixton-100_C.mp3">
+                                <span>01. British Brixton</span>
+                                <span class="track-meta">BPM 100 / Key C</span>
+                            </li>
+                            <li class="track-item" data-src="audio/2020103012 Accelerate_Afghanistan_TH-102_Cm.mp3">
+                                <span>02. Accelerate Afghanistan</span>
+                                <span class="track-meta">BPM 102 / Key Cm</span>
+                            </li>
+                            <li class="track-item" data-src="audio/2020103014 AABS_80s-128_Cm.mp3">
+                                <span>03. AABS 80s</span>
+                                <span class="track-meta">BPM 128 / Key Cm</span>
+                            </li>
+                            <li class="track-item" data-src="audio/2020103018 Altered_Afterburner_AYB-129_C#m.mp3">
+                                <span>04. Altered Afterburner AYB</span>
+                                <span class="track-meta">BPM 129 / Key C#m</span>
+                            </li>
+                            <li class="track-item" data-src="audio/2020103111 Alternating_synth_layers-125_Dm.mp3">
+                                <span>05. Alternating synth layers</span>
+                                <span class="track-meta">BPM 125 / Key Dm</span>
+                            </li>
+                        </ul>
 
-            <li class="track-item">
-                <div class="track-header">
-                    <span class="track-number">02</span>
-                    <span class="track-title">Accelerate Afghanistan</span>
-                    <span class="track-meta">BPM 102 / Key Cm</span>
-                </div>
-                <audio controls src="audio/2020103012 Accelerate_Afghanistan_TH-102_Cm.mp3"></audio>
-            </li>
+                        <div class="audio-controls">
+                            <div class="current-title" id="currentTitle">01. British Brixton</div>
+                            <button class="play-btn" id="playBtn">▶</button>
+                            <div class="timeline-container">
+                                <span id="currentTime">0:00</span>
+                                <input type="range" class="seek-bar" id="seekBar" value="0" max="100">
+                                <span id="duration">0:00</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
-            <li class="track-item">
-                <div class="track-header">
-                    <span class="track-number">03</span>
-                    <span class="track-title">AABS 80s</span>
-                    <span class="track-meta">BPM 128 / Key Cm</span>
-                </div>
-                <audio controls src="audio/2020103014 AABS_80s-128_Cm.mp3"></audio>
-            </li>
+                <section>
+                    <h2>Download / Buy</h2>
+                    <div style="font-size: 0.9rem; line-height: 1.8;">
+                        このアルバムの音源ダウンロード・商用利用ライセンスの購入はBOOTHから可能です。<br>
+                        <a href="https://casbgcasbg.booth.pm" target="_blank" style="color: #b46b2d; font-weight: bold;">BOOTHでチェックする →</a>
+                    </div>
+                </section>
+            </div>
 
-            <li class="track-item">
-                <div class="track-header">
-                    <span class="track-number">04</span>
-                    <span class="track-title">Altered Afterburner AYB</span>
-                    <span class="track-meta">BPM 129 / Key C#m</span>
-                </div>
-                <audio controls src="audio/2020103018 Altered_Afterburner_AYB-129_C#m.mp3"></audio>
-            </li>
+            <footer>© Qurage. All Rights Reserved.</footer>
+        </div>
+    </div>
 
-            <li class="track-item">
-                <div class="track-header">
-                    <span class="track-number">05</span>
-                    <span class="track-title">Alternating synth layers</span>
-                    <span class="track-meta">BPM 125 / Key Dm</span>
-                </div>
-                <audio controls src="audio/2020103111 Alternating_synth_layers-125_Dm.mp3"></audio>
-            </li>
-        </ul>
-    </main>
+    <script>
+        const audio = new Audio();
+        const playBtn = document.getElementById('playBtn');
+        const currentTitle = document.getElementById('currentTitle');
+        const seekBar = document.getElementById('seekBar');
+        const currentTimeText = document.getElementById('currentTime');
+        const durationText = document.getElementById('duration');
+        const trackItems = document.querySelectorAll('.track-item');
 
+        let currentTrack = trackItems[0];
+        audio.src = currentTrack.getAttribute('data-src');
+
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                playBtn.textContent = '⏸';
+            } else {
+                audio.pause();
+                playBtn.textContent = '▶';
+            }
+        });
+
+        trackItems.forEach(item => {
+            item.addEventListener('click', function() {
+                trackItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                currentTrack = this;
+                currentTitle.textContent = this.querySelector('span').textContent;
+                audio.src = this.getAttribute('data-src');
+                audio.play();
+                playBtn.textContent = '⏸';
+            });
+        });
+
+        audio.addEventListener('timeupdate', () => {
+            const value = (audio.currentTime / audio.duration) * 100;
+            seekBar.value = value || 0;
+            let curMin = Math.floor(audio.currentTime / 60);
+            let curSec = Math.floor(audio.currentTime % 60);
+            if (curSec < 10) curSec = '0' + curSec;
+            currentTimeText.textContent = `${curMin}:${curSec}`;
+        });
+
+        audio.addEventListener('loadedmetadata', () => {
+            let durMin = Math.floor(audio.duration / 60);
+            let durSec = Math.floor(audio.duration % 60);
+            if (durSec < 10) durSec = '0' + durSec;
+            durationText.textContent = `${durMin}:${durSec}`;
+        });
+
+        seekBar.addEventListener('input', () => {
+            const time = (seekBar.value / 100) * audio.duration;
+            audio.currentTime = time;
+        });
+
+        audio.addEventListener('ended', () => {
+            let next = currentTrack.nextElementSibling;
+            if (!next) next = trackItems[0];
+            next.click();
+        });
+    </script>
 </body>
 </html>
