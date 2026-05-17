@@ -57,25 +57,25 @@
             padding-top: var(--header-height);
         }
 
-        /* --- 左カラム：スクロール絶対禁止 --- */
+        /* --- 左カラム --- */
         .col-left {
             background: var(--primary-orange);
             color: #ffffff;
             position: sticky; top: var(--header-height); 
             height: calc(100vh - var(--header-height));
             display: flex; flex-direction: column;
-            overflow: hidden; /* スクロールを完全に禁止 */
+            overflow: hidden; /* PCではスクロール禁止 */
+            padding-top: 50px; /* PC・スマホ共通でヘッダーから50px空ける */
         }
         
         .hero-img-wrapper {
             width: 100%;
-            height: 30vh; /* 画像エリアを確保 */
-            display: flex; justify-content: center; align-items: flex-start;
-            padding-top: 50px; /* 指定の50px */
+            height: 28vh;
+            display: flex; justify-content: center; align-items: center;
         }
         .hero-img-left { 
             width: auto; 
-            max-height: 100%; /* 枠からはみ出さないように自動縮小 */
+            max-height: 100%; 
             max-width: 85%;
             object-fit: contain;
         }
@@ -102,9 +102,9 @@
         }
         .recent-link:hover { background: #ffffff; color: var(--primary-orange); border-color: #ffffff; transform: translateX(3px); }
 
-        /* --- 右側エリア：配分変更 --- */
+        /* --- メイン領域：6:4配分 --- */
         .content-area { display: flex; flex-direction: column; background: var(--soft-white); }
-        .columns-split { display: grid; grid-template-columns: 60% 40%; flex: 1; } /* 6:4配分 */
+        .columns-split { display: grid; grid-template-columns: 60% 40%; flex: 1; }
 
         .col-mid { padding: 60px 40px; border-right: 1px solid #f3f4f6; display: flex; flex-direction: column; align-items: center; text-align: center; }
         .album-art-square { width: 100%; max-width: 400px; aspect-ratio: 1/1; object-fit: cover; border-radius: 4px; box-shadow: 0 15px 40px rgba(0,0,0,0.08); margin-bottom: 35px; }
@@ -120,26 +120,22 @@
         .track-item { padding: 12px 10px; border-bottom: 1px solid #e5e7eb; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; }
         .track-item.active { background: #fff; color: var(--primary-orange); font-weight: bold; }
         .track-meta { font-family: 'Inter'; font-size: 0.65rem; color: var(--text-sub); }
-        
         .player-ui { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; align-items: center; }
         .now-playing-title { font-size: 0.85rem; font-weight: 700; margin-bottom: 15px; text-align: center; }
         .controls-group { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
-        .btn-svg { background: none; border: none; cursor: pointer; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; position: relative; }
+        .btn-svg { background: none; border: none; cursor: pointer; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; }
         .icon-svg { fill: #9ca3af; width: 20px; height: 20px; }
-        .btn-svg.active .icon-svg { fill: var(--primary-orange); }
         .play-main { width: 50px; height: 50px; border-radius: 50%; background: #fff; border: 1px solid var(--primary-orange); cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .play-main .icon-svg { fill: var(--primary-orange); }
-        
         .timeline-box { width: 100%; display: flex; align-items: center; gap: 8px; font-size: 0.65rem; color: var(--text-sub); }
         .seek-bar { flex: 1; height: 4px; accent-color: var(--primary-orange); cursor: pointer; }
-        
         .download-btn-wrapper { margin-top: 30px; text-align: center; }
         .booth-btn { display: inline-block; background: var(--primary-orange); color: #fff; text-decoration: none; font-weight: 700; padding: 12px 0; width: 100%; border-radius: 4px; transition: 0.3s; }
 
         footer { text-align: center; padding: 30px 0; color: var(--text-sub); font-size: 0.75rem; border-top: 1px solid #f3f4f6; background: #ffffff; }
 
-        /* --- モバイル --- */
-        @media (max-width: 1024px) {
+        /* --- モバイル設定（900px以下で切り替え） --- */
+        @media (max-width: 900px) {
             .main-container { display: block; }
             .burger-btn { display: block; }
             .col-left { 
@@ -147,11 +143,11 @@
                 width: 100%; height: 100vh; 
                 z-index: 2000; transition: 0.5s ease-in-out; 
                 opacity: 0; visibility: hidden;
-                padding-top: var(--header-height);
-                overflow-y: auto; /* スマホのみスクロール許可 */
+                padding-top: calc(var(--header-height) + 50px); /* ヘッダー分＋指定の50px */
+                overflow-y: auto; /* スマホのみスクロール可能に */
             }
             .col-left.open { top: 0; opacity: 1; visibility: visible; }
-            .hero-img-wrapper { height: 22vh; padding-top: 20px; }
+            .hero-img-wrapper { height: 25vh; }
             .columns-split { display: block; }
             .col-mid, .col-right { padding: 40px 20px; border-right: none; }
         }
@@ -244,7 +240,6 @@
     </div>
 
     <script>
-        // JS部分はロジックに変更なし
         const audio = new Audio();
         const playBtn = document.getElementById('playBtn');
         const playIconSVG = document.getElementById('playIconSVG');
@@ -310,6 +305,15 @@
         burgerBtn.addEventListener('click', () => { 
             burgerBtn.classList.toggle('open'); 
             sidebar.classList.toggle('open'); 
+            document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : 'auto';
+        });
+
+        sidebar.querySelectorAll('.recent-link').forEach(link => {
+            link.addEventListener('click', () => {
+                sidebar.classList.remove('open');
+                burgerBtn.classList.remove('open');
+                document.body.style.overflow = 'auto';
+            });
         });
     </script>
 </body>
