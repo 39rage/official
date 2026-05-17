@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Qurage Music - Free BGM & Track Maker</title>
     <link rel="icon" href="https://fromtheasia.com/wp-content/uploads/90d8e4fe08331e787970ae1288933823.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
@@ -15,8 +15,12 @@
             --text-sub: #6b7280;
             --header-height: 60px;
         }
+        /* スクロール安定化のための基本設定 */
+        html, body { height: 100%; overflow: hidden; overscroll-behavior: none; }
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Shippori Mincho', 'Inter', serif; background-color: var(--soft-white); color: var(--text-main); overflow-x: hidden; }
+        
+        body { font-family: 'Shippori Mincho', 'Inter', serif; background-color: var(--soft-white); color: var(--text-main); }
+        
         .site-header { position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); background: #ffffff; border-bottom: 1px solid #eee; display: flex; align-items: center; justify-content: center; z-index: 2100; }
         .header-logo { display: inline-block; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.15em; text-decoration: none; color: var(--primary-orange); padding: 10px 20px; }
         .burger-btn { position: absolute; left: 20px; background: none; border: none; cursor: pointer; display: none; padding: 10px; z-index: 2200; }
@@ -24,10 +28,13 @@
         .burger-btn.open .burger-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
         .burger-btn.open .burger-line:nth-child(2) { opacity: 0; }
         .burger-btn.open .burger-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-        .main-container { display: grid; grid-template-columns: 25% 75%; min-height: 100vh; padding-top: var(--header-height); }
+
+        /* コンテナの高さ固定 */
+        .main-container { display: grid; grid-template-columns: 25% 75%; height: calc(100vh - var(--header-height)); margin-top: var(--header-height); overflow: hidden; }
         
-        .col-left { background: var(--primary-orange); color: #ffffff; position: sticky; top: var(--header-height); height: calc(100vh - var(--header-height)); display: flex; flex-direction: column; overflow: hidden; padding-top: 40px; z-index: 1000; }
-        .hero-img-wrapper { width: 100%; height: 25vh; display: flex; justify-content: center; align-items: center; }
+        /* 左：完全固定 */
+        .col-left { background: var(--primary-orange); color: #ffffff; height: 100%; display: flex; flex-direction: column; overflow: hidden; padding-top: 40px; }
+        .hero-img-wrapper { width: 100%; height: 25vh; min-height: 150px; display: flex; justify-content: center; align-items: center; }
         .hero-img-left { width: auto; max-height: 100%; max-width: 80%; object-fit: contain; }
         .profile-text-area { padding: 15px 20px 10px; text-align: center; }
         .profile-header { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 5px; }
@@ -46,32 +53,31 @@
         .recent-link { display: block; color: #ffffff; text-decoration: none; font-size: 0.65rem; padding: 6px 8px; border: 1px solid rgba(255,255,255,0.3); border-radius: 2px; transition: 0.3s; }
         .recent-link:hover { background: #ffffff; color: var(--primary-orange); border-color: #ffffff; transform: translateX(3px); }
 
-        .content-area { display: flex; flex-direction: column; background: var(--soft-white); }
-        .columns-split { display: grid; grid-template-columns: 65% 35%; flex: 1; }
-        .col-mid { padding: 50px 50px 0; border-right: 1px solid #f3f4f6; display: flex; flex-direction: column; }
-        .mid-container { max-width: 800px; margin: 0 auto; width: 100%; flex: 1; }
+        /* 中：スクロールエリア */
+        .content-area { height: 100%; overflow: hidden; background: var(--soft-white); }
+        .columns-split { display: grid; grid-template-columns: 65% 35%; height: 100%; }
+        .col-mid { padding: 50px 50px 0; border-right: 1px solid #f3f4f6; overflow-y: auto; height: 100%; display: flex; flex-direction: column; }
+        .mid-container { max-width: 800px; margin: 0 auto; width: 100%; flex-shrink: 0; }
         .section-box { margin-bottom: 60px; }
         .section-box h2 { font-size: 1.1rem; font-weight: 700; letter-spacing: 0.2em; margin-bottom: 30px; color: var(--text-main); border-left: 3px solid var(--primary-orange); padding-left: 15px; }
         .about-text { font-size: 0.9rem; line-height: 2.2; color: var(--text-sub); }
-        
-        /* アルバムグリッド：常に2列並び */
         .album-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }
         .album-card { text-decoration: none; color: inherit; display: flex; flex-direction: column; }
         .album-img-box { aspect-ratio: 1 / 1; width: 100%; overflow: hidden; border-radius: 4px; border: 1px solid #eee; margin-bottom: 12px; transition: transform 0.4s; }
         .album-img { width: 100%; height: 100%; object-fit: cover; }
-        .album-card:hover .album-img-box { transform: translateY(-5px); border-color: var(--primary-orange); }
         .album-title { font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 4px; }
         .album-meta { font-size: 0.75rem; color: var(--text-sub); font-family: 'Inter'; }
 
-        .col-right { height: calc(100vh - var(--header-height)); position: sticky; top: var(--header-height); padding: 50px 25px 25px; background: var(--bg-light); display: flex; flex-direction: column; }
+        /* 右：完全固定 */
+        .col-right { height: 100%; padding: 50px 25px 25px; background: var(--bg-light); display: flex; flex-direction: column; overflow: hidden; }
         .section-title { font-size: 0.75rem; letter-spacing: 0.15em; margin-bottom: 20px; border-left: 3px solid var(--primary-orange); padding-left: 12px; font-weight: 700; }
         .track-list { list-style: none; margin-bottom: 25px; flex: 1; overflow-y: auto; padding-right: 5px; }
         .track-item { padding: 12px 8px; border-bottom: 1px solid #e5e7eb; cursor: pointer; display: grid; grid-template-columns: 2.2em 1fr auto; align-items: start; font-size: 0.8rem; transition: 0.2s; gap: 4px; }
-        .track-item:hover { background: rgba(255,255,255,0.5); }
         .track-item.active { background: #fff; color: var(--primary-orange); font-weight: bold; }
         .track-name { overflow-wrap: break-word; line-height: 1.4; }
         .track-meta { font-family: 'Inter'; font-size: 0.6rem; color: var(--text-sub); margin-top: 2px; }
 
+        /* プレイヤー操作 */
         .player-footer { margin-top: auto; width: 100%; }
         .player-ui { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 15px 20px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
         .now-playing-title { font-size: 0.8rem; font-weight: 700; margin-bottom: 12px; text-align: center; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-main); }
@@ -91,15 +97,19 @@
         .download-btn-wrapper { margin-top: 15px; }
         .booth-btn { display: block; background: var(--primary-orange); color: #fff; text-decoration: none; font-weight: 700; padding: 10px; text-align: center; border-radius: 6px; transition: 0.3s; font-size: 0.8rem; letter-spacing: 0.05em; font-family: 'Shippori Mincho', serif; }
         
-        footer { text-align: center; padding: 30px 0; color: var(--text-sub); font-size: 0.75rem; border-top: 1px solid #f3f4f6; background: #ffffff; }
+        footer { text-align: center; padding: 30px 0; color: var(--text-sub); font-size: 0.75rem; border-top: 1px solid #f3f4f6; background: #ffffff; flex-shrink: 0; }
         .footer-pc { display: block; width: 100%; margin-top: auto; }
         .footer-mobile { display: none; }
 
-        @media (max-width: 1024px) { .main-container { grid-template-columns: 30% 70%; } .columns-split { grid-template-columns: 60% 40%; } }
         @media (max-width: 900px) { 
-            .main-container { display: block; } .burger-btn { display: block; } .col-left { position: fixed; left: 0; top: -100%; width: 100%; height: 100vh; z-index: 2000; transition: 0.5s; opacity: 0; visibility: hidden; padding-top: calc(var(--header-height) + 40px); overflow-y: auto; } .col-left.open { top: 0; opacity: 1; visibility: visible; } .columns-split { display: block; } .col-mid, .col-right { padding: 30px 20px; border-right: none; height: auto; position: static; } .track-list { max-height: 400px; } 
+            html, body { overflow: auto; }
+            .main-container { display: block; height: auto; margin-top: var(--header-height); overflow: visible; }
+            .col-left { position: fixed; left: 0; top: -100%; width: 100%; height: 100vh; z-index: 2000; transition: 0.5s; opacity: 0; visibility: hidden; padding-top: calc(var(--header-height) + 40px); overflow-y: auto; }
+            .col-left.open { top: 0; opacity: 1; visibility: visible; }
+            .columns-split { display: block; }
+            .col-mid, .col-right { padding: 30px 20px; border-right: none; height: auto; overflow: visible; }
+            .track-list { max-height: 400px; }
             .footer-pc { display: none; } .footer-mobile { display: block; }
-            .album-grid { gap: 15px; } /* スマホでは余白を少し詰める */
         }
     </style>
 </head>
@@ -130,7 +140,7 @@
         <div class="content-area">
             <div class="columns-split">
                 <article class="col-mid">
-                    <div class="mid-container" id="albumGridParent">
+                    <div class="mid-container">
                         <section class="section-box">
                             <h2>ABOUT</h2>
                             <div class="about-text">
@@ -179,13 +189,7 @@
         const sidebarNav = document.getElementById('sidebarNav');
         sidebarNav.innerHTML = allAlbums.map(album => `<a href="${album.id}.html" class="recent-link">${album.title}</a>`).join('');
         const albumGrid = document.getElementById('albumGrid');
-        albumGrid.innerHTML = allAlbums.map(album => `
-            <a href="${album.id}.html" class="album-card">
-                <div class="album-img-box"><img src="${album.img}" class="album-img" alt="${album.title}"></div>
-                <div class="album-title">${album.title}</div>
-                <div class="album-meta">${album.subtitle} / ${album.tracksCount}</div>
-            </a>
-        `).join('');
+        albumGrid.innerHTML = allAlbums.map(album => `<a href="${album.id}.html" class="album-card"><div class="album-img-box"><img src="${album.img}" class="album-img" alt="${album.title}"></div><div class="album-title">${album.title}</div><div class="album-meta">${album.subtitle} / ${album.tracksCount}</div></a>`).join('');
         const trackListContainer = document.getElementById('trackList');
         const albumOrder = allAlbums.map(a => a.id);
         const sortedTracks = [...allTracks].sort((a, b) => {
@@ -194,13 +198,7 @@
             if (indexA !== indexB) return indexA - indexB;
             return a.file.localeCompare(b.file);
         });
-        trackListContainer.innerHTML = sortedTracks.map((track, idx) => `
-            <li class="track-item" data-src="audio/${track.file}">
-                <span class="track-number">${String(idx + 1).padStart(2, '0')}.</span>
-                <span class="track-name">${track.title}</span>
-                <span class="track-meta">Preview</span>
-            </li>
-        `).join('');
+        trackListContainer.innerHTML = sortedTracks.map((track, idx) => `<li class="track-item" data-src="audio/${track.file}"><span class="track-number">${String(idx + 1).padStart(2, '0')}.</span><span class="track-name">${track.title}</span><span class="track-meta">Preview</span></li>`).join('');
         const audio = new Audio();
         const playBtn = document.getElementById('playBtn');
         const playIconSVG = document.getElementById('playIconSVG');
@@ -255,7 +253,7 @@
         function updateVolumeIcon(vol) { const path = volumeIcon.querySelector('path'); if (vol === 0) path.setAttribute('d', 'M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z'); else if (vol < 0.5) path.setAttribute('d', 'M7 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z'); else path.setAttribute('d', 'M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z'); }
         const burgerBtn = document.getElementById('burgerBtn');
         const sidebar = document.getElementById('sidebar');
-        burgerBtn.addEventListener('click', () => { burgerBtn.classList.toggle('open'); sidebar.classList.toggle('open'); document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : 'auto'; });
+        burgerBtn.addEventListener('click', () => { burgerBtn.classList.toggle('open'); sidebar.classList.toggle('open'); });
     </script>
 </body>
 </html>
