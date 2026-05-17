@@ -24,7 +24,7 @@
             color: var(--text-main);
         }
 
-        /* --- ヘッダー（オレンジ背景・白文字） --- */
+        /* --- ヘッダー --- */
         .site-header {
             position: fixed;
             top: 0; left: 0; width: 100%; height: var(--header-height);
@@ -55,35 +55,63 @@
             padding-top: var(--header-height);
         }
 
-        /* --- 左カラム（オレンジ背景） --- */
+        /* --- 左カラム：固定とスクロールの分離 --- */
         .col-left {
             background: var(--primary-orange);
             color: #ffffff;
             position: sticky; top: var(--header-height); height: calc(100vh - var(--header-height));
-            overflow-y: auto; display: flex; flex-direction: column;
+            display: flex; flex-direction: column;
+            overflow: hidden; /* 親はスクロールさせない */
         }
-        .hero-img-left { width: 100%; height: 200px; object-fit: cover; }
-        .title-box-left { padding: 30px 20px; text-align: center; }
-        .title-box-left h1 { font-size: 1.6rem; font-weight: 400; letter-spacing: 0.15em; margin-bottom: 5px; }
-        .title-box-left p { font-size: 0.75rem; opacity: 0.8; margin-bottom: 15px; font-weight: 600; }
-        .illust-credit { font-size: 0.65rem; opacity: 0.6; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 10px; }
+        
+        /* 画像エリア：縦幅をフルに使いつつ横幅20%に収める */
+        .hero-img-wrapper {
+            width: 100%;
+            height: 40vh; /* 画面の約4割を画像に */
+            background: var(--primary-orange);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow: hidden;
+        }
+        .hero-img-left {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* 足元まで見えるように比率を維持 */
+            object-position: top;
+        }
 
-        .song-list-placeholder { padding: 40px 20px; }
-        .song-list-placeholder h3 { font-size: 0.8rem; letter-spacing: 0.1em; margin-bottom: 15px; color: rgba(255,255,255,0.7); border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 8px; }
+        .title-box-left { padding: 20px; text-align: center; flex-shrink: 0; }
+        .title-box-left h1 { font-size: 1.4rem; font-weight: 400; letter-spacing: 0.15em; margin-bottom: 4px; }
+        .title-box-left p { font-size: 0.7rem; opacity: 0.8; margin-bottom: 12px; font-weight: 600; }
+        .illust-credit { font-size: 0.6rem; opacity: 0.6; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 8px; }
+
+        /* アルバム名だけスクロールするエリア */
+        .recent-tracks-container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto; /* ここだけスクロール */
+            background: rgba(0,0,0,0.05); /* 少しだけ色を変えてリスト感を出す */
+        }
+        .recent-tracks-container::-webkit-scrollbar { width: 4px; }
+        .recent-tracks-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+
+        .recent-tracks-container h3 { font-size: 0.75rem; letter-spacing: 0.1em; margin-bottom: 15px; color: rgba(255,255,255,0.7); border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 8px; }
         
         .recent-link {
-            display: block; color: #ffffff; text-decoration: none; font-size: 0.9rem;
-            padding: 10px 0; transition: 0.3s;
+            display: block; color: #ffffff; text-decoration: none; font-size: 0.85rem;
+            padding: 8px 0; transition: 0.3s;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         .recent-link:hover { opacity: 0.7; padding-left: 5px; }
 
-        /* --- 中央カラム（ジャケ写＋紹介） --- */
+        /* --- 中央カラム --- */
         .col-mid {
             padding: 60px 40px; border-right: 1px solid #f3f4f6;
             display: flex; flex-direction: column; align-items: center; text-align: center;
         }
         .album-art-square {
-            width: 100%; max-width: 320px;
+            width: 100%; max-width: 300px;
             aspect-ratio: 1/1; object-fit: cover; border-radius: 4px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.06); margin-bottom: 30px;
         }
@@ -91,7 +119,7 @@
         .album-subtitle { color: var(--primary-orange); font-weight: bold; margin-bottom: 20px; font-size: 0.9rem; }
         .album-desc { font-size: 0.95rem; line-height: 2; color: var(--text-sub); }
 
-        /* --- 右カラム（試聴＋Download） --- */
+        /* --- 右カラム --- */
         .col-right {
             padding: 60px 40px; background: var(--bg-light);
             display: flex; flex-direction: column;
@@ -102,23 +130,16 @@
         .booth-btn {
             display: inline-block; background: var(--primary-orange); color: #fff;
             text-decoration: none; font-weight: 700; padding: 15px 60px;
-            border-radius: 4px; transition: 0.3s; box-shadow: 0 4px 15px rgba(180, 107, 45, 0.2);
+            border-radius: 4px; transition: 0.3s;
         }
-        .booth-btn:hover { background: #d28542; transform: translateY(-2px); }
 
         /* --- プレイヤーUI --- */
         .track-list { list-style: none; margin-bottom: 30px; }
-        .track-item {
-            padding: 15px 10px; border-bottom: 1px solid #e5e7eb;
-            cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem;
-        }
+        .track-item { padding: 15px 10px; border-bottom: 1px solid #e5e7eb; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; }
         .track-item.active { background: #fff; color: var(--primary-orange); font-weight: bold; }
         .track-meta { font-family: 'Inter'; font-size: 0.7rem; color: var(--text-sub); font-weight: normal; }
 
-        .player-ui {
-            background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 25px;
-            display: flex; flex-direction: column; align-items: center;
-        }
+        .player-ui { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 25px; display: flex; flex-direction: column; align-items: center; }
         .now-playing-title { font-size: 0.9rem; font-weight: 700; margin-bottom: 20px; text-align: center; }
         .controls-group { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
         .btn-svg { background: none; border: none; cursor: pointer; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; position: relative; }
@@ -128,22 +149,18 @@
         .play-main .icon-svg { fill: var(--primary-orange); }
         .rep-one { position: absolute; font-size: 8px; font-weight: 900; top: 52%; left: 50%; transform: translate(-50%, -50%); display: none; color: var(--primary-orange); }
         .active.mode-1 .rep-one { display: block; }
-
         .timeline-box { width: 100%; display: flex; align-items: center; gap: 10px; font-size: 0.7rem; color: var(--text-sub); }
         .seek-bar { flex: 1; height: 4px; accent-color: var(--primary-orange); cursor: pointer; }
 
         footer { text-align: center; padding: 40px 0; color: var(--text-sub); font-size: 0.75rem; border-top: 1px solid #f3f4f6; }
 
-        /* ==========================================
-           モバイル対応
-        ========================================== */
+        /* モバイル対応 */
         @media (max-width: 1024px) {
             .main-wrapper { display: flex; flex-direction: column; }
             .col-left { position: fixed; left: -100%; top: var(--header-height); width: 280px; z-index: 2000; transition: 0.4s; }
             .col-left.open { left: 0; }
             .burger-btn { display: block; }
-
-            /* スマホ順序: ジャケ写・紹介 → 試聴 → ボタン */
+            .hero-img-wrapper { height: 250px; }
             .col-mid { padding: 40px 20px; border-right: none; }
             .col-right { padding: 20px 20px 60px; background: #fff; }
         }
@@ -166,16 +183,28 @@
 
     <div class="main-wrapper">
         <aside class="col-left" id="sidebar">
-            <img src="https://fromtheasia.com/wp-content/uploads/NCG292.jpg" alt="Qurage" class="hero-img-left">
+            <div class="hero-img-wrapper">
+                <img src="https://fromtheasia.com/wp-content/uploads/NCG292.jpg" alt="Qurage" class="hero-img-left">
+            </div>
             <div class="title-box-left">
                 <h1>Qurage</h1>
                 <p>Free BGM & Track Maker</p>
                 <div class="illust-credit">Illustration : ノーコピーライトガール</div>
             </div>
-            <div class="song-list-placeholder">
+            <div class="recent-tracks-container">
                 <h3>RECENT TRACKS</h3>
                 <a href="first-step.html" class="recent-link">First step</a>
-                </div>
+                <a href="#" class="recent-link">Deep Upbeat</a>
+                <a href="#" class="recent-link">At the beach</a>
+                <a href="#" class="recent-link">Mystic Moon</a>
+                <a href="#" class="recent-link">Boogie Night</a>
+                <a href="#" class="recent-link">True Love</a>
+                <a href="#" class="recent-link">Between</a>
+                <a href="#" class="recent-link">Innocent</a>
+                <a href="#" class="recent-link">Ordinary</a>
+                <a href="#" class="recent-link">Big Tight</a>
+                <a href="#" class="recent-link">Organic</a>
+            </div>
         </aside>
 
         <article class="col-mid">
@@ -240,7 +269,6 @@
     <footer>© Qurage. All Rights Reserved.</footer>
 
     <script>
-        // プレイヤー基本機能
         const audio = new Audio();
         const playBtn = document.getElementById('playBtn');
         const playIconSVG = document.getElementById('playIconSVG');
@@ -319,7 +347,6 @@
             else updatePlayIcon(false);
         });
 
-        // ハンバーガーメニュー
         const burgerBtn = document.getElementById('burgerBtn');
         const sidebar = document.getElementById('sidebar');
         burgerBtn.addEventListener('click', () => {
