@@ -26,6 +26,15 @@ const allAlbums = [
         desc: "優しく切なく",
         booth: "https://casbgcasbg.booth.pm/items/2691982",
         tracksCount: "3 Tracks"
+    },
+    {
+        id: "mystic-moon", 
+        title: "Mystic Moon",
+        subtitle: "3rd Single",
+        img: "https://fromtheasia.com/wp-content/uploads/NCG210-scaled.jpg",
+        desc: "最近やってるゲームの影響でチャイニーズミュージックにトライした結果",
+        booth: "https://casbgcasbg.booth.pm/items/2692032",
+        tracksCount: "3 Tracks"
     }
 ];
 
@@ -45,5 +54,10 @@ const allTracks = [
     // At the beach 収録曲
     { title: "Ambition Christy", file: "2020110912 Ambition_Christy-80_Csm.mp3", albumId: "at-the-beach" },
     { title: "Ocean Blue", file: "2020110913 Ocean_Blue-90_B.mp3", albumId: "at-the-beach" },
-    { title: "Tropical Air", file: "2020111710 Tropical_Air-100_C.mp3", albumId: "at-the-beach" }
+    { title: "Tropical Air", file: "2020111710 Tropical_Air-100_C.mp3", albumId: "at-the-beach" },
+
+    // Mystic Moon 収録曲
+    { title: "Mystic Moon QGN", file: "2020111319 Mystic_Moon_QGN-110_B.mp3", albumId: "mystic-moon" },
+    { title: "Celestial Ageless CDM Dizi", file: "2020112622 Celestial_Ageless_CDM_Dizi-130_B.mp3", albumId: "mystic-moon" },
+    { title: "Mystic Moon Nines Technicolor", file: "2021011320 Mystic_Moon_Nines_Technicolor-150_B.mp3", albumId: "mystic-moon" }
 ];
