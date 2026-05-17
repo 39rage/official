@@ -17,6 +17,15 @@ const allAlbums = [
         desc: "ひたすらに眠たい曲を作りました。<br>おまけはちょっとオシャレにしたバージョンです。",
         booth: "https://casbgcasbg.booth.pm/items/2691947",
         tracksCount: "2 Tracks"
+    },
+    {
+        id: "at-the-beach", 
+        title: "At the beach",
+        subtitle: "2nd Single",
+        img: "https://fromtheasia.com/wp-content/uploads/NCG111.jpg",
+        desc: "優しく切なく",
+        booth: "https://casbgcasbg.booth.pm/items/2691982",
+        tracksCount: "3 Tracks"
     }
 ];
 
@@ -31,5 +40,10 @@ const allTracks = [
     
     // Deep Upbeat 収録曲
     { title: "Deep Upbeat EP", file: "2020110114 Deep_Upbeat_EP-60_D.mp3", albumId: "deep-upbeat" },
-    { title: "Deep Upbeat Dense Alert", file: "2020110114_2 Deep_Upbeat_Dense_Alert-60_D.mp3", albumId: "deep-upbeat" }
+    { title: "Deep Upbeat Dense Alert", file: "2020110114_2 Deep_Upbeat_Dense_Alert-60_D.mp3", albumId: "deep-upbeat" },
+
+    // At the beach 収録曲
+    { title: "Ambition Christy", file: "2020110912 Ambition_Christy-80_Csm.mp3", albumId: "at-the-beach" },
+    { title: "Ocean Blue", file: "2020110913 Ocean_Blue-90_B.mp3", albumId: "at-the-beach" },
+    { title: "Tropical Air", file: "2020111710 Tropical_Air-100_C.mp3", albumId: "at-the-beach" }
 ];
