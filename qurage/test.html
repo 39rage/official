@@ -24,27 +24,23 @@
             color: var(--text-main);
         }
 
-        /* --- ヘッダー：配置の違和感を解消 --- */
+        /* --- ヘッダー：中央揃え --- */
         .site-header {
             position: fixed;
             top: 0; left: 0; width: 100%; height: var(--header-height);
             background: #ffffff;
             border-bottom: 1px solid #eee;
-            display: grid;
-            grid-template-columns: 60px 1fr 60px; /* 左右に同じ幅を確保して中央を出す */
-            align-items: center;
+            display: flex; align-items: center; justify-content: center; /* 画面中央揃え */
             z-index: 2100;
         }
         .header-logo {
-            grid-column: 2; /* 真ん中の列に配置 */
             font-size: 1.1rem; font-weight: 700; letter-spacing: 0.15em;
             text-decoration: none; color: var(--primary-orange);
             text-align: center;
         }
 
         .burger-btn {
-            grid-column: 1; /* 左端に配置 */
-            justify-self: center;
+            position: absolute; left: 20px; /* 左端に固定 */
             background: none; border: none;
             cursor: pointer; display: none; padding: 10px; z-index: 2200;
         }
@@ -69,14 +65,18 @@
         }
         
         .hero-img-wrapper {
-            width: 100%; height: 32vh; /* 高さを少し抑えました */
-            display: flex; justify-content: center; align-items: flex-end; /* 下揃えにして隙間を調整 */
+            width: 100%; height: 30vh; 
+            display: flex; justify-content: center; align-items: flex-start;
             overflow: hidden;
-            padding-top: 20px; /* 画像を少し下にズラすための余白 */
+            padding-top: 40px; /* 上の余白をさらに拡大 */
         }
-        .hero-img-left { width: 90%; height: 100%; object-fit: contain; }
+        .hero-img-left { 
+            width: 85%; height: 100%; 
+            object-fit: contain;
+            transform: translateY(15px); /* 画像自体をさらに15px下げ */
+        }
 
-        .profile-text-area { padding: 15px 20px; text-align: center; }
+        .profile-text-area { padding: 30px 20px 15px; text-align: center; } /* 画像を下げた分、少しパディング調整 */
         .profile-text-area h1 { font-size: 1.4rem; font-weight: 400; letter-spacing: 0.15em; margin-bottom: 2px; }
         .profile-text-area p { font-size: 0.7rem; opacity: 0.8; margin-bottom: 4px; font-weight: 600; }
         .illust-credit { font-size: 0.6rem; opacity: 0.6; margin-bottom: 30px; }
@@ -163,7 +163,7 @@
     <header class="site-header">
         <button class="burger-btn" id="burgerBtn"><span class="burger-line"></span><span class="burger-line"></span><span class="burger-line"></span></button>
         <a href="index.html" class="header-logo">Qurage Music</a>
-        <div style="grid-column: 3;"></div> </header>
+    </header>
 
     <div class="main-container">
         <aside class="col-left" id="sidebar">
@@ -241,7 +241,6 @@
     </div>
 
     <script>
-        // JS部分は変更なし
         const audio = new Audio();
         const playBtn = document.getElementById('playBtn');
         const playIconSVG = document.getElementById('playIconSVG');
