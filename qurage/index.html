@@ -25,85 +25,90 @@
         .burger-btn.open .burger-line:nth-child(2) { opacity: 0; }
         .burger-btn.open .burger-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
         .main-container { display: grid; grid-template-columns: 25% 75%; min-height: 100vh; padding-top: var(--header-height); }
-        .col-left { background: var(--primary-orange); color: #ffffff; position: sticky; top: var(--header-height); height: calc(100vh - var(--header-height)); display: flex; flex-direction: column; overflow: hidden; padding-top: 50px; z-index: 1000; }
         
-        .hero-img-wrapper { width: 100%; height: 28vh; display: flex; justify-content: center; align-items: center; }
-        .hero-img-left { width: auto; max-height: 100%; max-width: 85%; object-fit: contain; }
-        .profile-text-area { padding: 20px 20px 10px; text-align: center; }
-        .profile-text-area h1 { font-size: 1.3rem; font-weight: 400; letter-spacing: 0.15em; margin-bottom: 2px; }
-        .profile-text-area p { font-size: 0.7rem; opacity: 0.8; margin-bottom: 4px; font-weight: 600; }
-        .illust-credit { font-size: 0.6rem; opacity: 0.6; margin-bottom: 15px; }
+        /* 左サイドバー */
+        .col-left { background: var(--primary-orange); color: #ffffff; position: sticky; top: var(--header-height); height: calc(100vh - var(--header-height)); display: flex; flex-direction: column; overflow: hidden; padding-top: 40px; z-index: 1000; }
+        .hero-img-wrapper { width: 100%; height: 25vh; display: flex; justify-content: center; align-items: center; }
+        .hero-img-left { width: auto; max-height: 100%; max-width: 80%; object-fit: contain; }
+        .profile-text-area { padding: 15px 20px 10px; text-align: center; }
+        .profile-text-area h1 { font-size: 1.2rem; font-weight: 400; letter-spacing: 0.15em; margin-bottom: 2px; }
+        .profile-text-area p { font-size: 0.65rem; opacity: 0.8; margin-bottom: 4px; font-weight: 600; }
+        .illust-credit { font-size: 0.55rem; opacity: 0.6; margin-bottom: 15px; }
 
-        /* 追加：SNS・規約リンクボタン */
-        .info-links { display: flex; justify-content: center; gap: 10px; padding: 0 20px 25px; }
-        .info-btn { flex: 1; text-align: center; text-decoration: none; color: #ffffff; border: 1px solid rgba(255,255,255,0.4); border-radius: 4px; padding: 6px 0; font-size: 0.65rem; transition: 0.3s; }
-        .info-btn:hover { background: #ffffff; color: var(--primary-orange); }
+        /* サイドバー：SNS・規約リンク（縦並びスリム版） */
+        .info-links { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 0 15%; margin-bottom: 25px; }
+        .info-btn { width: 100%; max-width: 140px; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; color: #ffffff; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; padding: 5px 0; font-size: 0.65rem; transition: 0.3s; }
+        .info-btn:hover { background: #ffffff; color: var(--primary-orange); border-color: #ffffff; }
+        .info-btn svg { fill: currentColor; width: 12px; height: 12px; }
         
-        .recent-tracks-section { padding: 0 10% 20px 15%; flex: 1; overflow-y: auto; }
-        .recent-tracks-section h3 { font-size: 0.7rem; letter-spacing: 0.15em; color: rgba(255,255,255,0.7); border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 8px; margin-bottom: 15px; }
-        .recent-grid { display: flex; flex-direction: column; gap: 8px; }
-        .recent-link { display: block; color: #ffffff; text-decoration: none; font-size: 0.65rem; padding: 6px 8px; border: 1px solid rgba(255,255,255,0.4); border-radius: 2px; transition: all 0.3s ease; }
+        .recent-tracks-section { padding: 0 15% 20px; flex: 1; overflow-y: auto; }
+        .recent-tracks-section h3 { font-size: 0.65rem; letter-spacing: 0.15em; color: rgba(255,255,255,0.7); border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 6px; margin-bottom: 12px; }
+        .recent-grid { display: flex; flex-direction: column; gap: 6px; }
+        .recent-link { display: block; color: #ffffff; text-decoration: none; font-size: 0.65rem; padding: 6px 8px; border: 1px solid rgba(255,255,255,0.3); border-radius: 2px; transition: 0.3s; }
         .recent-link:hover { background: #ffffff; color: var(--primary-orange); border-color: #ffffff; transform: translateX(3px); }
 
+        /* メインエリア */
         .content-area { display: flex; flex-direction: column; background: var(--soft-white); }
         .columns-split { display: grid; grid-template-columns: 65% 35%; flex: 1; }
-        .col-mid { padding: 60px 50px 0; border-right: 1px solid #f3f4f6; display: flex; flex-direction: column; }
+        .col-mid { padding: 50px 50px 0; border-right: 1px solid #f3f4f6; display: flex; flex-direction: column; }
         .mid-container { max-width: 800px; margin: 0 auto; width: 100%; flex: 1; }
-        .section-box { margin-bottom: 80px; }
-        .section-box h2 { font-size: 1.2rem; font-weight: 700; letter-spacing: 0.25em; margin-bottom: 40px; color: var(--text-main); border-left: 3px solid var(--primary-orange); padding-left: 18px; }
-        .about-text { font-size: 1rem; line-height: 2.4; color: var(--text-sub); }
-        .album-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 35px; }
+        .section-box { margin-bottom: 60px; }
+        .section-box h2 { font-size: 1.1rem; font-weight: 700; letter-spacing: 0.2em; margin-bottom: 30px; color: var(--text-main); border-left: 3px solid var(--primary-orange); padding-left: 15px; }
+        .about-text { font-size: 0.9rem; line-height: 2.2; color: var(--text-sub); }
+        .album-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 30px; }
         .album-card { text-decoration: none; color: inherit; display: flex; flex-direction: column; }
-        .album-img-box { aspect-ratio: 1 / 1; width: 100%; overflow: hidden; border-radius: 4px; border: 1px solid #eee; margin-bottom: 15px; transition: transform 0.4s; }
+        .album-img-box { aspect-ratio: 1 / 1; width: 100%; overflow: hidden; border-radius: 4px; border: 1px solid #eee; margin-bottom: 12px; transition: transform 0.4s; }
         .album-img { width: 100%; height: 100%; object-fit: cover; }
         .album-card:hover .album-img-box { transform: translateY(-5px); border-color: var(--primary-orange); }
-        .album-title { font-size: 1rem; font-weight: 700; color: var(--text-main); margin-bottom: 5px; }
-        .album-meta { font-size: 0.8rem; color: var(--text-sub); font-family: 'Inter'; }
+        .album-title { font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 4px; }
+        .album-meta { font-size: 0.75rem; color: var(--text-sub); font-family: 'Inter'; }
 
-        /* 右カラム：曲リスト字下げ対応 */
-        .col-right { height: calc(100vh - var(--header-height)); position: sticky; top: var(--header-height); padding: 60px 30px 30px; background: var(--bg-light); display: flex; flex-direction: column; }
-        .section-title { font-size: 0.8rem; letter-spacing: 0.15em; margin-bottom: 25px; border-left: 3px solid var(--primary-orange); padding-left: 15px; font-weight: 700; }
-        .track-list { list-style: none; margin-bottom: 30px; flex: 1; overflow-y: auto; padding-right: 5px; }
-        .track-item { padding: 15px 10px; border-bottom: 1px solid #e5e7eb; cursor: pointer; display: grid; grid-template-columns: 2.2em 1fr auto; align-items: start; font-size: 0.85rem; transition: 0.2s; gap: 4px; }
+        /* 右カラム：曲リスト */
+        .col-right { height: calc(100vh - var(--header-height)); position: sticky; top: var(--header-height); padding: 50px 25px 25px; background: var(--bg-light); display: flex; flex-direction: column; }
+        .section-title { font-size: 0.75rem; letter-spacing: 0.15em; margin-bottom: 20px; border-left: 3px solid var(--primary-orange); padding-left: 12px; font-weight: 700; }
+        .track-list { list-style: none; margin-bottom: 25px; flex: 1; overflow-y: auto; padding-right: 5px; }
+        .track-item { padding: 12px 8px; border-bottom: 1px solid #e5e7eb; cursor: pointer; display: grid; grid-template-columns: 2.2em 1fr auto; align-items: start; font-size: 0.8rem; transition: 0.2s; gap: 4px; }
         .track-item:hover { background: rgba(255,255,255,0.5); }
         .track-item.active { background: #fff; color: var(--primary-orange); font-weight: bold; }
         .track-name { word-break: break-all; line-height: 1.4; }
-        .track-meta { font-family: 'Inter'; font-size: 0.65rem; color: var(--text-sub); margin-top: 2px; }
+        .track-meta { font-family: 'Inter'; font-size: 0.6rem; color: var(--text-sub); margin-top: 2px; }
 
-        /* プレイヤーUI：タブレットはみ出し防止 */
+        /* プレイヤーUI（2段ボタン構成） */
         .player-footer { margin-top: auto; width: 100%; }
-        .player-ui { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
-        .now-playing-title { font-size: 0.85rem; font-weight: 700; margin-bottom: 15px; text-align: center; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-main); }
-        .controls-group { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; width: 100%; flex-wrap: wrap; }
-        .btn-svg { background: none; border: none; cursor: pointer; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: 0.2s; flex-shrink: 0; }
-        .btn-svg:hover { background: #f3f4f6; }
-        .btn-svg.active .icon-svg { fill: var(--primary-orange); }
-        #repeatBtn { position: relative; }
-        #repeatBtn.repeat-one::after { content: '1'; position: absolute; top: 6px; right: 6px; font-size: 9px; font-weight: bold; color: var(--primary-orange); background: #fff; border: 1px solid var(--primary-orange); border-radius: 50%; width: 13px; height: 13px; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; }
-        .icon-svg { fill: #9ca3af; width: 20px; height: 20px; transition: fill 0.2s; }
-        .play-main { width: 48px; height: 48px; border-radius: 50%; background: #fff; border: 1px solid var(--primary-orange); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s; flex-shrink: 0; }
-        .play-main:hover { transform: scale(1.05); background: var(--primary-orange); }
-        .play-main:hover .icon-svg { fill: #fff; }
-        .play-main .icon-svg { fill: var(--primary-orange); width: 22px; height: 22px; }
-        .timeline-box { width: 100%; display: flex; align-items: center; gap: 8px; font-size: 0.65rem; color: var(--text-sub); font-family: 'Inter'; }
-        .seek-bar { flex: 1; height: 4px; accent-color: var(--primary-orange); cursor: pointer; }
-        .volume-box { width: 100%; display: flex; align-items: center; gap: 10px; margin-top: 15px; padding-top: 10px; border-top: 1px solid #f3f4f6; }
-        #volumeBar { height: 4px; accent-color: #9ca3af; flex: 1; cursor: pointer; }
-        .download-btn-wrapper { margin-top: 20px; }
-        .booth-btn { display: block; background: var(--primary-orange); color: #fff; text-decoration: none; font-weight: 700; padding: 12px; text-align: center; border-radius: 8px; transition: 0.3s; font-size: 0.85rem; letter-spacing: 0.05em; font-family: 'Shippori Mincho', serif; }
-        .booth-btn:hover { background: #965925; }
+        .player-ui { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 15px 20px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
+        .now-playing-title { font-size: 0.8rem; font-weight: 700; margin-bottom: 12px; text-align: center; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-main); }
         
-        footer { text-align: center; padding: 40px 0; color: var(--text-sub); font-size: 0.8rem; border-top: 1px solid #f3f4f6; background: #ffffff; }
+        .controls-group { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 12px; width: 100%; }
+        .controls-main { display: flex; align-items: center; justify-content: center; gap: 15px; }
+        .controls-sub { display: flex; align-items: center; justify-content: center; gap: 20px; border-top: 1px solid #f9fafb; padding-top: 8px; width: 80%; }
+        
+        .btn-svg { background: none; border: none; cursor: pointer; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: 0.2s; color: #9ca3af; }
+        .btn-svg:hover { background: #f3f4f6; }
+        .btn-svg.active { color: var(--primary-orange); }
+        .icon-svg { fill: currentColor; width: 18px; height: 18px; }
+        
+        .play-main { width: 44px; height: 44px; border-radius: 50%; background: #fff; border: 1px solid var(--primary-orange); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s; color: var(--primary-orange); }
+        .play-main:hover { transform: scale(1.05); background: var(--primary-orange); color: #fff; }
+        .play-main .icon-svg { width: 20px; height: 20px; }
+
+        #repeatBtn { position: relative; }
+        #repeatBtn.repeat-one::after { content: '1'; position: absolute; top: 4px; right: 4px; font-size: 8px; font-weight: bold; color: var(--primary-orange); background: #fff; border: 1px solid var(--primary-orange); border-radius: 50%; width: 12px; height: 12px; display: flex; align-items: center; justify-content: center; }
+
+        .timeline-box { width: 100%; display: flex; align-items: center; gap: 8px; font-size: 0.6rem; color: var(--text-sub); font-family: 'Inter'; }
+        .seek-bar { flex: 1; height: 4px; accent-color: var(--primary-orange); cursor: pointer; }
+        .volume-box { width: 100%; display: flex; align-items: center; gap: 10px; margin-top: 12px; padding-top: 8px; border-top: 1px solid #f3f4f6; }
+        #volumeBar { height: 4px; accent-color: #9ca3af; flex: 1; cursor: pointer; }
+        
+        .download-btn-wrapper { margin-top: 15px; }
+        .booth-btn { display: block; background: var(--primary-orange); color: #fff; text-decoration: none; font-weight: 700; padding: 10px; text-align: center; border-radius: 6px; transition: 0.3s; font-size: 0.8rem; letter-spacing: 0.05em; font-family: 'Shippori Mincho', serif; }
+        
+        footer { text-align: center; padding: 30px 0; color: var(--text-sub); font-size: 0.75rem; border-top: 1px solid #f3f4f6; background: #ffffff; }
         .footer-pc { display: block; width: 100%; margin-top: auto; }
         .footer-mobile { display: none; }
 
-        @media (max-width: 1024px) { 
-            .main-container { grid-template-columns: 30% 70%; } .columns-split { grid-template-columns: 60% 40%; } 
-            .controls-group { gap: 4px; }
-            .btn-svg { width: 34px; height: 34px; }
-        }
+        @media (max-width: 1024px) { .main-container { grid-template-columns: 30% 70%; } .columns-split { grid-template-columns: 60% 40%; } }
         @media (max-width: 900px) { 
-            .main-container { display: block; } .burger-btn { display: block; } .col-left { position: fixed; left: 0; top: -100%; width: 100%; height: 100vh; z-index: 2000; transition: 0.5s; opacity: 0; visibility: hidden; padding-top: calc(var(--header-height) + 50px); overflow-y: auto; } .col-left.open { top: 0; opacity: 1; visibility: visible; } .columns-split { display: block; } .col-mid, .col-right { padding: 40px 20px; border-right: none; height: auto; position: static; } .track-list { max-height: 400px; } 
+            .main-container { display: block; } .burger-btn { display: block; } .col-left { position: fixed; left: 0; top: -100%; width: 100%; height: 100vh; z-index: 2000; transition: 0.5s; opacity: 0; visibility: hidden; padding-top: calc(var(--header-height) + 40px); overflow-y: auto; } .col-left.open { top: 0; opacity: 1; visibility: visible; } .columns-split { display: block; } .col-mid, .col-right { padding: 30px 20px; border-right: none; height: auto; position: static; } .track-list { max-height: 400px; } 
             .footer-pc { display: none; } .footer-mobile { display: block; }
         }
     </style>
@@ -123,11 +128,15 @@
                 <p>Free BGM & Track Maker</p>
                 <div class="illust-credit">Illustration : ノーコピーライトガール</div>
             </div>
-            <!-- 追加：X・利用規約ボタン -->
+            
             <div class="info-links">
-                <a href="https://x.com/_caSBg" target="_blank" class="info-btn">X (Twitter)</a>
+                <a href="https://x.com/_caSBg" target="_blank" class="info-btn">
+                    <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 7.719L22.875 21H16.22l-5.216-6.817L4.99 21H1.68l7.73-8.235L1.25 2.25h6.822l4.713 6.231l5.459-6.231zm-1.161 16.77h1.833L7.084 4.126H5.117L17.083 19.02z"/></svg>
+                    X (Twitter)
+                </a>
                 <a href="https://casbgcasbg.booth.pm/" target="_blank" class="info-btn">利用規約</a>
             </div>
+
             <div class="recent-tracks-section">
                 <h3>DISCOGRAPHY</h3>
                 <div class="recent-grid" id="sidebarNav"></div>
@@ -161,11 +170,17 @@
                         <div class="player-ui">
                             <div class="now-playing-title" id="nowPlaying">...</div>
                             <div class="controls-group">
-                                <button class="btn-svg" id="shuffleBtn" title="Shuffle"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.45 20 9.5V4h-5.5zm.59 10.83l-1.41 1.41 3.13 3.13L14.5 22H20v-5.5l-2.04 2.04-3.37-3.37z"/></svg></button>
-                                <button class="btn-svg" id="prevBtn" title="Previous"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
-                                <button class="play-main" id="playBtn" title="Play/Pause"><svg id="playIconSVG" class="icon-svg" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
-                                <button class="btn-svg" id="nextBtn" title="Next"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
-                                <button class="btn-svg" id="repeatBtn" title="Repeat"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg></button>
+                                <!-- 1段目：メイン操作 -->
+                                <div class="controls-main">
+                                    <button class="btn-svg" id="prevBtn" title="Previous"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
+                                    <button class="play-main" id="playBtn" title="Play/Pause"><svg id="playIconSVG" class="icon-svg" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+                                    <button class="btn-svg" id="nextBtn" title="Next"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
+                                </div>
+                                <!-- 2段目：サブ操作 -->
+                                <div class="controls-sub">
+                                    <button class="btn-svg" id="shuffleBtn" title="Shuffle"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.45 20 9.5V4h-5.5zm.59 10.83l-1.41 1.41 3.13 3.13L14.5 22H20v-5.5l-2.04 2.04-3.37-3.37z"/></svg></button>
+                                    <button class="btn-svg" id="repeatBtn" title="Repeat"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg></button>
+                                </div>
                             </div>
                             <div class="timeline-box">
                                 <span id="currentTime">0:00</span>
@@ -173,7 +188,7 @@
                                 <span id="duration">0:00</span>
                             </div>
                             <div class="volume-box">
-                                <button class="btn-svg" id="muteBtn" style="width:24px; height:24px;"><svg id="volumeIcon" class="icon-svg" style="width:18px; height:18px;" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+                                <button class="btn-svg" id="muteBtn" style="width:24px; height:24px;"><svg id="volumeIcon" class="icon-svg" style="width:16px; height:18px;" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
                                 <input type="range" id="volumeBar" value="80" max="100">
                             </div>
                         </div>
@@ -232,23 +247,16 @@
         playBtn.addEventListener('click', () => { if (audio.paused) { audio.play().catch(e => console.log(e)); updatePlayIcon(true); } else { audio.pause(); updatePlayIcon(false); } });
         document.getElementById('prevBtn').addEventListener('click', () => { let idx = (currentIndex - 1 + trackItems.length) % trackItems.length; loadTrack(idx); audio.play(); updatePlayIcon(true); });
         
-        // 修正：playNext ロジック（リピートなし時の停止対応）
         const playNext = () => {
             let idx;
             if (isShuffle) {
                 idx = Math.floor(Math.random() * trackItems.length);
             } else {
                 idx = currentIndex + 1;
-                // もし最後の曲で、リピート設定がない場合は止める
                 if (idx >= trackItems.length) {
                     if (repeatMode === 0) {
-                        audio.pause();
-                        audio.currentTime = 0;
-                        updatePlayIcon(false);
-                        return;
-                    } else {
-                        idx = 0; // 全曲リピートなら最初に戻る
-                    }
+                        audio.pause(); audio.currentTime = 0; updatePlayIcon(false); return;
+                    } else { idx = 0; }
                 }
             }
             loadTrack(idx); audio.play(); updatePlayIcon(true);
