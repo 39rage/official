@@ -7,7 +7,7 @@
     <link rel="icon" href="https://fromtheasia.com/wp-content/uploads/90d8e4fe08331e787970ae1288933823.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         
         body {
             font-family: 'Shippori Mincho', 'Inter', serif;
@@ -102,7 +102,7 @@
         }
         .back-link:hover { opacity: 0.7; }
 
-        /* アルバム詳細 - 正方形 */
+        /* アルバム詳細 */
         .album-detail {
             margin-bottom: 60px;
             text-align: center;
@@ -195,7 +195,7 @@
             color: #9ca3af;
         }
 
-        /* プレイヤーコントロール（サイズ調整） */
+        /* プレイヤーコントロール */
         .audio-controls {
             background: #fffcf9;
             border: 1px solid rgba(180, 107, 45, 0.1);
@@ -217,7 +217,7 @@
         .control-buttons {
             display: flex;
             align-items: center;
-            gap: 25px;
+            gap: 20px;
             margin-bottom: 25px;
         }
 
@@ -225,58 +225,58 @@
             background: none;
             border: none;
             cursor: pointer;
-            width: 44px; /* 大きめに調整 */
+            width: 44px;
             height: 44px;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: 0.2s;
             position: relative;
         }
 
         .icon { 
             fill: #9ca3af; 
-            width: 24px; /* アイコン自体も少し大きく */
+            width: 24px;
             height: 24px; 
             transition: fill 0.2s;
         }
         
-        /* アクティブ時の色 */
-        .btn-control.active .icon { fill: #b46b2d; }
-        .btn-control:hover .icon { fill: #111827; }
+        /* PCでのホバー時のみ黒くする（スマホでの誤作動防止） */
+        @media (hover: hover) {
+            .btn-control:hover .icon { fill: #111827; }
+            .play-btn:hover { background: #b46b2d; transform: scale(1.08); }
+            .play-btn:hover .icon-play { fill: #ffffff; }
+        }
+
+        /* アクティブ・選択中の色（オレンジ固定） */
+        .btn-control.active .icon { fill: #b46b2d !important; }
 
         .play-btn {
             background: #ffffff;
             border: 1px solid #b46b2d;
-            color: #b46b2d;
-            width: 60px; /* メインボタンを大きく */
+            width: 60px;
             height: 60px;
             border-radius: 50%;
             cursor: pointer;
             display: flex; justify-content: center; align-items: center;
-            font-size: 1.4rem;
             transition: all 0.3s;
             box-shadow: 0 4px 10px rgba(180, 107, 45, 0.1);
         }
-        .play-btn:hover {
-            background: #b46b2d;
-            color: #ffffff;
-            transform: scale(1.08);
-        }
+        .icon-play { fill: #b46b2d; width: 24px; height: 24px; transition: fill 0.3s; }
 
-        /* リピートアイコンの中の1 */
-        .repeat-one-text {
+        /* リピートアイコン内テキスト */
+        .repeat-text {
             position: absolute;
             font-size: 9px;
             font-weight: 900;
             font-family: 'Inter';
-            color: #b46b2d;
-            top: 50%;
+            color: inherit;
+            top: 52%;
             left: 50%;
-            transform: translate(-50%, -40%); /* 微調整 */
+            transform: translate(-50%, -50%);
             display: none;
+            pointer-events: none;
         }
-        .repeat-mode-2 .repeat-one-text { display: block; }
+        .btn-control.active.repeat-mode-2 .repeat-text { display: block; color: #b46b2d; }
 
         .timeline-container {
             width: 100%;
@@ -309,11 +309,6 @@
             box-shadow: 0 4px 10px rgba(180, 107, 45, 0.2);
             margin-top: 10px;
         }
-        .booth-button:hover {
-            background-color: #d28542;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(180, 107, 45, 0.3);
-        }
 
         footer {
             text-align: center;
@@ -330,6 +325,8 @@
             .hero-image { height: 45vh; }
             .title-box { height: auto; padding: 35px 20px; }
             .right-panel { padding: 40px 20px; }
+            /* スマホでは常に再生ボタンに色をつけても良い */
+            .play-btn { background: #ffffff; }
         }
     </style>
 </head>
@@ -401,7 +398,9 @@
                                     <svg class="icon" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
                                 </button>
 
-                                <button class="play-btn" id="playBtn">▶</button>
+                                <button class="play-btn" id="playBtn">
+                                    <svg id="playIconSVG" class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </button>
 
                                 <button class="btn-control" id="nextBtn" title="Next">
                                     <svg class="icon" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
@@ -409,7 +408,7 @@
 
                                 <button class="btn-control" id="repeatBtn" title="Repeat Off">
                                     <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg>
-                                    <span class="repeat-one-text">1</span>
+                                    <span class="repeat-text">1</span>
                                 </button>
                             </div>
 
@@ -441,6 +440,7 @@
     <script>
         const audio = new Audio();
         const playBtn = document.getElementById('playBtn');
+        const playIconSVG = document.getElementById('playIconSVG');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         const shuffleBtn = document.getElementById('shuffleBtn');
@@ -454,13 +454,17 @@
 
         let currentIndex = 0;
         let isShuffle = false;
-        let repeatMode = 0; // 0: OFF, 1: ALL, 2: ONE
+        let repeatMode = 0; 
+
+        // 再生・一時停止のSVGパス
+        const playPath = "M8 5v14l11-7z";
+        const pausePath = "M6 19h4V5H6v14zm8-14v14h4V5h-4z";
 
         const channel = new BroadcastChannel('qurage_player');
         channel.onmessage = (event) => {
             if (event.data === 'play_started') {
                 audio.pause();
-                playBtn.textContent = '▶';
+                playIconSVG.querySelector('path').setAttribute('d', playPath);
             }
         };
 
@@ -478,11 +482,11 @@
         playBtn.addEventListener('click', () => {
             if (audio.paused) {
                 audio.play();
-                playBtn.textContent = '⏸';
+                playIconSVG.querySelector('path').setAttribute('d', pausePath);
                 channel.postMessage('play_started');
             } else {
                 audio.pause();
-                playBtn.textContent = '▶';
+                playIconSVG.querySelector('path').setAttribute('d', playPath);
             }
         });
 
@@ -491,7 +495,7 @@
             if (index < 0) index = trackItems.length - 1;
             loadTrack(index);
             audio.play();
-            playBtn.textContent = '⏸';
+            playIconSVG.querySelector('path').setAttribute('d', pausePath);
             channel.postMessage('play_started');
         });
 
@@ -509,7 +513,7 @@
                 loadTrack(index);
             }
             audio.play();
-            playBtn.textContent = '⏸';
+            playIconSVG.querySelector('path').setAttribute('d', pausePath);
             channel.postMessage('play_started');
         }
 
@@ -522,8 +526,6 @@
             repeatMode = (repeatMode + 1) % 3;
             repeatBtn.classList.remove('repeat-mode-0', 'repeat-mode-1', 'repeat-mode-2');
             repeatBtn.classList.add(`repeat-mode-${repeatMode}`);
-            
-            // 全曲または1曲リピートの時にアクティブ色にする
             repeatBtn.classList.toggle('active', repeatMode > 0);
             
             const titles = ["Repeat Off", "Repeat All", "Repeat One"];
@@ -534,7 +536,7 @@
             item.addEventListener('click', () => {
                 loadTrack(index);
                 audio.play();
-                playBtn.textContent = '⏸';
+                playIconSVG.querySelector('path').setAttribute('d', pausePath);
                 channel.postMessage('play_started');
             });
         });
@@ -559,7 +561,7 @@
         audio.addEventListener('ended', () => {
             if (repeatMode === 2) audio.play();
             else if (repeatMode === 1 || currentIndex < trackItems.length - 1) playNext();
-            else playBtn.textContent = '▶';
+            else playIconSVG.querySelector('path').setAttribute('d', playPath);
         });
     </script>
 </body>
