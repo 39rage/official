@@ -7,7 +7,6 @@
     <link rel="icon" href="https://fromtheasia.com/wp-content/uploads/90d8e4fe08331e787970ae1288933823.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* スタイルは index.html と共通 */
         :root { --primary-orange: #b46b2d; --soft-white: #ffffff; --bg-light: #f9fafb; --text-main: #1f2937; --text-sub: #6b7280; --header-height: 60px; }
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Shippori Mincho', 'Inter', serif; background-color: var(--soft-white); color: var(--text-main); overflow-x: hidden; }
@@ -33,8 +32,8 @@
         .recent-link:hover { background: #ffffff; color: var(--primary-orange); border-color: #ffffff; transform: translateX(3px); }
         .content-area { display: flex; flex-direction: column; background: var(--soft-white); }
         .columns-split { display: grid; grid-template-columns: 65% 35%; flex: 1; }
-        .col-mid { padding: 60px 50px; border-right: 1px solid #f3f4f6; }
-        .mid-container { max-width: 800px; margin: 0 auto; width: 100%; }
+        .col-mid { padding: 60px 50px 0; border-right: 1px solid #f3f4f6; display: flex; flex-direction: column; }
+        .mid-container { max-width: 800px; margin: 0 auto; width: 100%; flex: 1; }
         .album-detail-box { text-align: center; }
         .album-art-large { width: 100%; max-width: 320px; aspect-ratio: 1/1; object-fit: cover; border-radius: 4px; box-shadow: 0 15px 40px rgba(0,0,0,0.08); margin-bottom: 40px; }
         .album-title-main { font-size: 1.8rem; font-weight: 700; margin-bottom: 10px; color: var(--text-main); }
@@ -70,17 +69,22 @@
         .download-btn-wrapper { margin-top: 25px; }
         .booth-btn { display: block; background: var(--primary-orange); color: #fff; text-decoration: none; font-weight: 700; padding: 15px; text-align: center; border-radius: 8px; transition: 0.3s; font-size: 0.9rem; letter-spacing: 0.05em; font-family: 'Shippori Mincho', serif; }
         .booth-btn:hover { background: #965925; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(180, 107, 45, 0.2); }
+        
         footer { text-align: center; padding: 40px 0; color: var(--text-sub); font-size: 0.8rem; border-top: 1px solid #f3f4f6; background: #ffffff; }
-        @media (max-width: 900px) { .main-container { display: block; } .burger-btn { display: block; } .col-left { position: fixed; left: 0; top: -100%; width: 100%; height: 100vh; z-index: 2000; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0; visibility: hidden; padding-top: calc(var(--header-height) + 50px); overflow-y: auto; } .col-left.open { top: 0; opacity: 1; visibility: visible; } .columns-split { display: block; } .col-mid, .col-right { padding: 40px 20px; border-right: none; height: auto; position: static; } .track-list { max-height: 400px; } }
+        .footer-pc { display: block; width: 100%; margin-top: auto; }
+        .footer-mobile { display: none; }
+
+        @media (max-width: 900px) { 
+            .main-container { display: block; } .burger-btn { display: block; } .col-left { position: fixed; left: 0; top: -100%; width: 100%; height: 100vh; z-index: 2000; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0; visibility: hidden; padding-top: calc(var(--header-height) + 50px); overflow-y: auto; } .col-left.open { top: 0; opacity: 1; visibility: visible; } .columns-split { display: block; } .col-mid, .col-right { padding: 40px 20px; border-right: none; height: auto; position: static; } .track-list { max-height: 400px; } 
+            .footer-pc { display: none; } .footer-mobile { display: block; }
+        }
     </style>
 </head>
 <body>
-
     <header class="site-header">
         <button class="burger-btn" id="burgerBtn"><span class="burger-line"></span><span class="burger-line"></span><span class="burger-line"></span></button>
         <a href="index.html" class="header-logo">Qurage Music</a>
     </header>
-
     <div class="main-container">
         <aside class="col-left" id="sidebar">
             <div class="hero-img-wrapper"><img src="https://fromtheasia.com/wp-content/uploads/NCG292.jpg" alt="Qurage" class="hero-img-left"></div>
@@ -90,13 +94,12 @@
                 <div class="recent-grid" id="sidebarNav"></div>
             </div>
         </aside>
-
         <div class="content-area">
             <div class="columns-split">
                 <article class="col-mid">
                     <div class="mid-container" id="albumDetail"></div>
+                    <footer class="footer-pc">© Qurage. All Rights Reserved.</footer>
                 </article>
-
                 <section class="col-right">
                     <h2 class="section-title">TRACK LIST</h2>
                     <ul class="track-list" id="trackList"></ul>
@@ -124,45 +127,23 @@
                     </div>
                 </section>
             </div>
-            <footer>© Qurage. All Rights Reserved.</footer>
+            <footer class="footer-mobile">© Qurage. All Rights Reserved.</footer>
         </div>
     </div>
-
     <script src="music-data.js"></script>
     <script>
-        // ★ このページで表示するアルバムIDを指定
         const currentAlbumId = "first-step";
-
-        // サイドバー生成
         const sidebarNav = document.getElementById('sidebarNav');
         sidebarNav.innerHTML = allAlbums.map(album => `<a href="${album.id}.html" class="recent-link">${album.title}</a>`).join('');
-
-        // アルバム詳細生成
         const album = allAlbums.find(a => a.id === currentAlbumId);
         if(album) {
             document.title = `${album.title} - Qurage Music`;
-            document.getElementById('albumDetail').innerHTML = `
-                <div class="album-detail-box">
-                    <img src="${album.img}" alt="${album.title}" class="album-art-large">
-                    <h2 class="album-title-main">${album.title}</h2>
-                    <p class="album-subtitle">${album.subtitle}</p>
-                    <p class="album-description">${album.desc}</p>
-                </div>
-            `;
+            document.getElementById('albumDetail').innerHTML = `<div class="album-detail-box"><img src="${album.img}" alt="${album.title}" class="album-art-large"><h2 class="album-title-main">${album.title}</h2><p class="album-subtitle">${album.subtitle}</p><p class="album-description">${album.desc}</p></div>`;
             document.getElementById('downloadArea').innerHTML = `<a href="${album.booth}" target="_blank" class="booth-btn">Download at BOOTH</a>`;
         }
-
-        // このアルバムの曲だけを表示（ファイル名順）
         const albumTracks = allTracks.filter(t => t.albumId === currentAlbumId).sort((a, b) => a.file.localeCompare(b.file));
         const trackListContainer = document.getElementById('trackList');
-        trackListContainer.innerHTML = albumTracks.map((track, idx) => `
-            <li class="track-item" data-src="audio/${track.file}">
-                <span>${String(idx + 1).padStart(2, '0')}. ${track.title}</span>
-                <span class="track-meta">Preview</span>
-            </li>
-        `).join('');
-
-        // プレイヤーロジック
+        trackListContainer.innerHTML = albumTracks.map((track, idx) => `<li class="track-item" data-src="audio/${track.file}"><span>${String(idx + 1).padStart(2, '0')}. ${track.title}</span><span class="track-meta">Preview</span></li>`).join('');
         const audio = new Audio();
         const playBtn = document.getElementById('playBtn');
         const playIconSVG = document.getElementById('playIconSVG');
