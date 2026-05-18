@@ -71,6 +71,15 @@ const allAlbums = [
         desc: "ギター・ウクレレ中心の爽やかな曲たち",
         booth: "https://casbgcasbg.booth.pm/items/2758663",
         tracksCount: "3 Tracks"
+    },
+    {
+        id: "ordinary", 
+        title: "Ordinary",
+        subtitle: "8th Single",
+        img: "https://fromtheasia.com/wp-content/uploads/NCG64.jpg",
+        desc: "日常使いできそうなほのぼの曲",
+        booth: "https://casbgcasbg.booth.pm/items/2758775",
+        tracksCount: "3 Tracks"
     }
 ];
 
@@ -116,5 +125,10 @@ const allTracks = [
     // --- Innocent ---
     { title: "HGB Ukulele Perc", file: "2021012021 HGB_Ukulele_Perc-101_C.mp3", albumId: "innocent" },
     { title: "NISS Gavin", file: "2021020319 NISS_Gavin-124_Dm.mp3", albumId: "innocent" },
-    { title: "Diamond CCD", file: "2021021315 Diamond_CCD-100_Bm.mp3", albumId: "innocent" }
+    { title: "Diamond CCD", file: "2021021315 Diamond_CCD-100_Bm.mp3", albumId: "innocent" },
+
+    // --- Ordinary ---
+    { title: "Microchip", file: "2021020912 Microchip_170_Cm.mp3", albumId: "ordinary" },
+    { title: "Chinese Traditional", file: "2021020914 Chinese_Traditional-109_D.mp3", albumId: "ordinary" },
+    { title: "Southern 70s", file: "2021021713 Southern_70s-90_C.mp3", albumId: "ordinary" }
 ];
