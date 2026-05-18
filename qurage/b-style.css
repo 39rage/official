@@ -7,7 +7,7 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, sans-serif; }
-body { background-color: var(--p-bg); color: var(--p-text); overflow-y: auto; }
+body { background-color: var(--p-bg); color: var(--p-text); overflow-y: scroll; }
 
 /* ヘッダー */
 .app-header { position: sticky; top: 0; width: 100%; height: 50px; background: rgba(255,255,255,0.8); backdrop-filter: blur(20px); z-index: 1000; border-bottom: 1px solid #eee; }
@@ -15,9 +15,9 @@ body { background-color: var(--p-bg); color: var(--p-text); overflow-y: auto; }
 .app-logo { font-weight: 900; font-size: 1.1rem; }
 .header-nav a { text-decoration: none; font-size: 0.75rem; font-weight: 700; color: var(--p-purple); }
 
-.app-main { max-width: 1200px; margin: 0 auto; padding: 20px 20px 150px; }
+.app-main { max-width: 1100px; margin: 0 auto; padding: 20px 20px 100px; min-height: 100vh; }
 
-/* ヒーロー */
+/* ヒーローエリア */
 .hero-content { position: relative; height: 320px; border-radius: 12px; overflow: hidden; background: #000; display: flex; align-items: flex-end; }
 .hero-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
 .hero-text { position: relative; padding: 40px; color: #fff; z-index: 10; width: 100%; background: linear-gradient(transparent, rgba(0,0,0,0.8)); }
@@ -55,25 +55,32 @@ body { background-color: var(--p-bg); color: var(--p-text); overflow-y: auto; }
 .p-controls { display: flex; align-items: center; gap: 8px; width: 220px; flex-shrink: 0; }
 .icon-btn { background: none; border: none; cursor: pointer; color: var(--p-text); padding: 8px; border-radius: 6px; position: relative; }
 .icon-btn.active { color: var(--p-purple); }
-/* 1曲リピートの① */
 .icon-btn.repeat-one::after { content: '1'; position: absolute; top: 4px; right: 4px; font-size: 8px; font-weight: 900; background: var(--p-purple); color: #fff; width: 12px; height: 12px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 .icon-btn svg { width: 18px; height: 18px; fill: currentColor; }
 .play-btn { background: none; border: none; cursor: pointer; width: 50px; color: var(--p-text); }
 .play-btn svg { width: 28px; height: 24px; fill: currentColor; }
 
-/* 中央：電光掲示板演出 */
+/* 中央：電光掲示板（マーキー）修正版 */
 .p-center { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; min-width: 0; }
 .p-info { display: flex; align-items: center; gap: 12px; width: 100%; justify-content: center; min-width: 0; }
 .p-art-wrapper { width: 42px; height: 42px; border-radius: 4px; background: #eee; overflow: hidden; flex-shrink: 0; aspect-ratio: 1/1; }
 .p-art { width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: 0.3s; }
 .p-art.show { opacity: 1; }
-.p-text { min-width: 0; flex: 1; max-width: 400px; }
-.p-title-line { font-weight: 800; font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--p-text); margin-bottom: 2px; }
-.p-description-area { width: 100%; overflow: hidden; white-space: nowrap; position: relative; }
-.marquee-text { display: inline-block; font-size: 0.75rem; color: var(--p-sub); padding-left: 100%; animation: marquee 15s linear infinite; }
+.p-text { min-width: 0; flex: 1; max-width: 400px; overflow: hidden; }
+.p-title-line { font-weight: 800; font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--p-text); margin-bottom: 2px; text-align: center; }
+.p-description-area { width: 100%; overflow: hidden; white-space: nowrap; }
+.marquee-text { 
+    display: inline-block; 
+    font-size: 0.75rem; 
+    color: var(--p-sub); 
+    padding-left: 20px;
+    animation: marquee-b 12s linear infinite; 
+}
 
-@keyframes marquee {
+@keyframes marquee-b {
     0% { transform: translateX(0); }
+    10% { transform: translateX(0); } /* 少し最初で止める */
+    90% { transform: translateX(-100%); }
     100% { transform: translateX(-100%); }
 }
 
@@ -88,7 +95,7 @@ body { background-color: var(--p-bg); color: var(--p-text); overflow-y: auto; }
 .volume-popup.show { display: block; }
 #volumeBar { appearance: slider-vertical; width: 4px; height: 100px; accent-color: var(--p-purple); }
 
-/* キュー（次に再生）：画像変形防止 */
+/* キュー：画像変形防止 */
 .queue-drawer { position: fixed; bottom: -500px; right: 30px; width: 350px; height: 450px; background: #fff; border: 1px solid #eee; border-radius: 12px; box-shadow: 0 -10px 40px rgba(0,0,0,0.1); z-index: 3500; transition: 0.5s; display: flex; flex-direction: column; }
 .queue-drawer.show { bottom: 95px; }
 .queue-header { padding: 15px 20px; font-weight: 900; border-bottom: 1px solid #f5f5f7; font-size: 0.85rem; }
@@ -97,9 +104,15 @@ body { background-color: var(--p-bg); color: var(--p-text); overflow-y: auto; }
 .q-item.active { background: #f3e8ff; color: var(--p-purple); font-weight: 700; }
 .q-art { width: 35px; height: 35px; border-radius: 4px; object-fit: cover; margin-right: 12px; flex-shrink: 0; aspect-ratio: 1/1; }
 
+/* フッター：改善版 */
+.app-footer { margin-top: 80px; padding: 40px 0; text-align: center; color: var(--p-sub); font-size: 0.8rem; }
+.footer-line { width: 50px; height: 2px; background: #eee; margin: 0 auto 20px; }
+.footer-sub { font-size: 0.7rem; opacity: 0.6; margin-top: 5px; }
+
 @media (max-width: 900px) {
     .player-inner { gap: 10px; padding: 0 10px; }
     .p-controls { width: auto; gap: 2px; }
     .p-tools, .p-seek-wrapper { display: none; }
     .hero-name { font-size: 2.2rem; }
+    .s-album { display: none; }
 }
