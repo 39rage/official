@@ -1,64 +1,126 @@
 :root {
     --primary-purple: #8a2be2;
     --sub-purple: #f3e8ff;
-    --soft-white: #fdfbff;
+    --soft-white: #ffffff;
     --text-main: #2d1b4d;
     --text-sub: #6b5b95;
     --header-height: 60px;
 }
 
-html, body { height: 100%; overflow: hidden; overscroll-behavior: none; background: var(--soft-white); color: var(--text-main); }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Shippori Mincho', 'Inter', serif; }
-
-/* パターンAから移植するプレイヤー用の色上書き (オレンジ -> 紫) */
-.btn-svg.active, .track-item.active, .seek-bar, .booth-btn, .play-main {
+/* プレイヤーを強制的に表示し、紫にする設定 */
+#player-part {
+    display: flex !important;
+    background: var(--sub-purple) !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+.btn-svg.active, .track-item.active, .seek-bar, .play-main, .booth-btn {
     --primary-orange: var(--primary-purple) !important;
+    accent-color: var(--primary-purple) !important;
 }
 
-/* ヘッダー */
-.site-header { position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); background: #ffffff; border-bottom: 2px solid var(--primary-purple); display: flex; align-items: center; justify-content: center; z-index: 2100; box-shadow: 0 4px 15px rgba(138, 43, 226, 0.1); }
-.header-logo { font-size: 1.1rem; font-weight: 700; letter-spacing: 0.15em; text-decoration: none; color: var(--primary-purple); }
+.game-container {
+    display: grid;
+    grid-template-columns: 180px 1fr 350px;
+    height: calc(100vh - var(--header-height));
+    margin-top: var(--header-height);
+    background: var(--soft-white);
+    overflow: hidden;
+}
 
-.game-container { display: grid; grid-template-columns: 150px 1fr 380px; height: calc(100vh - var(--header-height)); margin-top: var(--header-height); gap: 10px; }
+/* 左：カテゴリー（Aのサイドバーを改造） */
+.category-selector .hero-img-wrapper, 
+.category-selector .profile-text-area,
+.category-selector .terms-wrapper,
+.category-selector .recent-tracks-section {
+    display: none; /* 不要な要素を消す */
+}
+.category-selector {
+    padding: 20px 10px !important;
+    display: flex !important;
+    flex-direction: column;
+    gap: 10px;
+}
 
-/* 左：カテゴリー */
-.category-selector { background: var(--sub-purple); padding: 20px 10px; display: flex; flex-direction: column; gap: 15px; border-right: 1px solid #e0d5f0; }
-.cat-btn { background: #fff; border: 2px solid var(--primary-purple); border-radius: 10px; padding: 15px 5px; cursor: pointer; display: flex; flex-direction: column; align-items: center; transition: 0.3s; }
-.cat-btn.active { background: var(--primary-purple); color: #fff; transform: scale(1.05); }
-.cat-name { font-size: 0.65rem; font-weight: 900; margin-top: 5px; }
+/* 中面：縦スクロール */
+.music-selection {
+    display: flex;
+    flex-direction: row; /* 横に並べて左にジャケ写、右に説明 */
+    align-items: center;
+    background: #fff;
+    border-right: 1px solid #f3f4f6;
+    padding: 20px;
+    gap: 30px;
+    overflow: hidden;
+}
 
-/* 中：ぐるぐるエリア */
-.music-selection { display: flex; flex-direction: column; align-items: center; padding: 30px 20px; overflow-y: auto; background: #fff; }
-.carousel-container { display: flex; gap: 20px; overflow-x: auto; width: 100%; padding: 20px 0; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
-.carousel-container::-webkit-scrollbar { height: 4px; }
-.carousel-container::-webkit-scrollbar-thumb { background: var(--primary-purple); border-radius: 10px; }
+.scroll-area {
+    width: 200px;
+    height: 100%;
+    overflow-y: auto;
+    scrollbar-width: none; /* Firefox用 */
+    scroll-snap-type: y mandatory;
+}
+.scroll-area::-webkit-scrollbar { display: none; } /* Chrome用 */
 
-.carousel-item { flex: 0 0 180px; height: 180px; scroll-snap-align: center; cursor: pointer; transition: 0.4s; position: relative; }
-.carousel-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 15px; border: 4px solid transparent; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-.carousel-item.active img { border-color: var(--primary-purple); transform: scale(1.15) translateY(-10px); box-shadow: 0 15px 30px rgba(138, 43, 226, 0.3); }
+.infinite-scroll-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 200px 0; /* 上下に余白を持たせて真ん中に来るようにする */
+}
 
-.album-info-display { text-align: center; margin-top: 30px; width: 100%; max-width: 500px; }
-.b-title-main { font-size: 1.8rem; color: var(--primary-purple); margin-bottom: 5px; }
-.b-subtitle { font-size: 0.9rem; font-weight: bold; color: var(--text-sub); margin-bottom: 15px; }
-.b-desc { font-size: 0.85rem; line-height: 1.8; color: var(--text-main); margin-bottom: 25px; }
+.carousel-item {
+    width: 140px;
+    height: 140px;
+    margin: 15px auto;
+    scroll-snap-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+    opacity: 0.4;
+}
+.carousel-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 3px solid transparent;
+}
+.carousel-item.active {
+    opacity: 1;
+    transform: scale(1.2);
+}
+.carousel-item.active img {
+    border-color: var(--primary-purple);
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
+}
 
-/* 中面のBOOTHボタン（紫版） */
-.booth-btn-b { display: inline-block; background: var(--primary-purple); color: #fff; text-decoration: none; font-weight: 700; padding: 12px 40px; border-radius: 50px; font-size: 1rem; transition: 0.3s; box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4); }
-.booth-btn-b:hover { transform: translateY(-3px); filter: brightness(1.1); }
+.album-info-panel {
+    flex: 1;
+    text-align: left;
+    padding: 20px;
+}
+.b-title-main { font-size: 1.8rem; font-weight: 900; color: var(--primary-purple); margin-bottom: 5px; }
+.b-subtitle { font-size: 1rem; color: var(--text-sub); margin-bottom: 20px; font-weight: bold; }
+.b-desc { font-size: 0.9rem; line-height: 2; margin-bottom: 30px; }
 
-/* 右：プレイヤーエリア（パターンA準拠） */
-.col-right { background: var(--sub-purple) !important; border-left: 1px solid #e0d5f0; }
-
-.game-footer { position: fixed; bottom: 0; left: 0; width: 100%; height: 25px; background: rgba(255,255,255,0.8); border-top: 1px solid #eee; text-align: center; font-size: 0.6rem; line-height: 25px; opacity: 0.6; z-index: 2200; }
+/* BOOTHボタン */
+.booth-btn-b {
+    display: inline-block;
+    background: var(--primary-purple);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 12px 30px;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+.booth-btn-b:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
 /* スマホ対応 */
 @media (max-width: 900px) {
-    html, body { overflow: auto; }
-    .game-container { display: flex; flex-direction: column; height: auto; }
-    .category-selector { flex-direction: row; height: auto; border-right: none; border-bottom: 1px solid #eee; }
-    .cat-btn { flex: 1; padding: 10px; }
-    .music-selection { height: auto; }
-    .carousel-item { flex: 0 0 140px; height: 140px; }
-    .col-right { height: auto; overflow: visible; padding: 30px 20px 60px; }
+    .game-container { display: flex; flex-direction: column; height: auto; overflow: visible; }
+    .music-selection { flex-direction: column; height: auto; overflow: visible; }
+    .scroll-area { width: 100%; height: 200px; overflow-x: auto; overflow-y: hidden; }
+    .infinite-scroll-wrapper { flex-direction: row; padding: 0 100px; }
+    .album-info-panel { text-align: center; }
+    .col-right { height: auto; padding-bottom: 80px !important; }
 }
