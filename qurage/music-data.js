@@ -1,4 +1,6 @@
-// 【全アルバム의リスト】
+// 【全アルバムのリスト】
+// category: "discography" -> サイドバーとIndexの画像グリッドに表示
+// category: "unreleased"  -> Indexの下部文字リストのみに表示
 const allAlbums = [
     {
         id: "first-step", 
@@ -130,6 +132,16 @@ const allAlbums = [
         booth: "#",
         tracksCount: "2 Tracks",
         category: "unreleased"
+    },
+    {
+        id: "remix", 
+        title: "REMIX!!!",
+        subtitle: "Extra Edition",
+        img: "https://fromtheasia.com/wp-content/uploads/ecd2f31856852488f4100b208af0618b.jpg",
+        desc: "過去にリリースした曲のうち、著作権引っかかってた曲をリメイクする計画を進行中です！",
+        booth: "#",
+        tracksCount: "1 Track",
+        category: "unreleased"
     }
 ];
 
@@ -174,5 +186,6 @@ const allTracks = [
     { title: "Colossus", file: "2021020617 Colossus-150_Dm.mp3", albumId: "colossus" },
     { title: "Colossus (inst)", file: "2021020617-2 Colossus_inst.mp3", albumId: "colossus" },
     { title: "Mississippi", file: "2021091218_Mississippi-100_Em.mp3", albumId: "rip" },
-    { title: "BASS", file: "2022020715_BASS-128_Fm.mp3", albumId: "rip" }
+    { title: "BASS", file: "2022020715_BASS-128_Fm.mp3", albumId: "rip" },
+    { title: "Tight Fashion Re", file: "2021090719 Tight_Fashion_Re-125_Fm.mp3", albumId: "remix" }
 ];
