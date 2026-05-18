@@ -1,4 +1,3 @@
-// 共通のHTMLパーツを書き出す魔法
 function renderHeader() {
     document.getElementById('header-part').innerHTML = `
         <header class="site-header">
@@ -23,12 +22,14 @@ function renderSidebar() {
         <div class="terms-wrapper"><a href="https://casbgcasbg.booth.pm/" target="_blank" class="terms-btn">利用規約</a></div>
         <div class="recent-tracks-section"><h3>DISCOGRAPHY</h3><div class="recent-grid" id="sidebarNav"></div></div>`;
     
-    // サイドバーのナビを自動生成
+    // サイドバーのナビを自動生成（00. 01. 番号付き）
     const sidebarNav = document.getElementById('sidebarNav');
-    sidebarNav.innerHTML = allAlbums.map(album => `<a href="${album.id}.html" class="recent-link">${album.title}</a>`).join('');
+    sidebarNav.innerHTML = allAlbums.map((album, idx) => `
+        <a href="${album.id}.html" class="recent-link">${String(idx).padStart(2, '0')}.${album.title}</a>
+    `).join('');
 }
 
-function renderPlayerPart(pageType, albumId = null) {
+function renderPlayerPart(pageType) {
     document.getElementById('player-part').innerHTML = `
         <h2 class="section-title">${pageType === 'index' ? 'ALL TRACKS' : 'TRACK LIST'}</h2>
         <ul class="track-list" id="trackList"></ul>
@@ -52,7 +53,6 @@ function renderPlayerPart(pageType, albumId = null) {
         </div>`;
 }
 
-// 音楽プレイヤーの動き（ロジック）を起動
 function initAudioPlayer(tracks) {
     const trackListContainer = document.getElementById('trackList');
     trackListContainer.innerHTML = tracks.map((track, idx) => `
@@ -117,13 +117,8 @@ function initAudioPlayer(tracks) {
     });
 }
 
-// ページ起動の呪文
 function initIndexPage() {
-    renderHeader();
-    renderSidebar();
-    renderPlayerPart('index');
-    
-    // アルバム一覧生成
+    renderHeader(); renderSidebar(); renderPlayerPart('index');
     const albumGrid = document.getElementById('albumGrid');
     albumGrid.innerHTML = allAlbums.map(album => `
         <a href="${album.id}.html" class="album-card">
@@ -131,8 +126,6 @@ function initIndexPage() {
             <div class="album-title">${album.title}</div>
             <div class="album-meta">${album.subtitle} / ${album.tracksCount}</div>
         </a>`).join('');
-
-    // 全曲ソート（アルバム順 -> ファイル名昇順）
     const albumOrder = allAlbums.map(a => a.id);
     const sortedTracks = [...allTracks].sort((a, b) => {
         const indexA = albumOrder.indexOf(a.albumId);
@@ -140,15 +133,11 @@ function initIndexPage() {
         if (indexA !== indexB) return indexA - indexB;
         return a.file.localeCompare(b.file);
     });
-
     initAudioPlayer(sortedTracks);
 }
 
 function initAlbumPage(currentAlbumId) {
-    renderHeader();
-    renderSidebar();
-    renderPlayerPart('album');
-
+    renderHeader(); renderSidebar(); renderPlayerPart('album');
     const album = allAlbums.find(a => a.id === currentAlbumId);
     if(album) {
         document.title = `${album.title} - Qurage Music`;
@@ -161,7 +150,6 @@ function initAlbumPage(currentAlbumId) {
             </div>`;
         document.getElementById('downloadArea').innerHTML = `<a href="${album.booth}" target="_blank" class="booth-btn">Download at BOOTH</a>`;
     }
-
     const albumTracks = allTracks.filter(t => t.albumId === currentAlbumId).sort((a, b) => a.file.localeCompare(b.file));
     initAudioPlayer(albumTracks);
 }
