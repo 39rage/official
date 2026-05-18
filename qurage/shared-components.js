@@ -1,4 +1,3 @@
-// 共通のHTMLパーツを書き出す魔法
 function renderHeader() {
     document.getElementById('header-part').innerHTML = `
         <header class="site-header">
@@ -24,7 +23,7 @@ function renderSidebar() {
         <div class="recent-tracks-section"><h3>DISCOGRAPHY</h3><div class="recent-grid" id="sidebarNav"></div></div>`;
     
     const sidebarNav = document.getElementById('sidebarNav');
-    // ★ categoryが "discography" のものだけサイドバーに出す
+    // discographyカテゴリのみ、番号付き(00.)で2列表示
     sidebarNav.innerHTML = allAlbums
         .filter(album => album.category === 'discography')
         .map((album, idx) => {
@@ -123,8 +122,6 @@ function initAudioPlayer(tracks) {
 
 function initIndexPage() {
     renderHeader(); renderSidebar(); renderPlayerPart('index');
-    
-    // DISCOGRAPHY 生成
     const albumGrid = document.getElementById('albumGrid');
     albumGrid.innerHTML = allAlbums.filter(a => a.category === 'discography').map(album => `
         <a href="discography.html?id=${album.id}" class="album-card">
@@ -132,16 +129,12 @@ function initIndexPage() {
             <div class="album-title">${album.title}</div>
             <div class="album-meta">${album.subtitle} / ${album.tracksCount}</div>
         </a>`).join('');
-
-    // UNRELEASED 生成
     const unreleasedList = document.getElementById('unreleasedList');
     unreleasedList.innerHTML = allAlbums.filter(a => a.category === 'unreleased').map(album => `
         <a href="discography.html?id=${album.id}" class="unreleased-link-item">
             <span class="un-title">${album.title}</span>
             <span class="un-meta">${album.subtitle} / ${album.tracksCount}</span>
         </a>`).join('');
-
-    // ★ ALL TRACKS 生成：discographyカテゴリのアルバムに属する曲だけに限定
     const discographyAlbumIds = allAlbums.filter(a => a.category === 'discography').map(a => a.id);
     const sortedTracks = [...allTracks]
         .filter(t => discographyAlbumIds.includes(t.albumId))
@@ -151,7 +144,6 @@ function initIndexPage() {
             if (indexA !== indexB) return indexA - indexB;
             return a.file.localeCompare(b.file);
         });
-
     initAudioPlayer(sortedTracks);
 }
 
@@ -169,12 +161,9 @@ function initAlbumPage() {
                 <p class="album-subtitle">${album.subtitle}</p>
                 <p class="album-description">${album.desc}</p>
             </div>`;
-        
-        // ★ アルバムのカテゴリが "discography" かつ、boothのリンクがある場合のみボタンを表示
         if(album.category === 'discography' && album.booth !== "#") {
             document.getElementById('downloadArea').innerHTML = `<a href="${album.booth}" target="_blank" class="booth-btn">Download at BOOTH</a>`;
         }
-        
         const albumTracks = allTracks.filter(t => t.albumId === currentAlbumId).sort((a, b) => a.file.localeCompare(b.file));
         initAudioPlayer(albumTracks);
     } else {
