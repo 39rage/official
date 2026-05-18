@@ -7,120 +7,61 @@
     --header-height: 60px;
 }
 
-/* プレイヤーを強制的に表示し、紫にする設定 */
-#player-part {
-    display: flex !important;
-    background: var(--sub-purple) !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-}
-.btn-svg.active, .track-item.active, .seek-bar, .play-main, .booth-btn {
-    --primary-orange: var(--primary-purple) !important;
-    accent-color: var(--primary-purple) !important;
-}
+/* 全体をブロック体（ゴシック系）に固定 */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif; }
+html, body { height: 100%; overflow: hidden; overscroll-behavior: none; background: var(--soft-white); color: var(--text-main); }
 
-.game-container {
-    display: grid;
-    grid-template-columns: 180px 1fr 350px;
-    height: calc(100vh - var(--header-height));
-    margin-top: var(--header-height);
-    background: var(--soft-white);
-    overflow: hidden;
-}
+/* ヘッダー：紫ライン */
+.site-header { position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); background: #ffffff; border-bottom: 3px solid var(--primary-purple); display: flex; align-items: center; justify-content: center; z-index: 2100; box-shadow: 0 4px 15px rgba(138, 43, 226, 0.1); }
+.header-logo { font-size: 1.3rem; font-weight: 900; letter-spacing: 0.1em; text-decoration: none; color: var(--primary-purple); text-transform: uppercase; }
 
-/* 左：カテゴリー（Aのサイドバーを改造） */
-.category-selector .hero-img-wrapper, 
-.category-selector .profile-text-area,
-.category-selector .terms-wrapper,
-.category-selector .recent-tracks-section {
-    display: none; /* 不要な要素を消す */
-}
-.category-selector {
-    padding: 20px 10px !important;
-    display: flex !important;
-    flex-direction: column;
-    gap: 10px;
-}
+.game-container { display: grid; grid-template-columns: 180px 1fr 380px; height: calc(100vh - var(--header-height)); margin-top: var(--header-height); gap: 0; }
 
-/* 中面：縦スクロール */
-.music-selection {
-    display: flex;
-    flex-direction: row; /* 横に並べて左にジャケ写、右に説明 */
-    align-items: center;
-    background: #fff;
-    border-right: 1px solid #f3f4f6;
-    padding: 20px;
-    gap: 30px;
-    overflow: hidden;
-}
+/* 左：カテゴリー（AのサイドバーをB用に改造） */
+.category-selector { background: var(--sub-purple); padding: 30px 15px !important; display: flex !important; flex-direction: column; gap: 15px; border-right: 1px solid #e0d5f0; }
+.cat-btn { background: #fff; border: 2px solid var(--primary-purple); border-radius: 8px; padding: 15px 5px; cursor: pointer; display: flex; flex-direction: column; align-items: center; transition: 0.3s; font-weight: 900; color: var(--primary-purple); }
+.cat-btn.active { background: var(--primary-purple); color: #fff; transform: scale(1.05); box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3); }
+.cat-name { font-size: 0.7rem; margin-top: 8px; }
 
-.scroll-area {
-    width: 200px;
-    height: 100%;
-    overflow-y: auto;
-    scrollbar-width: none; /* Firefox用 */
-    scroll-snap-type: y mandatory;
-}
-.scroll-area::-webkit-scrollbar { display: none; } /* Chrome用 */
+/* 中面：無限横スクロール */
+.music-selection { display: flex; flex-direction: column; align-items: center; justify-content: center; background: #fff; overflow: hidden; position: relative; }
 
-.infinite-scroll-wrapper {
-    display: flex;
-    flex-direction: column;
-    padding: 200px 0; /* 上下に余白を持たせて真ん中に来るようにする */
-}
+/* くるくる回るコンテナ */
+.carousel-viewport { width: 100%; overflow-x: auto; overflow-y: hidden; white-space: nowrap; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none; padding: 40px 0; }
+.carousel-viewport::-webkit-scrollbar { display: none; }
 
-.carousel-item {
-    width: 140px;
-    height: 140px;
-    margin: 15px auto;
-    scroll-snap-align: center;
-    cursor: pointer;
-    transition: 0.3s;
-    opacity: 0.4;
-}
-.carousel-item img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    border-radius: 12px;
-    border: 3px solid transparent;
-}
-.carousel-item.active {
-    opacity: 1;
-    transform: scale(1.2);
-}
-.carousel-item.active img {
-    border-color: var(--primary-purple);
-    box-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
-}
+.infinite-wrapper { display: inline-flex; gap: 30px; padding: 0 40%; }
 
-.album-info-panel {
-    flex: 1;
-    text-align: left;
-    padding: 20px;
-}
-.b-title-main { font-size: 1.8rem; font-weight: 900; color: var(--primary-purple); margin-bottom: 5px; }
-.b-subtitle { font-size: 1rem; color: var(--text-sub); margin-bottom: 20px; font-weight: bold; }
-.b-desc { font-size: 0.9rem; line-height: 2; margin-bottom: 30px; }
+.carousel-item { flex: 0 0 200px; width: 200px; height: 200px; scroll-snap-align: center; cursor: pointer; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.carousel-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; border: 4px solid transparent; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+.carousel-item.active { transform: scale(1.2); z-index: 10; }
+.carousel-item.active img { border-color: var(--primary-purple); box-shadow: 0 15px 30px rgba(138, 43, 226, 0.4); }
 
-/* BOOTHボタン */
-.booth-btn-b {
-    display: inline-block;
-    background: var(--primary-purple);
-    color: #fff;
-    text-decoration: none;
-    font-weight: 700;
-    padding: 12px 30px;
-    border-radius: 4px;
-    transition: 0.3s;
-}
-.booth-btn-b:hover { transform: translateY(-2px); filter: brightness(1.1); }
+/* アルバム情報 */
+.album-info-display { text-align: center; margin-top: 40px; padding: 0 20px; min-height: 200px; }
+.b-title-main { font-size: 2rem; font-weight: 900; color: var(--primary-purple); margin-bottom: 5px; }
+.b-subtitle { font-size: 1rem; font-weight: 700; color: var(--text-sub); margin-bottom: 15px; text-transform: uppercase; }
+.b-desc { font-size: 0.95rem; line-height: 1.8; color: var(--text-main); margin-bottom: 25px; max-width: 600px; }
 
-/* スマホ対応 */
+.booth-btn-b { display: inline-block; background: var(--primary-purple); color: #fff; text-decoration: none; font-weight: 900; padding: 12px 40px; border-radius: 50px; font-size: 0.9rem; transition: 0.3s; box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4); }
+.booth-btn-b:hover { transform: translateY(-3px); filter: brightness(1.1); }
+
+/* 右：プレイヤーエリア（Aを移植＆紫化） */
+.col-right { background: var(--sub-purple) !important; border-left: 1px solid #e0d5f0; height: 100%; display: flex !important; flex-direction: column !important; }
+.btn-svg.active, .track-item.active, .seek-bar, .play-main { color: var(--primary-purple) !important; }
+.play-main { border-color: var(--primary-purple) !important; }
+.play-main:hover { background: var(--primary-purple) !important; color: #fff !important; }
+.seek-bar { accent-color: var(--primary-purple) !important; }
+
+/* フッター */
+.game-footer { position: fixed; bottom: 0; left: 0; width: 100%; height: 25px; background: rgba(255,255,255,0.9); border-top: 1px solid #eee; text-align: center; font-size: 0.65rem; line-height: 25px; opacity: 0.5; z-index: 2200; font-weight: 700; }
+
 @media (max-width: 900px) {
-    .game-container { display: flex; flex-direction: column; height: auto; overflow: visible; }
-    .music-selection { flex-direction: column; height: auto; overflow: visible; }
-    .scroll-area { width: 100%; height: 200px; overflow-x: auto; overflow-y: hidden; }
-    .infinite-scroll-wrapper { flex-direction: row; padding: 0 100px; }
-    .album-info-panel { text-align: center; }
-    .col-right { height: auto; padding-bottom: 80px !important; }
+    html, body { overflow: auto; }
+    .game-container { display: flex; flex-direction: column; height: auto; }
+    .category-selector { flex-direction: row; height: auto; padding: 10px !important; border-right: none; }
+    .cat-btn { flex: 1; padding: 10px; }
+    .music-selection { height: auto; padding: 40px 0; }
+    .carousel-item { flex: 0 0 150px; width: 150px; height: 150px; }
+    .col-right { height: auto; padding: 30px 20px 80px !important; }
 }
