@@ -1,6 +1,6 @@
 // 【全アルバムのリスト】
-// category: "discography" -> 画像グリッドに表示
-// category: "unreleased"  -> 文字リストに表示
+// category: "discography" -> サイドバーとIndexの画像グリッドに表示
+// category: "unreleased"  -> Indexの下部文字リストのみに表示
 const allAlbums = [
     {
         id: "first-step", 
@@ -116,38 +116,18 @@ const allAlbums = [
     {
         id: "colossus", 
         title: "Colossus",
-        subtitle: "Draft Works",
-        img: "https://fromtheasia.com/wp-content/uploads/NCG292.jpg", // 仮画像
-        desc: "制作当初、SSや歌詞をつける予定だった曲たち。現在は試聴のみ。",
+        subtitle: "Draft Archive",
+        img: "https://fromtheasia.com/wp-content/uploads/NCG69.jpg",
+        desc: "一歩踏みだす勇気をくれたColossusとの物語<br>いつか歌詞とかSS書きたいな",
         booth: "#",
         tracksCount: "2 Tracks",
-        category: "unreleased"
-    },
-    {
-        id: "rip", 
-        title: "R.I.P.",
-        subtitle: "Last Fragments",
-        img: "https://fromtheasia.com/wp-content/uploads/NCG292.jpg",
-        desc: "ガレバンデータ消失から奇跡的に救出された最後の2曲。供養作品。",
-        booth: "#",
-        tracksCount: "2 Tracks",
-        category: "unreleased"
-    },
-    {
-        id: "remix", 
-        title: "REMIX!!!",
-        subtitle: "Extra Edition",
-        img: "https://fromtheasia.com/wp-content/uploads/NCG292.jpg",
-        desc: "著作権問題を逆手に取った、再構築版。OVA的な番外編アルバム。",
-        booth: "#",
-        tracksCount: "1 Track",
         category: "unreleased"
     }
 ];
 
 // 【全曲のリスト】
 const allTracks = [
-    // 既存の35曲（略）
+    // --- Discography 収録曲 ---
     { title: "British Brixton", file: "2020102923 British_Brixton-100_C.mp3", albumId: "first-step" },
     { title: "Accelerate Afghanistan", file: "2020103012 Accelerate_Afghanistan_TH-102_Cm.mp3", albumId: "first-step" },
     { title: "AABS 80s", file: "2020103014 AABS_80s-128_Cm.mp3", albumId: "first-step" },
@@ -184,6 +164,7 @@ const allTracks = [
     { title: "Full 3FC", file: "2021022512 Full_3FC-125_C.mp3", albumId: "organic" },
     { title: "Backroads", file: "2021033017 Backroads-90_C.mp3", albumId: "organic" },
 
-    // --- Colossus ---
-    // ここに曲ができ次第追加
+    // --- Unreleased 収録曲 ---
+    { title: "Colossus", file: "2021020617 Colossus-150_Dm.mp3", albumId: "colossus" },
+    { title: "Colossus (inst)", file: "2021020617-2 Colossus_inst.mp3", albumId: "colossus" }
 ];
