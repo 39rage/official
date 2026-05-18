@@ -29,38 +29,42 @@ body { font-family: 'Shippori Mincho', 'Inter', serif; background-color: var(--s
 .col-left { background: var(--primary-orange); color: #ffffff; height: 100%; display: flex; flex-direction: column; overflow: hidden; padding-top: 40px; z-index: 1000; }
 .hero-img-wrapper { width: 100%; height: 25vh; min-height: 150px; display: flex; justify-content: center; align-items: center; }
 .hero-img-left { width: auto; max-height: 100%; max-width: 80%; object-fit: contain; }
-.profile-text-area { padding: 15px 20px 10px; text-align: center; }
-.profile-header { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 5px; }
-.profile-header h1 { font-size: 1.2rem; font-weight: 400; letter-spacing: 0.15em; }
+
+/* プロフィールエリア：中央配置を厳密に */
+.profile-text-area { padding: 15px 10px 10px; text-align: center; width: 100%; }
+.profile-header { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 5px; width: 100%; }
+.profile-header h1 { font-size: 1.1rem; font-weight: 400; letter-spacing: 0.15em; }
 .x-circle-btn { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.5); border-radius: 50%; color: #ffffff; text-decoration: none; transition: 0.3s; flex-shrink: 0; }
 .x-circle-btn:hover { background: #ffffff; color: var(--primary-orange); border-color: #ffffff; }
 .x-circle-btn svg { fill: currentColor; width: 11px; height: 11px; }
 .profile-text-area p { font-size: 0.65rem; opacity: 0.8; margin-bottom: 4px; font-weight: 600; }
 .illust-credit { font-size: 0.55rem; opacity: 0.6; margin-bottom: 15px; }
-.terms-wrapper { padding-bottom: 25px; text-align: center; }
+
+/* 利用規約ボタン：中央配置を厳密に */
+.terms-wrapper { padding-bottom: 25px; text-align: center; width: 100%; }
 .terms-btn { display: inline-block; text-decoration: none; color: #ffffff; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; padding: 4px 15px; font-size: 0.6rem; transition: 0.3s; opacity: 0.9; }
 .terms-btn:hover { background: #ffffff; color: var(--primary-orange); opacity: 1; }
 
-/* 2列・縦流れ（6行で折り返し）の設定 */
-.recent-tracks-section { padding: 0 5% 20px 10%; flex: 1; overflow-y: auto; }
-.recent-tracks-section h3 { font-size: 0.65rem; letter-spacing: 0.15em; color: rgba(255,255,255,0.7); border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 6px; margin-bottom: 12px; }
+/* 2列・縦流れ（6行で折り返し）の決定版 */
+.recent-tracks-section { padding: 0 10% 20px; flex: 1; overflow-y: auto; width: 100%; }
+.recent-tracks-section h3 { font-size: 0.6rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.7); border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 6px; margin-bottom: 12px; text-align: center; }
 
-/* PC・スマホ共通で2列縦並びにする魔法 */
 .recent-grid { 
     display: flex;
     flex-direction: column;
     flex-wrap: wrap; 
-    height: 190px; /* 6行分がちょうど収まる高さ（文字サイズ0.6remに合わせて調整） */
-    align-content: flex-start;
-    gap: 0 8px; 
+    height: 180px; /* 6行分(1行30px)で折り返すよう高さを固定 */
+    align-content: center; /* 2列を中央に寄せる */
+    gap: 0 10px; 
+    width: 100%;
 }
 .recent-link { 
     display: block; 
-    width: calc(50% - 4px); 
+    width: 110px; /* 列の幅を固定して安定させる */
     margin-bottom: 6px; 
     color: #ffffff; 
     text-decoration: none; 
-    font-size: 0.55rem; /* スマホで見やすいよう少しだけ小さく */
+    font-size: 0.55rem; 
     padding: 5px 4px; 
     border: 1px solid rgba(255,255,255,0.3); 
     border-radius: 2px; 
@@ -68,6 +72,7 @@ body { font-family: 'Shippori Mincho', 'Inter', serif; background-color: var(--s
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-align: center;
 }
 .recent-link:hover { background: #ffffff; color: var(--primary-orange); border-color: #ffffff; transform: translateX(3px); }
 
@@ -86,6 +91,7 @@ body { font-family: 'Shippori Mincho', 'Inter', serif; background-color: var(--s
 .album-title { font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 4px; }
 .album-meta { font-size: 0.75rem; color: var(--text-sub); font-family: 'Inter'; }
 
+/* アルバム詳細 */
 .back-home { display: inline-block; text-decoration: none; color: var(--text-sub); font-size: 0.75rem; margin-bottom: 25px; transition: 0.3s; }
 .back-home:hover { color: var(--primary-orange); }
 .album-detail-box { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 35px; margin-bottom: 60px; }
@@ -123,12 +129,10 @@ body { font-family: 'Shippori Mincho', 'Inter', serif; background-color: var(--s
 .download-btn-wrapper { margin-top: 15px; }
 .booth-btn { display: block; background: var(--primary-orange); color: #fff; text-decoration: none; font-weight: 700; padding: 10px; text-align: center; border-radius: 6px; transition: 0.3s; font-size: 0.8rem; letter-spacing: 0.05em; font-family: 'Shippori Mincho', serif; }
 
-/* フッター */
 footer { text-align: center; padding: 30px 0; color: var(--text-sub); font-size: 0.75rem; border-top: 1px solid #f3f4f6; background: #ffffff; flex-shrink: 0; }
 .footer-pc { display: block; width: 100%; margin-top: auto; }
 .footer-mobile { display: none; }
 
-/* レスポンシブ */
 @media (max-width: 900px) { 
     html, body { overflow: auto; }
     .main-container { display: block; height: auto; margin-top: var(--header-height); overflow: visible; }
@@ -141,12 +145,13 @@ footer { text-align: center; padding: 30px 0; color: var(--text-sub); font-size:
     .track-list { max-height: 400px; }
     .footer-pc { display: none; } .footer-mobile { display: block; }
     
-    /* スマホのサイドバーも2列縦並びを維持 */
+    /* スマホのサイドバー設定 */
+    .recent-tracks-section { padding: 0 10% 30px; }
     .recent-grid { 
         display: flex; 
         flex-direction: column; 
         flex-wrap: wrap; 
-        height: 190px; /* PCと同じ高さで6行固定 */
-        align-content: flex-start;
+        height: 170px; /* 6行で折り返す高さを維持 */
+        align-content: center;
     }
 }
