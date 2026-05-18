@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="b-style.css">
 </head>
-<body>
+<body class="bright-theme">
 
     <header class="app-header">
         <div class="header-inner">
@@ -20,6 +20,7 @@
     </header>
 
     <main class="app-main">
+        <!-- ヒーローエリア -->
         <section class="artist-hero">
             <div class="hero-content">
                 <img src="https://fromtheasia.com/wp-content/uploads/NCG292.jpg" alt="Qurage" class="hero-img">
@@ -47,7 +48,7 @@
         </section>
 
         <!-- UNRELEASED -->
-        <section class="app-section">
+        <section class="app-section unreleased-section">
             <h2 class="section-title">UNRELEASED</h2>
             <p class="section-note">制作途中・未配布の楽曲です。これはフリーBGMではありませんが、よければお聞きください。</p>
             <div class="song-list" id="unreleasedList"></div>
@@ -56,47 +57,59 @@
         <footer class="app-footer">© Qurage. All Rights Reserved.</footer>
     </main>
 
-    <!-- 再生リストポップアップ -->
+    <!-- 再生リスト（キュー）表示 -->
     <div id="queueDrawer" class="queue-drawer">
         <div class="queue-header">次に再生</div>
         <div id="queueList" class="queue-content"></div>
     </div>
 
-    <!-- Apple Music風プレイヤーバー -->
+    <!-- 究極のプレイヤーバー -->
     <div class="fixed-player">
         <div class="player-inner">
-            <!-- 左：コントロール -->
+            
+            <!-- 1. 操作系（左） -->
             <div class="p-controls">
-                <button class="icon-btn" id="shuffleBtn" title="シャッフル">🔀</button>
-                <button class="icon-btn" id="prevBtn">⏮</button>
-                <button class="play-btn" id="playBtn">▶</button>
-                <button class="icon-btn" id="nextBtn">⏭</button>
-                <button class="icon-btn" id="repeatBtn" title="リピート">🔁</button>
+                <button class="icon-btn" id="shuffleBtn" title="シャッフル"><svg viewBox="0 0 24 24"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.45 20 9.5V4h-5.5zm.59 10.83l-1.41 1.41 3.13 3.13L14.5 22H20v-5.5l-2.04 2.04-3.37-3.37z"/></svg></button>
+                <button class="icon-btn" id="prevBtn" title="前へ"><svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
+                <button class="play-btn" id="playBtn"><svg id="playIconSVG" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+                <button class="icon-btn" id="nextBtn" title="次へ"><svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
+                <button class="icon-btn" id="repeatBtn" title="リピート"><svg viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg></button>
             </div>
 
-            <!-- 中央：曲情報 -->
-            <div class="p-info">
-                <div class="p-art-wrapper">
-                    <div id="playerDefaultIcon" class="p-default-icon">👾</div>
-                    <img src="" alt="" id="playerArt" class="p-art">
+            <!-- 2. 情報 ＆ シーク（中央） -->
+            <div class="p-center">
+                <div class="p-info">
+                    <div class="p-art-wrapper">
+                        <div id="playerDefaultIcon" class="p-default-icon">👾</div>
+                        <img src="" alt="" id="playerArt" class="p-art">
+                    </div>
+                    <div class="p-text">
+                        <div id="playerTitle" class="p-title">曲を選択してください</div>
+                        <div id="playerSub" class="p-sub">Qurage</div>
+                    </div>
                 </div>
-                <div class="p-text">
-                    <div id="playerTitle" class="p-title">曲を選択してください</div>
-                    <div id="playerSub" class="p-sub">Qurage</div>
-                </div>
-            </div>
-
-            <!-- 右：ツール -->
-            <div class="p-tools">
-                <div class="seek-container">
+                <div class="p-seek-wrapper">
+                    <span id="currentTime" class="time-label">0:00</span>
                     <input type="range" id="seekBar" value="0" max="100">
+                    <span id="duration" class="time-label">0:00</span>
                 </div>
-                <button class="icon-btn" id="queueBtn" title="再生リスト">📑</button>
-                <div class="volume-container">
-                    <span class="vol-icon">🔈</span>
-                    <input type="range" id="volumeBar" value="80" max="100">
+            </div>
+
+            <!-- 3. ツール系（右） -->
+            <div class="p-tools">
+                <button class="icon-btn" id="queueBtn" title="再生リスト"><svg viewBox="0 0 24 24"><path d="M4 6h18v2H4zm0 5h18v2H4zm0 5h18v2H4z"/></svg></button>
+                
+                <div class="volume-tool">
+                    <button class="icon-btn" id="volumeBtn"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button>
+                    <!-- 音量ポップアップ -->
+                    <div id="volumePopup" class="volume-popup">
+                        <input type="range" id="volumeBar" value="80" max="100" orient="vertical">
+                    </div>
                 </div>
-                <a href="#" target="_blank" id="boothLink" class="icon-btn download-btn" title="Download at BOOTH">⬇️</a>
+
+                <a href="#" target="_blank" id="boothLink" class="icon-btn download-btn" title="Download at BOOTH">
+                    <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                </a>
             </div>
         </div>
     </div>
