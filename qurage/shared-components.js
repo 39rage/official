@@ -1,3 +1,4 @@
+// 共通のHTMLパーツを書き出す魔法
 function renderHeader() {
     document.getElementById('header-part').innerHTML = `
         <header class="site-header">
@@ -22,12 +23,12 @@ function renderSidebar() {
         <div class="terms-wrapper"><a href="https://casbgcasbg.booth.pm/" target="_blank" class="terms-btn">利用規約</a></div>
         <div class="recent-tracks-section"><h3>DISCOGRAPHY</h3><div class="recent-grid" id="sidebarNav"></div></div>`;
     
-    // サイドバー生成（古いブラウザでも確実に動く番号付け）
+    // サイドバーのナビを自動生成（00. 01. 番号付き）
     const sidebarNav = document.getElementById('sidebarNav');
     sidebarNav.innerHTML = allAlbums.map((album, idx) => {
-        // padStartを使わず、確実な番号表示
         const num = (idx < 10) ? '0' + idx : idx;
-        return `<a href="${album.id}.html" class="recent-link">${num}.${album.title}</a>`;
+        // リンク先を discography.html?id=... に変更
+        return `<a href="discography.html?id=${album.id}" class="recent-link">${num}.${album.title}</a>`;
     }).join('');
 }
 
@@ -59,14 +60,8 @@ function initAudioPlayer(tracks) {
     const trackListContainer = document.getElementById('trackList');
     trackListContainer.innerHTML = tracks.map((track, idx) => {
         const num = (idx + 1 < 10) ? '0' + (idx + 1) : (idx + 1);
-        return `
-        <li class="track-item" data-src="audio/${track.file}">
-            <span class="track-number">${num}.</span>
-            <span class="track-name">${track.title}</span>
-            <span class="track-meta">Preview</span>
-        </li>`;
+        return `<li class="track-item" data-src="audio/${track.file}"><span class="track-number">${num}.</span><span class="track-name">${track.title}</span><span class="track-meta">Preview</span></li>`;
     }).join('');
-
     const audio = new Audio();
     const playBtn = document.getElementById('playBtn'), playIconSVG = document.getElementById('playIconSVG'), nowPlaying = document.getElementById('nowPlaying'), seekBar = document.getElementById('seekBar'), currentTimeText = document.getElementById('currentTime'), durationText = document.getElementById('duration'), volumeBar = document.getElementById('volumeBar'), muteBtn = document.getElementById('muteBtn'), volumeIcon = document.getElementById('volumeIcon');
     let trackItems; let currentIndex = 0; let isShuffle = false; let repeatMode = 0; let lastVolume = 0.8;
@@ -82,7 +77,6 @@ function initAudioPlayer(tracks) {
         nowPlaying.textContent = trackItems[index].querySelector('.track-name').textContent;
         audio.src = trackItems[index].getAttribute('data-src');
     }
-
     loadTrack(0);
     playBtn.addEventListener('click', () => { if (audio.paused) { audio.play().catch(e => console.log(e)); updatePlayIcon(true); } else { audio.pause(); updatePlayIcon(false); } });
     document.getElementById('prevBtn').addEventListener('click', () => { let idx = (currentIndex - 1 + trackItems.length) % trackItems.length; loadTrack(idx); audio.play(); updatePlayIcon(true); });
@@ -115,21 +109,24 @@ function initAudioPlayer(tracks) {
 
     const burgerBtn = document.getElementById('burgerBtn');
     const sidebar = document.getElementById('sidebar-part');
-    burgerBtn.addEventListener('click', () => { 
-        burgerBtn.classList.toggle('open'); 
-        sidebar.classList.toggle('open'); 
-    });
+    if(burgerBtn) {
+        burgerBtn.addEventListener('click', () => { 
+            burgerBtn.classList.toggle('open'); 
+            sidebar.classList.toggle('open'); 
+        });
+    }
 }
 
 function initIndexPage() {
     renderHeader(); renderSidebar(); renderPlayerPart('index');
     const albumGrid = document.getElementById('albumGrid');
     albumGrid.innerHTML = allAlbums.map(album => `
-        <a href="${album.id}.html" class="album-card">
+        <a href="discography.html?id=${album.id}" class="album-card">
             <div class="album-img-box"><img src="${album.img}" class="album-img" alt="${album.title}"></div>
             <div class="album-title">${album.title}</div>
             <div class="album-meta">${album.subtitle} / ${album.tracksCount}</div>
         </a>`).join('');
+
     const albumOrder = allAlbums.map(a => a.id);
     const sortedTracks = [...allTracks].sort((a, b) => {
         const indexA = albumOrder.indexOf(a.albumId);
@@ -140,7 +137,10 @@ function initIndexPage() {
     initAudioPlayer(sortedTracks);
 }
 
-function initAlbumPage(currentAlbumId) {
+function initAlbumPage() {
+    const params = new URLSearchParams(window.location.search);
+    const currentAlbumId = params.get('id');
+
     renderHeader(); renderSidebar(); renderPlayerPart('album');
     const album = allAlbums.find(a => a.id === currentAlbumId);
     if(album) {
@@ -153,7 +153,9 @@ function initAlbumPage(currentAlbumId) {
                 <p class="album-description">${album.desc}</p>
             </div>`;
         document.getElementById('downloadArea').innerHTML = `<a href="${album.booth}" target="_blank" class="booth-btn">Download at BOOTH</a>`;
+        const albumTracks = allTracks.filter(t => t.albumId === currentAlbumId).sort((a, b) => a.file.localeCompare(b.file));
+        initAudioPlayer(albumTracks);
+    } else {
+        window.location.href = 'index.html';
     }
-    const albumTracks = allTracks.filter(t => t.albumId === currentAlbumId).sort((a, b) => a.file.localeCompare(b.file));
-    initAudioPlayer(albumTracks);
 }
