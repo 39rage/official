@@ -62,6 +62,15 @@ const allAlbums = [
         desc: "生と死の狭間みたいなちょっとダークな曲たち<br>病んでは、ないと思う",
         booth: "https://casbgcasbg.booth.pm/items/2758590",
         tracksCount: "4 Tracks"
+    },
+    {
+        id: "innocent", 
+        title: "Innocent",
+        subtitle: "7th Single",
+        img: "https://fromtheasia.com/wp-content/uploads/NCG105.jpg",
+        desc: "ギター・ウクレレ中心の爽やかな曲たち",
+        booth: "https://casbgcasbg.booth.pm/items/2758663",
+        tracksCount: "3 Tracks"
     }
 ];
 
@@ -102,5 +111,10 @@ const allTracks = [
     { title: "Daylight", file: "2021012021 Daylight_100_D.mp3", albumId: "between" },
     { title: "Recollection", file: "2021012821 Recollection-130_Dm.mp3", albumId: "between" },
     { title: "Metaphysical", file: "2021020615 Metaphysical-100_Cm.mp3", albumId: "between" },
-    { title: "Break Against", file: "2021020718 Break_Against-70_Dm.mp3", albumId: "between" }
+    { title: "Break Against", file: "2021020718 Break_Against-70_Dm.mp3", albumId: "between" },
+
+    // --- Innocent ---
+    { title: "HGB Ukulele Perc", file: "2021012021 HGB_Ukulele_Perc-101_C.mp3", albumId: "innocent" },
+    { title: "NISS Gavin", file: "2021020319 NISS_Gavin-124_Dm.mp3", albumId: "innocent" },
+    { title: "Diamond CCD", file: "2021021315 Diamond_CCD-100_Bm.mp3", albumId: "innocent" }
 ];
