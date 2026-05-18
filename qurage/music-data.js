@@ -1,148 +1,20 @@
 // 【全アルバムのリスト】
-// category: "discography" -> サイドバーとIndexの画像グリッドに表示
-// category: "unreleased"  -> Indexの下部文字リストのみに表示
 const allAlbums = [
-    {
-        id: "first-step", 
-        title: "First step",
-        subtitle: "1st Mini Album",
-        img: "https://fromtheasia.com/wp-content/uploads/NCG63.jpg",
-        desc: "初めて作った5曲がまとまってます。<br>デモ曲のようなミニアルバム。",
-        booth: "https://casbgcasbg.booth.pm/items/2691899",
-        tracksCount: "5 Tracks",
-        category: "discography"
-    },
-    {
-        id: "deep-upbeat", 
-        title: "Deep Upbeat",
-        subtitle: "1st Single",
-        img: "https://fromtheasia.com/wp-content/uploads/NCG93-1.jpg",
-        desc: "ひたすらに眠たい曲を作りました。<br>おまけはちょっとオシャレにしたバージョンです。",
-        booth: "https://casbgcasbg.booth.pm/items/2691947",
-        tracksCount: "2 Tracks",
-        category: "discography"
-    },
-    {
-        id: "at-the-beach", 
-        title: "At the beach",
-        subtitle: "2nd Single",
-        img: "https://fromtheasia.com/wp-content/uploads/NCG111.jpg",
-        desc: "優しく切なく",
-        booth: "https://casbgcasbg.booth.pm/items/2691982",
-        tracksCount: "3 Tracks",
-        category: "discography"
-    },
-    {
-        id: "mystic-moon", 
-        title: "Mystic Moon",
-        subtitle: "3rd Single",
-        img: "https://fromtheasia.com/wp-content/uploads/NCG210-scaled.jpg",
-        desc: "最近やってるゲームの影響でチャイニーズミュージックにトライした結果",
-        booth: "https://casbgcasbg.booth.pm/items/2692032",
-        tracksCount: "3 Tracks",
-        category: "discography"
-    },
-    {
-        id: "boogie-night", 
-        title: "Boogie Night",
-        subtitle: "4th Single",
-        img: "https://fromtheasia.com/wp-content/uploads/NCG99-2.jpg",
-        desc: "ロックが作りたかっただけなんや...",
-        booth: "https://casbgcasbg.booth.pm/items/2692935",
-        tracksCount: "3 Tracks",
-        category: "discography"
-    },
-    {
-        id: "true-love", 
-        title: "True Love",
-        subtitle: "5th Single",
-        img: "https://fromtheasia.com/wp-content/uploads/NCG82.jpg",
-        desc: "本当の愛ってなんだろう<br>安心してくださいただのしっとり曲です",
-        booth: "https://casbgcasbg.booth.pm/items/2692943",
-        tracksCount: "3 Tracks",
-        category: "discography"
-    },
-    {
-        id: "between", 
-        title: "Between",
-        subtitle: "6th Single",
-        img: "https://fromtheasia.com/wp-content/uploads/NCG54.jpg",
-        desc: "生と死の狭間みたいなちょっとダークな曲たち<br>病んでは、ないと思う",
-        booth: "https://casbgcasbg.booth.pm/items/2758590",
-        tracksCount: "4 Tracks",
-        category: "discography"
-    },
-    {
-        id: "innocent", 
-        title: "Innocent",
-        subtitle: "7th Single",
-        img: "https://fromtheasia.com/wp-content/uploads/NCG105.jpg",
-        desc: "ギター・ウクレレ中心の爽やかな曲たち",
-        booth: "https://casbgcasbg.booth.pm/items/2758663",
-        tracksCount: "3 Tracks",
-        category: "discography"
-    },
-    {
-        id: "ordinary", 
-        title: "Ordinary",
-        subtitle: "8th Single",
-        img: "https://fromtheasia.com/wp-content/uploads/NCG64.jpg",
-        desc: "日常使いできそうなほのぼの曲",
-        booth: "https://casbgcasbg.booth.pm/items/2758775",
-        tracksCount: "3 Tracks",
-        category: "discography"
-    },
-    {
-        id: "big-tight", 
-        title: "Big Tight",
-        subtitle: "9th Single",
-        img: "https://fromtheasia.com/wp-content/uploads/NCG33.jpg",
-        desc: "かっこよくておしゃんな曲",
-        booth: "https://casbgcasbg.booth.pm/items/2758818",
-        tracksCount: "3 Tracks",
-        category: "discography"
-    },
-    {
-        id: "organic", 
-        title: "Organic",
-        subtitle: "10th Single",
-        img: "https://fromtheasia.com/wp-content/uploads/NCG61.jpg",
-        desc: "３ヶ月ぶりの新曲<br>おしゃべり動画に使えそうなThe・ループ曲",
-        booth: "https://casbgcasbg.booth.pm/items/3007933",
-        tracksCount: "3 Tracks",
-        category: "discography"
-    },
+    { id: "first-step", title: "First step", subtitle: "1st EP", img: "https://fromtheasia.com/wp-content/uploads/NCG63.jpg", desc: "初めて作った5曲がまとまってます。<br>デモ曲のようなミニアルバム。", booth: "https://casbgcasbg.booth.pm/items/2691899", tracksCount: "5 Tracks", category: "discography" },
+    { id: "deep-upbeat", title: "Deep Upbeat", subtitle: "1st Single", img: "https://fromtheasia.com/wp-content/uploads/NCG93-1.jpg", desc: "ひたすらに眠たい曲を作りました。<br>おまけはちょっとオシャレにしたバージョンです。", booth: "https://casbgcasbg.booth.pm/items/2691947", tracksCount: "2 Tracks", category: "discography" },
+    { id: "at-the-beach", title: "At the beach", subtitle: "2nd Single", img: "https://fromtheasia.com/wp-content/uploads/NCG111.jpg", desc: "優しく切なく", booth: "https://casbgcasbg.booth.pm/items/2691982", tracksCount: "3 Tracks", category: "discography" },
+    { id: "mystic-moon", title: "Mystic Moon", subtitle: "3rd Single", img: "https://fromtheasia.com/wp-content/uploads/NCG210-scaled.jpg", desc: "最近やってるゲームの影響でチャイニーズミュージックにトライした結果", booth: "https://casbgcasbg.booth.pm/items/2692032", tracksCount: "3 Tracks", category: "discography" },
+    { id: "boogie-night", title: "Boogie Night", subtitle: "4th Single", img: "https://fromtheasia.com/wp-content/uploads/NCG99-2.jpg", desc: "ロックが作りたかっただけなんや...", booth: "https://casbgcasbg.booth.pm/items/2692935", tracksCount: "3 Tracks", category: "discography" },
+    { id: "true-love", title: "True Love", subtitle: "5th Single", img: "https://fromtheasia.com/wp-content/uploads/NCG82.jpg", desc: "本当の愛ってなんだろう<br>安心してくださいただのしっとり曲です", booth: "https://casbgcasbg.booth.pm/items/2692943", tracksCount: "3 Tracks", category: "discography" },
+    { id: "between", title: "Between", subtitle: "2nd EP", img: "https://fromtheasia.com/wp-content/uploads/NCG54.jpg", desc: "生と死の狭間みたいなちょっとダークな曲たち<br>病んでは、ないと思う", booth: "https://casbgcasbg.booth.pm/items/2758590", tracksCount: "4 Tracks", category: "discography" },
+    { id: "innocent", title: "Innocent", subtitle: "6th Single", img: "https://fromtheasia.com/wp-content/uploads/NCG105.jpg", desc: "ギター・ウクレレ中心の爽やかな曲たち", booth: "https://casbgcasbg.booth.pm/items/2758663", tracksCount: "3 Tracks", category: "discography" },
+    { id: "ordinary", title: "Ordinary", subtitle: "7th Single", img: "https://fromtheasia.com/wp-content/uploads/NCG64.jpg", desc: "日常使いできそうなほのぼの曲", booth: "https://casbgcasbg.booth.pm/items/2758775", tracksCount: "3 Tracks", category: "discography" },
+    { id: "big-tight", title: "Big Tight", subtitle: "8th Single", img: "https://fromtheasia.com/wp-content/uploads/NCG33.jpg", desc: "かっこよくておしゃんな曲", booth: "https://casbgcasbg.booth.pm/items/2758818", tracksCount: "3 Tracks", category: "discography" },
+    { id: "organic", title: "Organic", subtitle: "9th Single", img: "https://fromtheasia.com/wp-content/uploads/NCG61.jpg", desc: "３ヶ月ぶりの新曲<br>おしゃべり動画に使えそうなThe・ループ曲", booth: "https://casbgcasbg.booth.pm/items/3007933", tracksCount: "3 Tracks", category: "discography" },
     // --- UNRELEASED ---
-    {
-        id: "colossus", 
-        title: "Colossus",
-        subtitle: "Draft Archive",
-        img: "https://fromtheasia.com/wp-content/uploads/NCG69.jpg",
-        desc: "一歩踏みだす勇気をくれたColossusとの物語<br>という設定でいつか歌詞とかSS書きたいな",
-        booth: "#",
-        tracksCount: "2 Tracks",
-        category: "unreleased"
-    },
-    {
-        id: "rip", 
-        title: "R.I.P.",
-        subtitle: "Draft Archive",
-        img: "https://fromtheasia.com/wp-content/uploads/NCG306.jpg",
-        desc: "GarageBandデータ破損したのに、なぜか生き残ってた強い子たち<br>ここで供養させてください",
-        booth: "#",
-        tracksCount: "2 Tracks",
-        category: "unreleased"
-    },
-    {
-        id: "remix", 
-        title: "REMIX!!!",
-        subtitle: "Extra Edition",
-        img: "https://fromtheasia.com/wp-content/uploads/ecd2f31856852488f4100b208af0618b.jpg",
-        desc: "過去にリリースした曲のうち、著作権引っかかってた曲をリメイクする計画を進行中です！",
-        booth: "#",
-        tracksCount: "1 Track",
-        category: "unreleased"
-    }
+    { id: "colossus", title: "Colossus", subtitle: "Draft Archive", img: "https://fromtheasia.com/wp-content/uploads/NCG69.jpg", desc: "一歩踏みだす勇気をくれたColossusとの物語<br>いつか歌詞とかSS書きたいな", booth: "#", tracksCount: "2 Tracks", category: "unreleased" },
+    { id: "rip", title: "R.I.P.", subtitle: "Draft Archive", img: "https://fromtheasia.com/wp-content/uploads/NCG306.jpg", desc: "GarageBandデータ破損したのに、なぜか生き残ってた強い子たち<br>ここで供養させてください", booth: "#", tracksCount: "2 Tracks", category: "unreleased" },
+    { id: "remix", title: "REMIX!!!", subtitle: "Extra Edition", img: "https://fromtheasia.com/wp-content/uploads/ecd2f31856852488f4100b208af0618b.jpg", desc: "過去にリリースした曲のうち、著作権引っかかってた曲をリメイクする計画を進行中です！", booth: "#", tracksCount: "1 Track", category: "unreleased" }
 ];
 
 // 【全曲のリスト】
@@ -182,7 +54,6 @@ const allTracks = [
     { title: "Organic TBC", file: "2021022511 Organic_TBC-125_C.mp3", albumId: "organic" },
     { title: "Full 3FC", file: "2021022512 Full_3FC-125_C.mp3", albumId: "organic" },
     { title: "Backroads", file: "2021033017 Backroads-90_C.mp3", albumId: "organic" },
-    // --- Unreleased ---
     { title: "Colossus", file: "2021020617 Colossus-150_Dm.mp3", albumId: "colossus" },
     { title: "Colossus (inst)", file: "2021020617-2 Colossus_inst.mp3", albumId: "colossus" },
     { title: "Mississippi", file: "2021091218_Mississippi-100_Em.mp3", albumId: "rip" },
