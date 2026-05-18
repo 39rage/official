@@ -1,45 +1,36 @@
-let currentCategory = 'discography';
-let activeAlbumId = null;
+// アルバムリストを3倍にして「無限スクロール」をシミュレートする
+function renderVerticalList() {
+    const listContainer = document.getElementById('albumList');
+    const albums = allAlbums.filter(a => a.category === 'discography');
+    
+    // リストを複製（無限ループ感を作るため）
+    const tripledAlbums = [...albums, ...albums, ...albums];
 
-// カテゴリー切り替え
-function changeCategory(cat, btn) {
-    currentCategory = cat;
-    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    renderCarousel();
-}
-
-// 1. 中央のジャケ写ぐるぐるを生成
-function renderCarousel() {
-    const carousel = document.getElementById('albumCarousel');
-    const albums = allAlbums.filter(a => a.category === currentCategory);
-
-    carousel.innerHTML = albums.map((album, idx) => `
-        <div class="carousel-item" onclick="selectAlbum('${album.id}', this)" id="item-${album.id}">
+    listContainer.innerHTML = tripledAlbums.map((album, idx) => `
+        <div class="carousel-item" onclick="selectAlbumB('${album.id}', this)" data-id="${album.id}">
             <img src="${album.img}" alt="${album.title}">
         </div>
     `).join('');
 
-    if (albums.length > 0) {
-        selectAlbum(albums[0].id, carousel.querySelector('.carousel-item'));
-    }
+    // 真ん中の位置にスクロール
+    const area = document.getElementById('albumScrollArea');
+    const target = listContainer.children[albums.length];
+    area.scrollTop = target.offsetTop - area.offsetHeight / 2 + 70;
+    
+    selectAlbumB(albums[0].id, target);
 }
 
-// 2. アルバム選択
-function selectAlbum(albumId, element) {
-    // 見た目更新
+function selectAlbumB(albumId, element) {
+    // 見た目の切り替え
     document.querySelectorAll('.carousel-item').forEach(i => i.classList.remove('active'));
     element.classList.add('active');
-    
-    // スムーズスクロール
-    element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
 
     const album = allAlbums.find(a => a.id === albumId);
     if (!album) return;
 
-    // 中央の情報表示を更新
+    // パネル情報の更新
     const detail = document.getElementById('albumDetail');
-    const boothBtn = (album.category === 'discography' && album.booth !== '#') 
+    const boothBtn = (album.booth !== '#') 
         ? `<a href="${album.booth}" target="_blank" class="booth-btn-b">Download at BOOTH</a>` 
         : '';
 
@@ -50,15 +41,31 @@ function selectAlbum(albumId, element) {
         ${boothBtn}
     `;
 
-    // 右側のプレイヤー部分をそのアルバムの曲に更新
+    // 右側のプレイヤーを更新（アルバムの曲をセット）
     const albumTracks = allTracks.filter(t => t.albumId === albumId).sort((a, b) => a.file.localeCompare(b.file));
     initAudioPlayer(albumTracks);
 }
 
-// パターンBの全体起動
+// パターンBの初期化
 function initGamePage() {
+    // Aのパーツ機能を流用
     renderHeader();
-    renderSidebar(); // 共通のサイドバーは裏側で描画（スマホメニュー用）
-    renderPlayerPart('album'); // パターンAと同じプレイヤー枠を右側に
-    renderCarousel(); // 中央のぐるぐるを開始
+    renderPlayerPart('album'); 
+    renderVerticalList();
+    
+    // カテゴリー選択（B用に特別に動作させる）
+    const side = document.getElementById('sidebar-part');
+    side.innerHTML = `
+        <button class="cat-btn active" id="btn-disco">💿 DISCOGRAPHY</button>
+        <button class="cat-btn" id="btn-un">👾 UNRELEASED</button>
+    `;
+    
+    // 本来のサイドバー機能を一部復旧（ハンバーガーメニュー等）
+    const burgerBtn = document.getElementById('burgerBtn');
+    if(burgerBtn) {
+        burgerBtn.addEventListener('click', () => { 
+            burgerBtn.classList.toggle('open');
+            // Bではサイドバー自体を出す代わりに別の演出も可能ですが、一旦Aのロジックに合わせます
+        });
+    }
 }
