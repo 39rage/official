@@ -1,3 +1,4 @@
+// 共通のHTMLパーツを書き出す魔法
 function renderHeader() {
     document.getElementById('header-part').innerHTML = `
         <header class="site-header">
@@ -23,7 +24,6 @@ function renderSidebar() {
         <div class="recent-tracks-section"><h3>DISCOGRAPHY</h3><div class="recent-grid" id="sidebarNav"></div></div>`;
     
     const sidebarNav = document.getElementById('sidebarNav');
-    // discographyカテゴリのみ、番号付き(00.)で2列表示
     sidebarNav.innerHTML = allAlbums
         .filter(album => album.category === 'discography')
         .map((album, idx) => {
@@ -32,6 +32,7 @@ function renderSidebar() {
         }).join('');
 }
 
+// プレイヤー部分（Index・アルバム共通の形になりました）
 function renderPlayerPart(pageType) {
     document.getElementById('player-part').innerHTML = `
         <h2 class="section-title">${pageType === 'index' ? 'ALL TRACKS' : 'TRACK LIST'}</h2>
@@ -52,7 +53,7 @@ function renderPlayerPart(pageType) {
                 </div>
                 <div class="timeline-box"><span id="currentTime">0:00</span><input type="range" class="seek-bar" id="seekBar" value="0" max="100"><span id="duration">0:00</span></div>
             </div>
-            <div class="download-btn-wrapper" id="downloadArea"></div>
+            <!-- ここにあったボタンエリアを削除しました -->
         </div>`;
 }
 
@@ -70,6 +71,7 @@ function initAudioPlayer(tracks) {
     const playBtn = document.getElementById('playBtn'), playIconSVG = document.getElementById('playIconSVG'), nowPlaying = document.getElementById('nowPlaying'), seekBar = document.getElementById('seekBar'), currentTimeText = document.getElementById('currentTime'), durationText = document.getElementById('duration'), volumeBar = document.getElementById('volumeBar'), muteBtn = document.getElementById('muteBtn'), volumeIcon = document.getElementById('volumeIcon');
     let trackItems; let currentIndex = 0; let isShuffle = false; let repeatMode = 0; let lastVolume = 0.8;
     const playPath = "M8 5v14l11-7z", pausePath = "M6 19h4V5H6v14zm8-14v14h4V5h-4z";
+
     function updatePlayIcon(isPlaying) { playIconSVG.querySelector('path').setAttribute('d', isPlaying ? pausePath : playPath); }
     function loadTrack(index) {
         trackItems = Array.from(document.querySelectorAll('.track-item[data-src]'));
@@ -80,6 +82,7 @@ function initAudioPlayer(tracks) {
         nowPlaying.textContent = trackItems[index].querySelector('.track-name').textContent;
         audio.src = trackItems[index].getAttribute('data-src');
     }
+
     loadTrack(0);
     playBtn.addEventListener('click', () => { if (audio.paused) { audio.play().catch(e => console.log(e)); updatePlayIcon(true); } else { audio.pause(); updatePlayIcon(false); } });
     document.getElementById('prevBtn').addEventListener('click', () => { let idx = (currentIndex - 1 + trackItems.length) % trackItems.length; loadTrack(idx); audio.play(); updatePlayIcon(true); });
@@ -154,16 +157,25 @@ function initAlbumPage() {
     const album = allAlbums.find(a => a.id === currentAlbumId);
     if(album) {
         document.title = `${album.title} - Qurage Music`;
+        
+        // BOOTHボタンをテキストエリアの最後に追加する魔法
+        let boothBtnHtml = '';
+        if(album.category === 'discography' && album.booth !== "#") {
+            boothBtnHtml = `
+                <div class="album-download-wrapper">
+                    <a href="${album.booth}" target="_blank" class="booth-btn">Download at BOOTH</a>
+                </div>`;
+        }
+
         document.getElementById('albumDetail').innerHTML = `
             <img src="${album.img}" alt="${album.title}" class="album-art-large">
             <div class="album-info-text">
                 <h2 class="album-title-main">${album.title}</h2>
                 <p class="album-subtitle">${album.subtitle}</p>
                 <p class="album-description">${album.desc}</p>
+                ${boothBtnHtml}
             </div>`;
-        if(album.category === 'discography' && album.booth !== "#") {
-            document.getElementById('downloadArea').innerHTML = `<a href="${album.booth}" target="_blank" class="booth-btn">Download at BOOTH</a>`;
-        }
+        
         const albumTracks = allTracks.filter(t => t.albumId === currentAlbumId).sort((a, b) => a.file.localeCompare(b.file));
         initAudioPlayer(albumTracks);
     } else {
