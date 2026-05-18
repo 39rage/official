@@ -84,8 +84,10 @@
                         <img src="" alt="" id="playerArt" class="p-art">
                     </div>
                     <div class="p-text">
-                        <div id="playerTitle" class="p-title">曲を選択してください</div>
-                        <div id="playerSub" class="p-sub">Qurage</div>
+                        <div id="playerTitleInfo" class="p-title-line">曲を選択してください</div>
+                        <div class="p-description-area">
+                            <div id="playerDescMarquee" class="marquee-text">Qurage Music Player</div>
+                        </div>
                     </div>
                 </div>
                 <div class="p-seek-wrapper">
@@ -101,7 +103,6 @@
                 
                 <div class="volume-tool">
                     <button class="icon-btn" id="volumeBtn"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button>
-                    <!-- 音量ポップアップ -->
                     <div id="volumePopup" class="volume-popup">
                         <input type="range" id="volumeBar" value="80" max="100" orient="vertical">
                     </div>
