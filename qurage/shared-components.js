@@ -23,13 +23,14 @@ function renderSidebar() {
         <div class="terms-wrapper"><a href="https://casbgcasbg.booth.pm/" target="_blank" class="terms-btn">利用規約</a></div>
         <div class="recent-tracks-section"><h3>DISCOGRAPHY</h3><div class="recent-grid" id="sidebarNav"></div></div>`;
     
-    // サイドバーのナビを自動生成（00. 01. 番号付き）
     const sidebarNav = document.getElementById('sidebarNav');
-    sidebarNav.innerHTML = allAlbums.map((album, idx) => {
-        const num = (idx < 10) ? '0' + idx : idx;
-        // リンク先を discography.html?id=... に変更
-        return `<a href="discography.html?id=${album.id}" class="recent-link">${num}.${album.title}</a>`;
-    }).join('');
+    // ★ categoryが "discography" のものだけサイドバーに出す
+    sidebarNav.innerHTML = allAlbums
+        .filter(album => album.category === 'discography')
+        .map((album, idx) => {
+            const num = (idx < 10) ? '0' + idx : idx;
+            return `<a href="discography.html?id=${album.id}" class="recent-link">${num}.${album.title}</a>`;
+        }).join('');
 }
 
 function renderPlayerPart(pageType) {
@@ -58,6 +59,10 @@ function renderPlayerPart(pageType) {
 
 function initAudioPlayer(tracks) {
     const trackListContainer = document.getElementById('trackList');
+    if (!tracks || tracks.length === 0) {
+        trackListContainer.innerHTML = '<li class="track-item" style="cursor:default; opacity:0.5;">No tracks available yet.</li>';
+        return;
+    }
     trackListContainer.innerHTML = tracks.map((track, idx) => {
         const num = (idx + 1 < 10) ? '0' + (idx + 1) : (idx + 1);
         return `<li class="track-item" data-src="audio/${track.file}"><span class="track-number">${num}.</span><span class="track-name">${track.title}</span><span class="track-meta">Preview</span></li>`;
@@ -66,10 +71,9 @@ function initAudioPlayer(tracks) {
     const playBtn = document.getElementById('playBtn'), playIconSVG = document.getElementById('playIconSVG'), nowPlaying = document.getElementById('nowPlaying'), seekBar = document.getElementById('seekBar'), currentTimeText = document.getElementById('currentTime'), durationText = document.getElementById('duration'), volumeBar = document.getElementById('volumeBar'), muteBtn = document.getElementById('muteBtn'), volumeIcon = document.getElementById('volumeIcon');
     let trackItems; let currentIndex = 0; let isShuffle = false; let repeatMode = 0; let lastVolume = 0.8;
     const playPath = "M8 5v14l11-7z", pausePath = "M6 19h4V5H6v14zm8-14v14h4V5h-4z";
-
     function updatePlayIcon(isPlaying) { playIconSVG.querySelector('path').setAttribute('d', isPlaying ? pausePath : playPath); }
     function loadTrack(index) {
-        trackItems = Array.from(document.querySelectorAll('.track-item'));
+        trackItems = Array.from(document.querySelectorAll('.track-item[data-src]'));
         if(!trackItems[index]) return;
         trackItems.forEach(i => i.classList.remove('active'));
         trackItems[index].classList.add('active');
@@ -96,7 +100,7 @@ function initAudioPlayer(tracks) {
         if (repeatMode === 1) this.classList.add('active', 'repeat-one'); else if (repeatMode === 2) this.classList.add('active');
     });
     trackListContainer.addEventListener('click', (e) => {
-        const item = e.target.closest('.track-item');
+        const item = e.target.closest('.track-item[data-src]');
         if (item) { const idx = trackItems.indexOf(item); loadTrack(idx); audio.play(); updatePlayIcon(true); }
     });
     audio.addEventListener('timeupdate', () => { if (!isNaN(audio.duration)) { seekBar.value = (audio.currentTime / audio.duration) * 100; let m = Math.floor(audio.currentTime / 60), s = Math.floor(audio.currentTime % 60); currentTimeText.textContent = `${m}:${(s < 10) ? '0'+s : s}`; } });
@@ -119,28 +123,41 @@ function initAudioPlayer(tracks) {
 
 function initIndexPage() {
     renderHeader(); renderSidebar(); renderPlayerPart('index');
+    
+    // DISCOGRAPHY 生成
     const albumGrid = document.getElementById('albumGrid');
-    albumGrid.innerHTML = allAlbums.map(album => `
+    albumGrid.innerHTML = allAlbums.filter(a => a.category === 'discography').map(album => `
         <a href="discography.html?id=${album.id}" class="album-card">
             <div class="album-img-box"><img src="${album.img}" class="album-img" alt="${album.title}"></div>
             <div class="album-title">${album.title}</div>
             <div class="album-meta">${album.subtitle} / ${album.tracksCount}</div>
         </a>`).join('');
 
-    const albumOrder = allAlbums.map(a => a.id);
-    const sortedTracks = [...allTracks].sort((a, b) => {
-        const indexA = albumOrder.indexOf(a.albumId);
-        const indexB = albumOrder.indexOf(b.albumId);
-        if (indexA !== indexB) return indexA - indexB;
-        return a.file.localeCompare(b.file);
-    });
+    // UNRELEASED 生成
+    const unreleasedList = document.getElementById('unreleasedList');
+    unreleasedList.innerHTML = allAlbums.filter(a => a.category === 'unreleased').map(album => `
+        <a href="discography.html?id=${album.id}" class="unreleased-link-item">
+            <span class="un-title">${album.title}</span>
+            <span class="un-meta">${album.subtitle} / ${album.tracksCount}</span>
+        </a>`).join('');
+
+    // ★ ALL TRACKS 生成：discographyカテゴリのアルバムに属する曲だけに限定
+    const discographyAlbumIds = allAlbums.filter(a => a.category === 'discography').map(a => a.id);
+    const sortedTracks = [...allTracks]
+        .filter(t => discographyAlbumIds.includes(t.albumId))
+        .sort((a, b) => {
+            const indexA = allAlbums.findIndex(alb => alb.id === a.albumId);
+            const indexB = allAlbums.findIndex(alb => alb.id === b.albumId);
+            if (indexA !== indexB) return indexA - indexB;
+            return a.file.localeCompare(b.file);
+        });
+
     initAudioPlayer(sortedTracks);
 }
 
 function initAlbumPage() {
     const params = new URLSearchParams(window.location.search);
     const currentAlbumId = params.get('id');
-
     renderHeader(); renderSidebar(); renderPlayerPart('album');
     const album = allAlbums.find(a => a.id === currentAlbumId);
     if(album) {
@@ -152,7 +169,12 @@ function initAlbumPage() {
                 <p class="album-subtitle">${album.subtitle}</p>
                 <p class="album-description">${album.desc}</p>
             </div>`;
-        document.getElementById('downloadArea').innerHTML = `<a href="${album.booth}" target="_blank" class="booth-btn">Download at BOOTH</a>`;
+        
+        // ★ アルバムのカテゴリが "discography" かつ、boothのリンクがある場合のみボタンを表示
+        if(album.category === 'discography' && album.booth !== "#") {
+            document.getElementById('downloadArea').innerHTML = `<a href="${album.booth}" target="_blank" class="booth-btn">Download at BOOTH</a>`;
+        }
+        
         const albumTracks = allTracks.filter(t => t.albumId === currentAlbumId).sort((a, b) => a.file.localeCompare(b.file));
         initAudioPlayer(albumTracks);
     } else {
