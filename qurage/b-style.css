@@ -1,125 +1,64 @@
 :root {
-    --cyber-black: #0a0a0f;
-    --cyber-gray: #1a1a24;
-    --cyber-orange: #b46b2d;
-    --cyber-white: #e0e0e0;
-    --glow: 0 0 10px rgba(180, 107, 45, 0.4);
+    --primary-purple: #8a2be2;
+    --sub-purple: #f3e8ff;
+    --soft-white: #fdfbff;
+    --text-main: #2d1b4d;
+    --text-sub: #6b5b95;
+    --header-height: 60px;
 }
 
-/* 基本設定 */
-html, body { height: 100%; margin: 0; background: var(--cyber-black); color: var(--cyber-white); font-family: 'Inter', sans-serif; overflow: hidden; }
-.cyber-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #0a0a0f 100%); z-index: -1; }
+html, body { height: 100%; overflow: hidden; overscroll-behavior: none; background: var(--soft-white); color: var(--text-main); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Shippori Mincho', 'Inter', serif; }
+
+/* パターンAから移植するプレイヤー用の色上書き (オレンジ -> 紫) */
+.btn-svg.active, .track-item.active, .seek-bar, .booth-btn, .play-main {
+    --primary-orange: var(--primary-purple) !important;
+}
 
 /* ヘッダー */
-.game-header { height: 60px; background: rgba(0, 0, 0, 0.8); border-bottom: 2px solid var(--cyber-orange); box-shadow: var(--glow); display: flex; align-items: center; padding: 0 30px; }
-.header-inner { width: 100%; display: flex; justify-content: space-between; align-items: center; }
-.logo-area { font-weight: 900; font-size: 1.3rem; letter-spacing: 0.1em; color: var(--cyber-orange); }
-.header-nav { display: flex; gap: 15px; }
-.nav-item { text-decoration: none; color: var(--cyber-white); font-size: 0.75rem; font-weight: bold; transition: 0.3s; border: 1px solid transparent; padding: 5px 10px; }
-.nav-item:hover { color: var(--cyber-orange); border: 1px solid var(--cyber-orange); }
-.pattern-switch { background: var(--cyber-orange); color: #fff; border-radius: 4px; }
+.site-header { position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); background: #ffffff; border-bottom: 2px solid var(--primary-purple); display: flex; align-items: center; justify-content: center; z-index: 2100; box-shadow: 0 4px 15px rgba(138, 43, 226, 0.1); }
+.header-logo { font-size: 1.1rem; font-weight: 700; letter-spacing: 0.15em; text-decoration: none; color: var(--primary-purple); }
 
-/* メインレイアウト */
-.game-container { display: grid; grid-template-columns: 180px 1fr 350px; height: calc(100vh - 80px); gap: 20px; padding: 10px 20px; }
+.game-container { display: grid; grid-template-columns: 150px 1fr 380px; height: calc(100vh - var(--header-height)); margin-top: var(--header-height); gap: 10px; }
 
 /* 左：カテゴリー */
-.category-selector { display: flex; flex-direction: column; gap: 15px; padding-top: 20px; }
-.cat-btn { background: var(--cyber-gray); border: 1px solid rgba(180, 107, 45, 0.3); color: var(--cyber-white); padding: 15px; cursor: pointer; border-radius: 0 20px 20px 0; transition: 0.3s; display: flex; flex-direction: column; }
-.cat-btn.active { background: var(--cyber-orange); color: #fff; box-shadow: var(--glow); transform: translateX(10px); }
-.cat-icon { font-size: 1.2rem; }
-.cat-name { font-size: 0.7rem; font-weight: 900; margin-top: 5px; }
+.category-selector { background: var(--sub-purple); padding: 20px 10px; display: flex; flex-direction: column; gap: 15px; border-right: 1px solid #e0d5f0; }
+.cat-btn { background: #fff; border: 2px solid var(--primary-purple); border-radius: 10px; padding: 15px 5px; cursor: pointer; display: flex; flex-direction: column; align-items: center; transition: 0.3s; }
+.cat-btn.active { background: var(--primary-purple); color: #fff; transform: scale(1.05); }
+.cat-name { font-size: 0.65rem; font-weight: 900; margin-top: 5px; }
 
-/* 中：アルバム・選曲リスト */
-.music-selection { overflow-y: auto; padding-right: 10px; perspective: 1000px; }
-.music-selection::-webkit-scrollbar { width: 6px; }
-.music-selection::-webkit-scrollbar-thumb { background: var(--cyber-orange); border-radius: 10px; }
+/* 中：ぐるぐるエリア */
+.music-selection { display: flex; flex-direction: column; align-items: center; padding: 30px 20px; overflow-y: auto; background: #fff; }
+.carousel-container { display: flex; gap: 20px; overflow-x: auto; width: 100%; padding: 20px 0; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+.carousel-container::-webkit-scrollbar { height: 4px; }
+.carousel-container::-webkit-scrollbar-thumb { background: var(--primary-purple); border-radius: 10px; }
 
-.album-group { margin-bottom: 15px; }
+.carousel-item { flex: 0 0 180px; height: 180px; scroll-snap-align: center; cursor: pointer; transition: 0.4s; position: relative; }
+.carousel-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 15px; border: 4px solid transparent; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+.carousel-item.active img { border-color: var(--primary-purple); transform: scale(1.15) translateY(-10px); box-shadow: 0 15px 30px rgba(138, 43, 226, 0.3); }
 
-/* アルバムカード（ゲームのバナー風） */
-.album-banner {
-    background: linear-gradient(135deg, var(--cyber-gray) 0%, #2a2a3a 100%);
-    border: 1px solid rgba(180, 107, 45, 0.4);
-    padding: 12px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    transition: 0.3s;
-    position: relative;
-    overflow: hidden;
-}
-.album-banner:hover { transform: translateX(5px); border-color: var(--cyber-orange); background: #2a2a3a; }
-.album-banner.open { border-bottom: 3px solid var(--cyber-orange); background: #333; }
-.ab-img { width: 50px; height: 50px; border-radius: 4px; object-fit: cover; border: 1px solid var(--cyber-orange); }
-.ab-info { flex: 1; }
-.ab-title { font-weight: 900; font-size: 1rem; color: var(--cyber-orange); }
-.ab-meta { font-size: 0.7rem; opacity: 0.7; }
+.album-info-display { text-align: center; margin-top: 30px; width: 100%; max-width: 500px; }
+.b-title-main { font-size: 1.8rem; color: var(--primary-purple); margin-bottom: 5px; }
+.b-subtitle { font-size: 0.9rem; font-weight: bold; color: var(--text-sub); margin-bottom: 15px; }
+.b-desc { font-size: 0.85rem; line-height: 1.8; color: var(--text-main); margin-bottom: 25px; }
 
-/* 展開される曲リスト */
-.sub-track-list {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease-out;
-    background: rgba(0, 0, 0, 0.2);
-    margin: 0 10px;
-    border-radius: 0 0 10px 10px;
-}
-.album-group.active .sub-track-list { max-height: 1000px; padding: 10px 0; }
+/* 中面のBOOTHボタン（紫版） */
+.booth-btn-b { display: inline-block; background: var(--primary-purple); color: #fff; text-decoration: none; font-weight: 700; padding: 12px 40px; border-radius: 50px; font-size: 1rem; transition: 0.3s; box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4); }
+.booth-btn-b:hover { transform: translateY(-3px); filter: brightness(1.1); }
 
-.track-card {
-    padding: 10px 30px;
-    margin: 5px 10px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    display: flex;
-    justify-content: space-between;
-    transition: 0.2s;
-}
-.track-card:hover { background: rgba(255, 255, 255, 0.15); transform: translateX(10px); }
-.track-card.selected { 
-    background: var(--cyber-orange); 
-    color: #fff; 
-    font-weight: bold;
-    box-shadow: var(--glow);
-}
+/* 右：プレイヤーエリア（パターンA準拠） */
+.col-right { background: var(--sub-purple) !important; border-left: 1px solid #e0d5f0; }
 
-/* 右：プレビューパネル */
-.preview-panel { background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(180, 107, 45, 0.2); border-radius: 15px; padding: 20px; display: flex; flex-direction: column; }
-.panel-inner { height: 100%; display: flex; flex-direction: column; align-items: center; }
-.jacket-frame { width: 200px; height: 200px; border: 2px solid var(--cyber-orange); box-shadow: var(--glow); margin-bottom: 20px; overflow: hidden; background: #000; }
-.jacket-img { width: 100%; height: 100%; object-fit: cover; }
-.music-info { text-align: center; width: 100%; margin-bottom: 20px; }
-.sub-title { color: var(--cyber-orange); font-size: 0.8rem; font-weight: bold; margin-bottom: 5px; }
-.main-title { font-family: 'Shippori Mincho', serif; font-size: 1.2rem; margin: 0; line-height: 1.4; }
-.music-desc { font-size: 0.75rem; opacity: 0.7; margin-top: 10px; line-height: 1.6; }
-
-/* プレイヤー部分 */
-.game-player { width: 100%; background: var(--cyber-gray); padding: 15px; border-radius: 10px; margin-top: auto; }
-.player-controls { display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 10px; }
-.ctrl-btn { background: none; border: 1px solid #444; color: #fff; padding: 5px 10px; font-size: 0.6rem; cursor: pointer; border-radius: 4px; }
-.play-main-btn { background: var(--cyber-orange); border: none; color: #fff; font-weight: 900; padding: 10px 25px; border-radius: 5px; cursor: pointer; box-shadow: var(--glow); }
-.progress-area { display: flex; align-items: center; gap: 10px; font-size: 0.6rem; color: var(--cyber-orange); }
-#seekBar { flex: 1; accent-color: var(--cyber-orange); }
-
-.start-btn-area { margin-top: 20px; width: 100%; }
-.booth-start-btn { display: flex; flex-direction: column; align-items: center; text-decoration: none; background: #e63946; color: #fff; padding: 12px; border-radius: 5px; font-weight: 900; box-shadow: 0 0 20px rgba(230, 57, 70, 0.4); transition: 0.3s; }
-.booth-start-btn:hover { background: #ff4d5a; transform: translateY(-3px); }
-.btn-text { font-size: 1.2rem; letter-spacing: 0.1em; }
-.btn-sub { font-size: 0.6rem; opacity: 0.8; }
-
-.game-footer { height: 20px; text-align: center; font-size: 0.6rem; opacity: 0.4; margin-top: 10px; }
+.game-footer { position: fixed; bottom: 0; left: 0; width: 100%; height: 25px; background: rgba(255,255,255,0.8); border-top: 1px solid #eee; text-align: center; font-size: 0.6rem; line-height: 25px; opacity: 0.6; z-index: 2200; }
 
 /* スマホ対応 */
 @media (max-width: 900px) {
-    html, body { overflow: auto; overscroll-behavior: auto; }
-    .game-container { display: flex; flex-direction: column; height: auto; padding-bottom: 50px; }
-    .category-selector { flex-direction: row; order: 1; padding: 10px 0; }
-    .cat-btn { border-radius: 10px; flex: 1; align-items: center; padding: 10px; }
-    .music-selection { height: auto; order: 2; overflow: visible; }
-    .preview-panel { order: 3; width: auto; height: auto; padding: 20px; margin-top: 20px; }
-    .jacket-frame { width: 160px; height: 160px; }
+    html, body { overflow: auto; }
+    .game-container { display: flex; flex-direction: column; height: auto; }
+    .category-selector { flex-direction: row; height: auto; border-right: none; border-bottom: 1px solid #eee; }
+    .cat-btn { flex: 1; padding: 10px; }
+    .music-selection { height: auto; }
+    .carousel-item { flex: 0 0 140px; height: 140px; }
+    .col-right { height: auto; overflow: visible; padding: 30px 20px 60px; }
 }
