@@ -1,6 +1,4 @@
-// 【全アルバムのリスト】
-// category: "discography" -> サイドバーとIndexの画像グリッドに表示
-// category: "unreleased"  -> Indexの下部文字リストのみに表示
+// 【全アルバム의リスト】
 const allAlbums = [
     {
         id: "first-step", 
@@ -112,13 +110,23 @@ const allAlbums = [
         tracksCount: "3 Tracks",
         category: "discography"
     },
-    // --- ここから UNRELEASED ---
+    // --- UNRELEASED ---
     {
         id: "colossus", 
         title: "Colossus",
         subtitle: "Draft Archive",
         img: "https://fromtheasia.com/wp-content/uploads/NCG69.jpg",
-        desc: "一歩踏みだす勇気をくれたColossusとの物語<br>いつか歌詞とかSS書きたいな",
+        desc: "一歩踏みだす勇気をくれたColossusとの物語<br>という設定でいつか歌詞とかSS書きたいな",
+        booth: "#",
+        tracksCount: "2 Tracks",
+        category: "unreleased"
+    },
+    {
+        id: "rip", 
+        title: "R.I.P.",
+        subtitle: "Draft Archive",
+        img: "https://fromtheasia.com/wp-content/uploads/NCG306.jpg",
+        desc: "GarageBandデータ破損したのに、なぜか生き残ってた強い子たち<br>ここで供養させてください",
         booth: "#",
         tracksCount: "2 Tracks",
         category: "unreleased"
@@ -127,7 +135,6 @@ const allAlbums = [
 
 // 【全曲のリスト】
 const allTracks = [
-    // --- Discography 収録曲 ---
     { title: "British Brixton", file: "2020102923 British_Brixton-100_C.mp3", albumId: "first-step" },
     { title: "Accelerate Afghanistan", file: "2020103012 Accelerate_Afghanistan_TH-102_Cm.mp3", albumId: "first-step" },
     { title: "AABS 80s", file: "2020103014 AABS_80s-128_Cm.mp3", albumId: "first-step" },
@@ -163,8 +170,9 @@ const allTracks = [
     { title: "Organic TBC", file: "2021022511 Organic_TBC-125_C.mp3", albumId: "organic" },
     { title: "Full 3FC", file: "2021022512 Full_3FC-125_C.mp3", albumId: "organic" },
     { title: "Backroads", file: "2021033017 Backroads-90_C.mp3", albumId: "organic" },
-
-    // --- Unreleased 収録曲 ---
+    // --- Unreleased ---
     { title: "Colossus", file: "2021020617 Colossus-150_Dm.mp3", albumId: "colossus" },
-    { title: "Colossus (inst)", file: "2021020617-2 Colossus_inst.mp3", albumId: "colossus" }
+    { title: "Colossus (inst)", file: "2021020617-2 Colossus_inst.mp3", albumId: "colossus" },
+    { title: "Mississippi", file: "2021091218_Mississippi-100_Em.mp3", albumId: "rip" },
+    { title: "BASS", file: "2022020715_BASS-128_Fm.mp3", albumId: "rip" }
 ];
