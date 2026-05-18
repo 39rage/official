@@ -6,6 +6,7 @@
     <title>Qurage Music - SELECT MUSIC (B)</title>
     <link rel="icon" href="https://fromtheasia.com/wp-content/uploads/90d8e4fe08331e787970ae1288933823.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Shippori+Mincho:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css"> <!-- Aの基本設定を一部拝借 -->
     <link rel="stylesheet" href="b-style.css">
 </head>
 <body class="bright-theme">
@@ -13,31 +14,25 @@
 
     <main class="game-container">
         <!-- 左：カテゴリー -->
-        <aside class="category-selector">
-            <button class="cat-btn active" onclick="changeCategory('discography', this)">
-                <span class="cat-icon">💿</span>
-                <span class="cat-name">DISCOGRAPHY</span>
-            </button>
-            <button class="cat-btn" onclick="changeCategory('unreleased', this)">
-                <span class="cat-icon">👾</span>
-                <span class="cat-name">UNRELEASED</span>
-            </button>
+        <aside class="category-selector" id="sidebar-part">
+            <!-- shared-components.js の内容をB用に一部隠して表示します -->
         </aside>
 
-        <!-- 中：ジャケ写ぐるぐる ＆ アルバム情報 -->
+        <!-- 中：縦スクロール選曲エリア -->
         <section class="music-selection">
-            <div class="carousel-container" id="albumCarousel">
-                <!-- ジャケ写がここに並びます -->
+            <div class="scroll-area" id="albumScrollArea">
+                <div class="infinite-scroll-wrapper" id="albumList">
+                    <!-- ジャケ写リストが自動生成されます -->
+                </div>
             </div>
             
-            <div class="album-info-display" id="albumDetail">
-                <!-- アルバム名・説明・BOOTHボタンがここに出ます -->
+            <div class="album-info-panel" id="albumDetail">
+                <!-- ここにタイトル・説明・BOOTHボタンが並びます -->
             </div>
         </section>
 
-        <!-- 右：パターンAのプレイヤー ＆ 曲リスト -->
+        <!-- 右：プレイヤー ＆ 曲リスト（Aの形を完全維持） -->
         <section class="col-right" id="player-part">
-            <!-- shared-components.js の renderPlayerPart で生成されます -->
         </section>
     </main>
 
@@ -49,7 +44,6 @@
     <script src="shared-components.js"></script>
     <script src="b-logic.js"></script>
     <script>
-        // パターンB用の初期化
         initGamePage();
     </script>
 </body>
