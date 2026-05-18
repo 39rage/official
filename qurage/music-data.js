@@ -53,6 +53,15 @@ const allAlbums = [
         desc: "本当の愛ってなんだろう<br>安心してくださいただのしっとり曲です",
         booth: "https://casbgcasbg.booth.pm/items/2692943",
         tracksCount: "3 Tracks"
+    },
+    {
+        id: "between", 
+        title: "Between",
+        subtitle: "6th Single",
+        img: "https://fromtheasia.com/wp-content/uploads/NCG54.jpg",
+        desc: "生と死の狭間みたいなちょっとダークな曲たち<br>病んでは、ないと思う",
+        booth: "https://casbgcasbg.booth.pm/items/2758590",
+        tracksCount: "4 Tracks"
     }
 ];
 
@@ -87,5 +96,11 @@ const allTracks = [
     // --- True Love ---
     { title: "Twilight True Love", file: "2021011421 Twilight_True_Love-98_Em.mp3", albumId: "true-love" },
     { title: "Missing You", file: "2021011620 Missing_You-102_Ebm.mp3", albumId: "true-love" },
-    { title: "Hand in Hand", file: "2021011910 Hand_in_Hand-78_D.mp3", albumId: "true-love" }
+    { title: "Hand in Hand", file: "2021011910 Hand_in_Hand-78_D.mp3", albumId: "true-love" },
+
+    // --- Between ---
+    { title: "Daylight", file: "2021012021 Daylight_100_D.mp3", albumId: "between" },
+    { title: "Recollection", file: "2021012821 Recollection-130_Dm.mp3", albumId: "between" },
+    { title: "Metaphysical", file: "2021020615 Metaphysical-100_Cm.mp3", albumId: "between" },
+    { title: "Break Against", file: "2021020718 Break_Against-70_Dm.mp3", albumId: "between" }
 ];
