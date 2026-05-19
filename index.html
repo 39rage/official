@@ -2,52 +2,51 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Portal Page</title>
     <link rel="icon" href="https://fromtheasia.com/wp-content/uploads/6410224d7e21cc6e2a9eb0cf659e7eb4.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Qurage: Orange */
             --qurage-main: #ff8c00;
-            /* 39rage: Light Blue */
             --sakurage-main: #00d4ff;
-            /* Sacra: Lavender/Purple */
             --sacra-main: #9370db;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        body {
-            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+        /* 全画面固定設定 */
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden; /* スクロールを禁止 */
             background-color: #000;
-            height: 100vh;
-            overflow: hidden;
             color: #fff;
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
         }
 
         /* タイトルエリア */
         .title-area {
             text-align: center;
-            padding: 80px 20px;
+            padding: 40px 20px;
             position: absolute;
             top: 0; left: 0; width: 100%;
             z-index: 10;
             pointer-events: none;
         }
         .title-area h1 {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             letter-spacing: 0.8em;
             text-transform: uppercase;
-            color: #fff;
-            text-shadow: 0 0 20px rgba(255,255,255,0.4);
+            text-shadow: 0 0 20px rgba(0,0,0,0.8);
         }
 
+        /* セレクトコンテナ：画面いっぱいに広げる */
         .select-container {
             display: flex;
             width: 100%;
-            height: 100%;
+            height: 100vh;
             position: relative;
             z-index: 1;
         }
@@ -62,10 +61,7 @@
             position: relative;
             transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
             overflow: hidden;
-            border-right: 1px solid rgba(255,255,255,0.05);
         }
-
-        .panel:last-child { border-right: none; }
 
         .panel-bg {
             position: absolute;
@@ -91,7 +87,6 @@
         .panel:hover .panel-overlay { 
             background: rgba(0, 0, 0, 0.2); 
             backdrop-filter: blur(0px);
-            -webkit-backdrop-filter: blur(0px);
         }
 
         .panel-content {
@@ -101,64 +96,48 @@
             width: 100%;
         }
 
-        /* 修正：大文字強制(uppercase)を解除 */
         .name {
-            font-size: clamp(2rem, 6vw, 4rem);
+            font-size: clamp(2rem, 5vw, 4rem);
             font-weight: 900;
             letter-spacing: 0.05em;
             margin-bottom: 15px;
             color: #ffffff;
             text-shadow: 0 0 30px rgba(0,0,0,0.8);
-            /* text-transform: uppercase; を削除 */
         }
 
         .desc {
             display: inline-block;
             font-size: 0.75rem;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.2em;
             font-weight: 900;
             padding: 6px 18px;
             border-radius: 50px;
             color: #fff;
             text-shadow: 0 1px 5px rgba(0,0,0,0.3);
-            transition: all 0.4s ease;
         }
 
-        /* --- 各名義のカラー設定 --- */
-
-        /* 1. Qurage */
+        /* カラー演出 */
         .panel.qurage:hover { box-shadow: inset 0 0 120px rgba(255, 140, 0, 0.3); }
-        .panel.qurage .desc { 
-            background-color: var(--qurage-main);
-            box-shadow: 0 0 20px rgba(255, 140, 0, 0.4);
-        }
-
-        /* 2. 39rage */
+        .panel.qurage .desc { background-color: var(--qurage-main); }
         .panel.sakurage:hover { box-shadow: inset 0 0 120px rgba(0, 212, 255, 0.3); }
-        .panel.sakurage .desc { 
-            background-color: var(--sakurage-main);
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
-        }
-
-        /* 3. Sacra */
+        .panel.sakurage .desc { background-color: var(--sakurage-main); }
         .panel.sakura:hover { box-shadow: inset 0 0 120px rgba(147, 112, 219, 0.3); }
-        .panel.sakura .desc { 
-            background-color: var(--sacra-main);
-            box-shadow: 0 0 20px rgba(147, 112, 219, 0.3);
-        }
+        .panel.sakura .desc { background-color: var(--sacra-main); }
 
         /* 背景画像 */
         .panel.qurage .panel-bg { background: url('https://fromtheasia.com/wp-content/uploads/NCG292.jpg'); }
         .panel.sakurage .panel-bg { background: url('https://64.media.tumblr.com/3798e5568544434743b7bc635c4b539a/tumblr_pd6q45nJAl1xci1k0o1_1280.png'); }
         .panel.sakura .panel-bg { background: url('https://fromtheasia.com/wp-content/uploads/NCG144.jpg'); }
 
+        /* スマホ対応（縦に3分割） */
         @media (max-width: 768px) {
-            .select-container { flex-direction: column; }
-            .panel { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
-            .panel:hover { flex: 1; }
-            .title-area { position: relative; padding: 40px 20px; }
-            .name { font-size: 2.4rem; }
-            .panel-overlay { backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
+            .select-container { flex-direction: column; height: 100vh; }
+            .panel { border-bottom: 1px solid rgba(255,255,255,0.1); flex: 1; width: 100%; }
+            .panel:hover { flex: 1; } /* スマホでは広げない */
+            .title-area { padding: 30px 10px; }
+            .title-area h1 { font-size: 0.8rem; letter-spacing: 0.4em; }
+            .name { font-size: 1.8rem; margin-bottom: 8px; }
+            .desc { font-size: 0.6rem; padding: 4px 12px; }
         }
     </style>
 </head>
@@ -169,7 +148,6 @@
     </div>
 
     <div class="select-container">
-        
         <!-- Qurage -->
         <a href="qurage/index.html" class="panel qurage" target="_blank" rel="noopener noreferrer">
             <div class="panel-bg"></div>
@@ -199,7 +177,6 @@
                 <div class="desc">VOCALIST</div>
             </div>
         </a>
-
     </div>
 
 </body>
