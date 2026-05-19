@@ -15,7 +15,6 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        /* 画面からはみ出さないための絶対条件 */
         html, body {
             height: 100%;
             width: 100%;
@@ -28,14 +27,26 @@
             flex-direction: column;
         }
 
-        /* タイトルエリア：PCは浮かせ、スマホは上部に固定 */
+        /* セレクトコンテナ：画面全体（タイトルエリア分を空ける） */
+        .select-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* タイトルエリア：画面下部に配置 */
         .title-area {
             text-align: center;
-            padding: 40px 20px;
+            padding: 40px 20px 60px; /* 下に少し余裕を持たせる */
             width: 100%;
             z-index: 10;
             pointer-events: none;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+            position: absolute;
+            bottom: 0; left: 0;
+            /* 下から上へグラデーション */
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 20%, transparent);
         }
         .title-area h1 {
             font-size: 1.1rem;
@@ -43,15 +54,6 @@
             letter-spacing: 0.8em;
             text-transform: uppercase;
             text-shadow: 0 0 20px rgba(0,0,0,1);
-        }
-
-        /* コンテナを100%の高さで3分割 */
-        .select-container {
-            display: flex;
-            width: 100%;
-            flex: 1; /* 残りの高さをすべて使う */
-            position: relative;
-            z-index: 1;
         }
 
         .panel {
@@ -78,7 +80,7 @@
         .panel-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.65); /* 暗めにして文字を浮き立たせる */
+            background: rgba(0, 0, 0, 0.65);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             transition: all 0.7s ease;
@@ -106,7 +108,6 @@
             letter-spacing: 0.05em;
             margin-bottom: 12px;
             color: #ffffff;
-            /* 文字周りの影を強くして視認性UP */
             text-shadow: 0 0 20px rgba(0,0,0,1), 0 0 10px rgba(0,0,0,1);
         }
 
@@ -121,41 +122,35 @@
             text-shadow: 0 1px 5px rgba(0,0,0,0.5);
         }
 
-        /* 各名義のカラー */
         .panel.qurage .desc { background-color: var(--qurage-main); }
         .panel.sakurage .desc { background-color: var(--sakurage-main); }
         .panel.sakura .desc { background-color: var(--sacra-main); }
 
-        /* 背景画像 */
         .panel.qurage .panel-bg { background: url('https://fromtheasia.com/wp-content/uploads/NCG292.jpg'); }
         .panel.sakurage .panel-bg { background: url('https://64.media.tumblr.com/3798e5568544434743b7bc635c4b539a/tumblr_pd6q45nJAl1xci1k0o1_1280.png'); }
         .panel.sakura .panel-bg { background: url('https://fromtheasia.com/wp-content/uploads/NCG144.jpg'); }
 
-        /* スマホ専用修正：縦に3等分して1画面に収める */
+        /* スマホ専用修正 */
         @media (max-width: 768px) {
             .select-container { flex-direction: column; }
-            .panel { 
-                border-bottom: 1px solid rgba(255,255,255,0.1);
-                /* Sacra（一番下）が隠れないように調整 */
-                padding-bottom: env(safe-area-inset-bottom);
-            }
+            .panel { border-bottom: 1px solid rgba(255,255,255,0.1); flex: 1; }
+            .panel:hover { flex: 1; }
+            
+            /* タイトルエリアを最下部へ */
             .title-area { 
-                position: relative; 
-                padding: 30px 10px 10px; 
-                background: #000;
+                padding: 10px 10px calc(15px + env(safe-area-inset-bottom)); 
+                background: rgba(0,0,0,0.8);
             }
-            .title-area h1 { font-size: 0.8rem; letter-spacing: 0.3em; }
-            .name { font-size: 1.8rem; margin-bottom: 5px; }
+            .title-area h1 { font-size: 0.8rem; letter-spacing: 0.4em; }
+
+            /* 各コンテンツを少し上にずらしてバランスを取る */
+            .panel-content { transform: translateY(-15px); }
+            .name { font-size: 1.8rem; margin-bottom: 8px; }
             .desc { font-size: 0.6rem; padding: 4px 15px; }
-            .panel-overlay { backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
         }
     </style>
 </head>
 <body>
-
-    <div class="title-area">
-        <h1>WHICH PERSONA?</h1>
-    </div>
 
     <div class="select-container">
         <!-- Qurage -->
@@ -187,6 +182,11 @@
                 <div class="desc">VOCALIST</div>
             </div>
         </a>
+    </div>
+
+    <!-- タイトルエリアをHTML構造的にも下に配置 -->
+    <div class="title-area">
+        <h1>WHICH PERSONA?</h1>
     </div>
 
 </body>
