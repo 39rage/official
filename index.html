@@ -8,15 +8,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Qurage: White & Orange */
+            /* Qurage: Orange */
             --qurage-main: #ff8c00;
-            --qurage-sub: #ffffff;
-            /* 39rage: Light Blue Only */
+            /* 39rage: Light Blue */
             --sakurage-main: #00d4ff;
-            --sakurage-sub: #00d4ff;
-            /* Sacra: Lavender */
-            --sacra-main: #e6e6fa;
-            --sacra-sub: #9370db;
+            /* Sacra: Lavender/Purple */
+            --sacra-main: #9370db;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,29 +26,22 @@
             color: #fff;
         }
 
-        /* タイトルエリア（より情緒的なフレーズに） */
+        /* タイトルエリア */
         .title-area {
             text-align: center;
-            padding: 60px 20px;
+            padding: 80px 20px;
             position: absolute;
             top: 0; left: 0; width: 100%;
             z-index: 10;
             pointer-events: none;
         }
         .title-area h1 {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 700;
-            letter-spacing: 0.6em;
+            letter-spacing: 0.8em; /* 文字間隔を広げてよりスタイリッシュに */
             text-transform: uppercase;
             color: #fff;
-            text-shadow: 0 0 15px rgba(255,255,255,0.5);
-            margin-bottom: 10px;
-        }
-        .title-area p {
-            font-size: 0.65rem;
-            color: #aaa;
-            letter-spacing: 0.3em;
-            font-weight: 300;
+            text-shadow: 0 0 20px rgba(255,255,255,0.4);
         }
 
         .select-container {
@@ -72,6 +62,7 @@
             position: relative;
             transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
             overflow: hidden;
+            border-right: 1px solid rgba(255,255,255,0.05);
         }
 
         .panel-bg {
@@ -86,9 +77,9 @@
         .panel-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.7); /* 少し明るくして画像を見えやすく */
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             transition: all 0.7s ease;
             z-index: 2;
         }
@@ -97,19 +88,17 @@
         .panel:hover { flex: 2; }
         .panel:hover .panel-bg { transform: scale(1.1); }
         .panel:hover .panel-overlay { 
-            background: rgba(0, 0, 0, 0.25); 
+            background: rgba(0, 0, 0, 0.2); 
             backdrop-filter: blur(0px);
             -webkit-backdrop-filter: blur(0px);
         }
 
-        /* パネル中央のコンテンツ背景（文字を読みやすくするための影） */
+        /* パネル内のコンテンツ */
         .panel-content {
             position: relative;
             z-index: 3;
             text-align: center;
             width: 100%;
-            background: radial-gradient(circle, rgba(0,0,0,0.6) 0%, transparent 70%);
-            padding: 40px 0;
         }
 
         .name {
@@ -118,59 +107,48 @@
             letter-spacing: 0.05em;
             margin-bottom: 15px;
             text-transform: uppercase;
-            /* 文字の視認性を極限まで高めるシャドウ */
-            text-shadow: 0 0 30px rgba(0,0,0,1), 0 4px 10px rgba(0,0,0,1);
+            color: #ffffff; /* 全員白固定 */
+            text-shadow: 0 0 30px rgba(0,0,0,0.8);
         }
 
+        /* 職業・説明タグ（塗りつぶし形式） */
         .desc {
             display: inline-block;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             letter-spacing: 0.2em;
-            font-weight: 700;
-            padding: 6px 16px;
-            border: 1.5px solid;
-            border-radius: 3px;
-            margin-bottom: 25px;
-            text-shadow: 0 0 10px rgba(0,0,0,1);
-            background: rgba(0,0,0,0.3);
-        }
-
-        /* 各名義のカラー設定 */
-
-        /* 1. Qurage (Orange & White) */
-        .panel.qurage:hover { box-shadow: inset 0 0 120px rgba(255, 140, 0, 0.5); }
-        .panel.qurage .name { color: var(--qurage-sub); }
-        .panel.qurage .desc { border-color: var(--qurage-main); color: var(--qurage-main); }
-        .panel.qurage .view-chip { background: var(--qurage-main); color: #000; }
-
-        /* 2. 39rage (Light Blue Only) */
-        .panel.sakurage:hover { box-shadow: inset 0 0 120px rgba(0, 212, 255, 0.5); }
-        .panel.sakurage .name { color: var(--sakurage-main); }
-        .panel.sakurage .desc { border-color: var(--sakurage-main); color: var(--sakurage-main); }
-        .panel.sakurage .view-chip { background: var(--sakurage-main); color: #000; }
-
-        /* 3. Sacra (Lavender) */
-        .panel.sakura:hover { box-shadow: inset 0 0 120px rgba(147, 112, 219, 0.4); }
-        .panel.sakura .name { color: var(--sacra-main); }
-        .panel.sakura .desc { border-color: var(--sacra-sub); color: var(--sacra-sub); }
-        .panel.sakura .view-chip { background: var(--sacra-sub); color: #fff; }
-
-        /* VIEW SITE チップ */
-        .view-chip {
-            display: inline-block;
-            font-size: 0.7rem;
             font-weight: 900;
-            padding: 6px 20px;
-            border-radius: 30px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            padding: 6px 18px;
+            border-radius: 50px; /* 角丸でボタンのように */
+            color: #fff;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.3);
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
         }
 
-        .panel:hover .view-chip {
-            opacity: 1;
-            transform: translateY(0);
+        /* --- 各名義のカラー演出 --- */
+
+        /* 1. Qurage */
+        .panel.qurage:hover { box-shadow: inset 0 0 120px rgba(255, 140, 0, 0.3); }
+        .panel.qurage .desc { 
+            background-color: var(--qurage-main);
+            border-color: var(--qurage-main);
+            box-shadow: 0 0 20px rgba(255, 140, 0, 0.4);
+        }
+
+        /* 2. 39rage */
+        .panel.sakurage:hover { box-shadow: inset 0 0 120px rgba(0, 212, 255, 0.3); }
+        .panel.sakurage .desc { 
+            background-color: var(--sakurage-main);
+            border-color: var(--sakurage-main);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+        }
+
+        /* 3. Sacra */
+        .panel.sakura:hover { box-shadow: inset 0 0 120px rgba(147, 112, 219, 0.3); }
+        .panel.sakura .desc { 
+            background-color: var(--sacra-main);
+            border-color: var(--sacra-main);
+            box-shadow: 0 0 20px rgba(147, 112, 219, 0.3);
         }
 
         /* 背景画像 */
@@ -181,12 +159,11 @@
         /* スマホ対応 */
         @media (max-width: 768px) {
             .select-container { flex-direction: column; }
-            .panel { border-bottom: 1px solid rgba(255,255,255,0.1); }
+            .panel { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
             .panel:hover { flex: 1; }
-            .panel-overlay { backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
             .title-area { position: relative; padding: 40px 20px; }
-            .name { font-size: 2.5rem; }
-            .view-chip { opacity: 0.9; transform: none; margin-top: 10px; }
+            .name { font-size: 2.4rem; }
+            .panel-overlay { backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
         }
     </style>
 </head>
@@ -194,7 +171,6 @@
 
     <div class="title-area">
         <h1>WHICH PERSONA?</h1>
-        <p>THREE FACETS, ONE SOUL</p>
     </div>
 
     <div class="select-container">
@@ -205,8 +181,7 @@
             <div class="panel-overlay"></div>
             <div class="panel-content">
                 <div class="name">Qurage</div>
-                <div class="desc">BGM ARCHIVE</div><br>
-                <div class="view-chip">ENTER 👾</div>
+                <div class="desc">BGM ARCHIVE</div>
             </div>
         </a>
 
@@ -216,8 +191,7 @@
             <div class="panel-overlay"></div>
             <div class="panel-content">
                 <div class="name">39rage</div>
-                <div class="desc">MIX & VIDEO EDIT</div><br>
-                <div class="view-chip">ENTER 🪼</div>
+                <div class="desc">MIX & VIDEO EDIT</div>
             </div>
         </a>
 
@@ -227,8 +201,7 @@
             <div class="panel-overlay"></div>
             <div class="panel-content">
                 <div class="name">Sacra</div>
-                <div class="desc">VOCALIST</div><br>
-                <div class="view-chip">ENTER 🌸</div>
+                <div class="desc">VOCALIST</div>
             </div>
         </a>
 
